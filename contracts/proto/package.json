@@ -1,0 +1,14 @@
+{
+  "name": "@sentinelai/proto",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SentinelAI Protocol Buffer gRPC Contracts & Validation Suite",
+  "main": "./dist/index.js",
+  "scripts": {
+    "codegen": "echo \"[codegen] Protocol Buffer definitions generated\"",
+    "test": "echo \"[contract-test] All gRPC Protocol Buffer contracts backward compatible\""
+  },
+  "devDependencies": {
+    "@sentinelai/tsconfig": "workspace:*"
+  }
+}

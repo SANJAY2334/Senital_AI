@@ -1,0 +1,3093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentinelAI Enterprise Engineering Handbook (Volume I)</title>
+    <style>
+/* ==========================================================================
+   SentinelAI Enterprise Engineering Handbook Publishing System Stylesheet
+   Volume I – Foundation, Requirements & Architecture (v1.0.0)
+   Designed for Print-Ready A4 PDF Generation & Web Publication
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --primary-color: #0f172a;
+  --secondary-color: #0284c7;
+  --accent-color: #38bdf8;
+  --dark-bg: #0b0f19;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --bg-light: #f8fafc;
+  --bg-alt: #f1f5f9;
+  
+  --callout-tip-bg: #f0fdf4;
+  --callout-tip-border: #16a34a;
+  --callout-note-bg: #f0f9ff;
+  --callout-note-border: #0284c7;
+  --callout-warning-bg: #fffbeeb;
+  --callout-warning-border: #d97706;
+  --callout-caution-bg: #fef2f2;
+  --callout-caution-border: #dc2626;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, "Courier New", monospace;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 20mm 18mm 22mm 18mm;
+  @top-left {
+    content: "SentinelAI Enterprise Engineering Handbook";
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 500;
+    color: #64748b;
+  }
+  @top-right {
+    content: "Volume I – Foundation, Requirements & Architecture";
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 500;
+    color: #64748b;
+  }
+  @bottom-left {
+    content: "SentinelAI Enterprise Engineering Handbook | Vol I — Foundation & Architecture | v1.0.0 | Confidential";
+    font-family: var(--font-sans);
+    font-size: 7.5pt;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 600;
+    color: #0284c7;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Cover Page & Front Matter
+   ========================================================================== */
+
+.cover-page {
+  page-break-after: always;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0369a1 100%);
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.cover-header {
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 20px;
+}
+
+.cover-brand {
+  font-size: 14pt;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--accent-color);
+  text-transform: uppercase;
+}
+
+.cover-title-container {
+  margin-top: 60px;
+}
+
+.cover-title {
+  font-size: 32pt;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 15px 0;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.cover-subtitle {
+  font-size: 16pt;
+  font-weight: 400;
+  color: #93c5fd;
+  margin: 0;
+}
+
+.cover-badge {
+  display: inline-block;
+  background-color: rgba(56, 189, 248, 0.15);
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  font-size: 9pt;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cover-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 8.5pt;
+  color: #cbd5e1;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+/* ==========================================================================
+   Typography & Hierarchy
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--primary-color);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  page-break-after: avoid;
+}
+
+h1.part-header {
+  font-size: 26pt;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(90deg, #0f172a 0%, #0369a1 100%);
+  padding: 30px;
+  border-radius: 6px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  page-break-before: always;
+}
+
+h1.chapter-title {
+  font-size: 20pt;
+  font-weight: 800;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--secondary-color);
+  padding-bottom: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  page-break-before: always;
+}
+
+h2 {
+  font-size: 14pt;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 4px;
+  color: #0f172a;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #0284c7;
+}
+
+h4 {
+  font-size: 10pt;
+  color: #334155;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-align: justify;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Chapter Structure Elements (Purpose, Objectives, Overview, Takeaways)
+   ========================================================================== */
+
+.chapter-meta-block {
+  background-color: var(--bg-light);
+  border-left: 4px solid var(--secondary-color);
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  border-radius: 0 6px 6px 0;
+}
+
+.chapter-meta-block h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-size: 8.5pt;
+  letter-spacing: 1px;
+  color: var(--secondary-color);
+}
+
+.chapter-meta-block ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 9.5pt;
+}
+
+.chapter-summary-block {
+  background-color: var(--bg-alt);
+  border-top: 2px solid var(--primary-color);
+  padding: 18px 22px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+  page-break-inside: avoid;
+}
+
+.chapter-summary-block h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+  font-size: 10pt;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Tables, Lists & Code Blocks
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 8.5pt;
+  page-break-inside: avoid;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+}
+
+table td {
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--bg-light);
+}
+
+caption, .table-caption, .figure-caption {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-style: italic;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  background-color: var(--bg-alt);
+  color: #091e42;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+}
+
+pre {
+  background-color: var(--dark-bg);
+  color: #f8fafc;
+  padding: 14px 18px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  line-height: 1.5;
+  margin: 18px 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+}
+
+/* ==========================================================================
+   Callout Boxes (Best Practice, Architecture Note, Warning, Tip)
+   ========================================================================== */
+
+.callout {
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 4px;
+  border-left: 4px solid;
+  page-break-inside: avoid;
+  font-size: 9pt;
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-size: 8pt;
+  letter-spacing: 0.5px;
+}
+
+.callout-best-practice {
+  background-color: #f0fdf4;
+  border-color: #16a34a;
+  color: #14532d;
+}
+.callout-best-practice .callout-title { color: #15803d; }
+
+.callout-architecture {
+  background-color: #f0f9ff;
+  border-color: #0284c7;
+  color: #0c4a6e;
+}
+.callout-architecture .callout-title { color: #0369a1; }
+
+.callout-warning {
+  background-color: #fffbeeb;
+  border-color: #d97706;
+  color: #78350f;
+}
+.callout-warning .callout-title { color: #b45309; }
+
+.callout-tip {
+  background-color: #faf5ff;
+  border-color: #9333ea;
+  color: #581c87;
+}
+.callout-tip .callout-title { color: #7e22ce; }
+
+/* ==========================================================================
+   Executive Dashboard & Diagrams
+   ========================================================================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.dashboard-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+}
+
+.dashboard-card .metric-value {
+  font-size: 18pt;
+  font-weight: 800;
+  color: var(--secondary-color);
+}
+
+.dashboard-card .metric-label {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.diagram-box {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 16px;
+  margin: 20px 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.diagram-box pre {
+  text-align: left;
+  background-color: #0f172a;
+}
+
+    </style>
+</head>
+<body>
+<h1 id="sentinelai-enterprise-engineering-handbook">SentinelAI Enterprise Engineering Handbook</h1>
+<h2 id="volume-i-foundation-requirements-architecture">Volume I – Foundation, Requirements &amp; Architecture</h2>
+<div class="cover-page">
+  <div class="cover-header">
+    <div class="cover-brand">SENTINELAI ENTERPRISE PUBLICATIONS</div>
+    <div style="font-size: 9pt; color: #94a3b8; margin-top: 5px;">Document ID: SEN-ENG-HB-VOL1-1.0.0</div>
+  </div>
+  <div class="cover-title-container">
+    <div class="cover-title">SentinelAI Enterprise Engineering Handbook</div>
+    <div class="cover-subtitle">Volume I – Foundation, Requirements & Architecture</div>
+    <div class="cover-badge">Sprint 0 Foundation Release | Version 1.0.0 | Approved Baseline</div>
+  </div>
+  <div class="cover-footer">
+    <div>
+      <strong>Author:</strong> SentinelAI Core Engineering & Architecture Team<br>
+      <strong>Classification:</strong> Confidential – Internal Engineering Documentation<br>
+      <strong>Status:</strong> Approved Baseline | Release: Sprint 0 Foundation Release
+    </div>
+    <div style="text-align: right;">
+      <strong>Publication Date:</strong> August 2026<br>
+      <strong>Target Audience:</strong> CTOs, CISOs, Architects, Engineers, Evaluators<br>
+      <strong>Publisher:</strong> SentinelAI Technical Publications Press
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<h2 id="copyright-legal-notice">Copyright &amp; Legal Notice</h2>
+<p>Copyright © 2026 SentinelAI Inc. All rights reserved.</p>
+<p>This document contains proprietary and confidential information of SentinelAI Inc. Unauthorized copying, distribution, or disclosure of this document or any portion of its contents, via any medium, without the express written permission of SentinelAI Inc., is strictly prohibited.</p>
+<p><strong>Trademarks</strong>
+SentinelAI, the SentinelAI logo, Incident Story, Causal Graph Engine, and XAI Evidence Lineage are trademarks or registered trademarks of SentinelAI Inc. All other product names, logos, and brands mentioned herein are trademarks of their respective owners.</p>
+<p><strong>Document Control ID:</strong> <code>SEN-ENG-HB-VOL1-1.0.0</code><br />
+<strong>Document Classification:</strong> Confidential – Internal Engineering Documentation<br />
+<strong>Release Baseline:</strong> Version 1.0.0 (Sprint 0 Foundation Release)<br />
+<strong>Publication Status:</strong> Approved Baseline<br />
+<strong>Effective Date:</strong> August 7, 2026</p>
+<hr />
+<h2 id="preface">Preface</h2>
+<p>The <em>SentinelAI Enterprise Engineering Handbook (Volume I)</em> represents the definitive architectural, functional, and engineering baseline for the SentinelAI platform. Built from the ground up to address the systemic crisis facing modern Security Operations Centers (SOCs), SentinelAI unites multi-source streaming telemetry ingestion, Open Cybersecurity Schema Framework (OCSF v1.1) standardization, dynamic temporal causal graphing, multi-agent AI triage, deterministic Explainable AI (XAI) evidence validation, and policy-governed automated remediation.</p>
+<p>This volume consolidates all ten approved Sprint 0 architectural baselines—Product Vision Document (PVD), Business Requirements Specification (BRS), System Context &amp; Use Case Specification (SCUCS), Software Requirements Specification (SRS), Architecture Decision Records (ADR-0001 through ADR-0020), High-Level Design (HLD), Machine Learning Architecture Document (MLAD), Environment Configuration Strategy, CI/CD Pipeline Architecture, and Engineering Implementation Roadmap—into a single, cohesive, publication-grade handbook.</p>
+<hr />
+<h2 id="foreword">Foreword</h2>
+<p>In cybersecurity engineering, documentation is not an afterthought; it is the blueprint of system integrity. As enterprise IT environments expand across multi-cloud infrastructures, microservices, and hybrid identities, threat actors exploit the fragmented gaps between point security solutions. Traditional Security Information and Event Management (SIEM) solutions overload human analysts with uncontextualized alert noise, while legacy SOAR playbooks fail under the weight of brittle, static scripts.</p>
+<p>SentinelAI was conceived to re-engineer the SOC experience. By enforcing strict architectural principles—monorepo codebase organization, gRPC contract-first API design, zero-hallucination XAI lineage, and policy guardrails—this handbook serves as both an architectural reference for senior leadership (CTOs, CISOs, Enterprise Architects) and an operational guide for software, security, AI, and DevOps engineers implementing the platform.</p>
+<hr />
+<h2 id="document-control-version-history">Document Control &amp; Version History</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Document Title</strong></td>
+<td style="text-align: left;">SentinelAI Enterprise Engineering Handbook (Volume I)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Document ID</strong></td>
+<td style="text-align: left;"><code>SEN-ENG-HB-VOL1-1.0.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Document Version</strong></td>
+<td style="text-align: left;"><code>1.0.0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Release Baseline</strong></td>
+<td style="text-align: left;">Sprint 0 Foundation Release</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Publication Status</strong></td>
+<td style="text-align: left;">Approved Baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Document Classification</strong></td>
+<td style="text-align: left;">Confidential – Internal Engineering Documentation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Effective Date</strong></td>
+<td style="text-align: left;">August 7, 2026</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Document Owner</strong></td>
+<td style="text-align: left;">Lead Technical Publications Engineer &amp; Principal Documentation Architect</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Executive Sponsors</strong></td>
+<td style="text-align: left;">Chief Technology Officer (CTO), Chief Information Security Officer (CISO)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="revision-history">Revision History</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release Date</th>
+<th style="text-align: left;">Author / Role</th>
+<th style="text-align: left;">Description of Changes</th>
+<th style="text-align: left;">Approved By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>0.1.0-DRAFT</code></td>
+<td style="text-align: left;">July 15, 2026</td>
+<td style="text-align: left;">Principal Technical Writer</td>
+<td style="text-align: left;">Initial synthesis draft of Sprint 0 engineering documents.</td>
+<td style="text-align: left;">Engineering Leads</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>0.9.0-RC</code></td>
+<td style="text-align: left;">August 1, 2026</td>
+<td style="text-align: left;">Chief Product Architect</td>
+<td style="text-align: left;">Pre-publication review across architecture and ML sections.</td>
+<td style="text-align: left;">Enterprise Architect</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>1.0.0-APPROVED</code></td>
+<td style="text-align: left;">August 7, 2026</td>
+<td style="text-align: left;">Lead Technical Publications</td>
+<td style="text-align: left;">Official Volume I publication for Sprint 0 Foundation Release.</td>
+<td style="text-align: left;">CTO, CISO</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="executive-dashboard">Executive Dashboard</h2>
+<p>The Executive Dashboard provides an immediate operational metric summary of the SentinelAI Sprint 0 release.</p>
+<div class="dashboard-grid">
+  <div class="dashboard-card">
+    <div class="metric-value">v1.0.0</div>
+    <div class="metric-label">Release Version</div>
+  </div>
+  <div class="dashboard-card">
+    <div class="metric-value">20 ADRs</div>
+    <div class="metric-label">Approved ADRs</div>
+  </div>
+  <div class="dashboard-card">
+    <div class="metric-value">24 FRs / 12 NFRs</div>
+    <div class="metric-label">Software Requirements</div>
+  </div>
+  <div class="dashboard-card">
+    <div class="metric-value">11 Services</div>
+    <div class="metric-label">Microservices Landscape</div>
+  </div>
+  <div class="dashboard-card">
+    <div class="metric-value">12 Packages</div>
+    <div class="metric-label">Shared Monorepo Libraries</div>
+  </div>
+  <div class="dashboard-card">
+    <div class="metric-value">100% Passed</div>
+    <div class="metric-label">Sprint 0 Tasks</div>
+  </div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metadata Parameter</th>
+<th style="text-align: left;">Technical Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>System Architecture Style</strong></td>
+<td style="text-align: left;">Event-Driven Reactive Microservices (<code>ADR-0002</code>, <code>ADR-0004</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Primary Telemetry Standard</strong></td>
+<td style="text-align: left;">Open Cybersecurity Schema Framework (OCSF v1.1) (<code>SRS-FR-004</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Ensemble Pipeline</strong></td>
+<td style="text-align: left;">Isolation Forest (Unsupervised) + XGBoost (Supervised Threat Severity) (<code>MLAD</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XAI Lineage Validation</strong></td>
+<td style="text-align: left;">SHAP Attribution + Raw Log Line Token Match Verification (<code>BR-001</code>, <code>ADR-0010</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Monorepo Strategy</strong></td>
+<td style="text-align: left;">Turborepo Monorepo (<code>ADR-0001</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Target Ingestion Performance</strong></td>
+<td style="text-align: left;">100,000+ Events Per Second (EPS) with MTTD &lt; 60s (<code>BO-1</code>, <code>SRS-NFR-PERF-01</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>False Positive Cut</strong></td>
+<td style="text-align: left;">&gt;80% Noise Reduction via Baseline Noise Suppression (<code>BO-3</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="architecture-timeline">Architecture Timeline</h2>
+<p>The SentinelAI platform evolution follows a strict sequence of foundational engineering milestones, progressing from visionary product definition to scalable multi-cloud production.</p>
+<div class="codehilite"><pre><span></span><code>+---------------------------------------------------------------------------------------------------+
+|                                 SENTINELAI ARCHITECTURE TIMELINE                                  |
++---------------------------------------------------------------------------------------------------+
+| [Product Vision Document (PVD v1.1)]                                                              |
+|        │                                                                                          |
+|        ▼                                                                                          |
+| [Business Requirements Specification (BRS v1.0)]                                                  |
+|        │                                                                                          |
+|        ▼                                                                                          |
+| [System Context &amp; Use Case Spec (SCUCS v1.0)] ──► [Software Requirements Spec (SRS v1.0)]         |
+|                                                               │                                   |
+|                                                               ▼                                   |
+|                                            [Architecture Decision Records (ADR-0001..0020)]      |
+|                                                               │                                   |
+|                                                               ▼                                   |
+| [Machine Learning Arch (MLAD v1.0)] ◄──────────────── [High-Level Design (HLD v1.0)]              |
+|        │                                                      │                                   |
+|        ▼                                                      ▼                                   |
+| [CI/CD &amp; Environment Strategy] ───────────────► [Engineering Roadmap &amp; Backlog]                  |
+|                                                               │                                   |
+|                                                               ▼                                   |
+|                                            [Sprint 0 Foundation Release (Completed)]              |
+|                                                               │                                   |
+|                                                               ▼                                   |
+|                                            [Sprint 1-6 MVP Execution (Underway)]                  |
++---------------------------------------------------------------------------------------------------+
+</code></pre></div>
+
+<hr />
+<h2 id="engineering-maturity-model">Engineering Maturity Model</h2>
+<p>The SentinelAI Engineering Maturity Model evaluates the operational readiness and technological sophistication of the platform across seven key capabilities.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Maturity Level</th>
+<th style="text-align: left;">Capabilities &amp; Characteristics</th>
+<th style="text-align: left;">Sprint 0 Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Level 1: Vision &amp; Strategy</strong></td>
+<td style="text-align: left;">Defined product vision, target market, competitive positioning, and executive buy-in.</td>
+<td style="text-align: left;"><strong>COMPLETED</strong> (PVD Approved)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 2: Requirements</strong></td>
+<td style="text-align: left;">Complete functional/non-functional requirements, use cases, business rules, and traceability.</td>
+<td style="text-align: left;"><strong>COMPLETED</strong> (BRS, SCUCS, SRS Approved)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 3: Architecture</strong></td>
+<td style="text-align: left;">Approved system design, 20 ADRs, C4 models, DDD boundaries, and ML architecture.</td>
+<td style="text-align: left;"><strong>COMPLETED</strong> (HLD, ADRs, MLAD Approved)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 4: Infrastructure</strong></td>
+<td style="text-align: left;">Monorepo setup, gRPC proto contracts, shared packages, CI/CD pipelines, Docker Compose.</td>
+<td style="text-align: left;"><strong>COMPLETED</strong> (Sprint 0 Deliverables)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 5: Implementation</strong></td>
+<td style="text-align: left;">Microservice engine development, stream ingestion, causal graph, AI triage, UI workspace.</td>
+<td style="text-align: left;"><em>IN PROGRESS</em> (Sprints 1–5)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 6: Testing &amp; Audit</strong></td>
+<td style="text-align: left;">End-to-end load testing (150k EPS), mTLS security audit, chaos engineering, SOC 2 prep.</td>
+<td style="text-align: left;"><em>PLANNED</em> (Sprint 6)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Level 7: Production Pilot</strong></td>
+<td style="text-align: left;">Multi-region cloud pilot deployment, live partner customer onboarding, continuous MLOps.</td>
+<td style="text-align: left;"><em>PLANNED</em> (Post-MVP Release)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><strong>Front Matter</strong></li>
+<li>Cover Page</li>
+<li>Copyright &amp; Legal Notice</li>
+<li>Preface</li>
+<li>Foreword</li>
+<li>Document Control &amp; Version History</li>
+<li>Executive Dashboard</li>
+<li>Architecture Timeline</li>
+<li>Engineering Maturity Model</li>
+<li>Table of Contents</li>
+<li>List of Figures</li>
+<li>List of Tables</li>
+<li>List of Diagrams</li>
+<li>Abbreviations</li>
+<li>Glossary Overview</li>
+<li><strong>PART I: PROJECT FOUNDATION</strong></li>
+<li><a href="#chapter-1-executive-summary">Chapter 1: Executive Summary</a></li>
+<li><a href="#chapter-2-cyber-security-industry-background">Chapter 2: Cyber Security Industry Background</a></li>
+<li><a href="#chapter-3-problem-statement">Chapter 3: Problem Statement</a></li>
+<li><a href="#chapter-4-vision-mission--product-philosophy">Chapter 4: Vision, Mission &amp; Product Philosophy</a></li>
+<li><a href="#chapter-5-business-objectives">Chapter 5: Business Objectives</a></li>
+<li><a href="#chapter-6-business-scope">Chapter 6: Business Scope</a></li>
+<li><a href="#chapter-7-stakeholders">Chapter 7: Stakeholders</a></li>
+<li><strong>PART II: REQUIREMENTS ENGINEERING</strong></li>
+<li><a href="#chapter-8-business-requirements">Chapter 8: Business Requirements</a></li>
+<li><a href="#chapter-9-system-context">Chapter 9: System Context</a></li>
+<li><a href="#chapter-10-use-cases">Chapter 10: Use Cases</a></li>
+<li><a href="#chapter-11-business-rules">Chapter 11: Business Rules</a></li>
+<li><a href="#chapter-12-software-requirements">Chapter 12: Software Requirements</a></li>
+<li><strong>PART III: ENTERPRISE ARCHITECTURE</strong></li>
+<li><a href="#chapter-13-architecture-overview">Chapter 13: Architecture Overview</a></li>
+<li><a href="#chapter-14-architecture-decision-records">Chapter 14: Architecture Decision Records</a></li>
+<li><a href="#chapter-15-high-level-design">Chapter 15: High-Level Design</a></li>
+<li><strong>PART IV: ARTIFICIAL INTELLIGENCE</strong></li>
+<li><a href="#chapter-16-machine-learning-architecture">Chapter 16: Machine Learning Architecture</a></li>
+<li><strong>PART V: ENGINEERING FOUNDATION</strong></li>
+<li><a href="#chapter-17-repository-structure">Chapter 17: Repository Structure</a></li>
+<li><a href="#chapter-18-development-standards">Chapter 18: Development Standards</a></li>
+<li><a href="#chapter-19-environment-configuration">Chapter 19: Environment Configuration</a></li>
+<li><a href="#chapter-20-containerization-strategy">Chapter 20: Containerization Strategy</a></li>
+<li><a href="#chapter-21-shared-engineering-libraries">Chapter 21: Shared Engineering Libraries</a></li>
+<li><a href="#chapter-22-cicd-pipeline">Chapter 22: CI/CD Pipeline</a></li>
+<li><strong>PART VI: IMPLEMENTATION</strong></li>
+<li><a href="#chapter-23-engineering-roadmap">Chapter 23: Engineering Roadmap</a></li>
+<li><a href="#chapter-24-sprint-0-foundation-release-retrospective">Chapter 24: Sprint 0 Foundation Release Retrospective</a></li>
+<li><strong>PART VII: APPENDICES</strong></li>
+<li><a href="#appendix-a-complete-glossary">Appendix A: Complete Glossary</a></li>
+<li><a href="#appendix-b-references">Appendix B: References</a></li>
+<li><a href="#appendix-c-architecture-traceability-matrix">Appendix C: Architecture Traceability Matrix</a></li>
+<li><a href="#appendix-d-technology-decision-summary">Appendix D: Technology Decision Summary</a></li>
+<li><a href="#appendix-e-engineering-metrics">Appendix E: Engineering Metrics</a></li>
+<li><a href="#appendix-f-risk-register">Appendix F: Risk Register</a></li>
+<li><a href="#appendix-g-future-roadmap">Appendix G: Future Roadmap</a></li>
+<li><a href="#appendix-h-executive-sign-off">Appendix H: Executive Sign-Off</a></li>
+</ul>
+<hr />
+<h2 id="list-of-figures">List of Figures</h2>
+<ul>
+<li><code>Figure 1.1</code>: SentinelAI Platform Conceptual Architecture (<code>Chapter 1</code>)</li>
+<li><code>Figure 2.1</code>: Legacy Fragmented Telemetry Landscape vs. Unified Ingestion (<code>Chapter 2</code>)</li>
+<li><code>Figure 3.1</code>: The Human Capacity Breakdown in Legacy SOC Operations (<code>Chapter 3</code>)</li>
+<li><code>Figure 4.1</code>: The Four Pillars of SentinelAI Design Philosophy (<code>Chapter 4</code>)</li>
+<li><code>Figure 5.1</code>: Target Metrics: MTTD &lt; 60s, MTTR &lt; 5m, Noise Cut &gt; 80% (<code>Chapter 5</code>)</li>
+<li><code>Figure 6.1</code>: System Scope Boundary: Core Platform vs. External Integrations (<code>Chapter 6</code>)</li>
+<li><code>Figure 7.1</code>: Stakeholder Ecosystem Map (<code>Chapter 7</code>)</li>
+<li><code>Figure 8.1</code>: Strategic Release Roadmap (MVP v1.0 through v3.0) (<code>Chapter 8</code>)</li>
+<li><code>Figure 9.1</code>: Detailed System Boundary Model (<code>Chapter 9</code>)</li>
+<li><code>Figure 10.1</code>: Use Case Dependency Topology (<code>Chapter 10</code>)</li>
+<li><code>Figure 11.1</code>: Asset Criticality Policy Guardrail Decision Tree (<code>Chapter 11</code>)</li>
+<li><code>Figure 12.1</code>: Logical Component Decomposition Architecture (<code>Chapter 12</code>)</li>
+<li><code>Figure 13.1</code>: Decoupled Reactive Microservices Substrate Diagram (<code>Chapter 13</code>)</li>
+<li><code>Figure 15.1</code>: C4 Level 1 System Context Diagram (<code>Chapter 15</code>)</li>
+<li><code>Figure 15.2</code>: C4 Level 2 Container Architecture Diagram (<code>Chapter 15</code>)</li>
+<li><code>Figure 15.3</code>: C4 Level 3 Component Diagram for Ingestion &amp; Graph Subsystems (<code>Chapter 15</code>)</li>
+<li><code>Figure 15.4</code>: DDD Bounded Context Map Diagram (<code>Chapter 15</code>)</li>
+<li><code>Figure 15.5</code>: Zero-Trust Security &amp; Trust Boundary Topology (<code>Chapter 15</code>)</li>
+<li><code>Figure 15.6</code>: Cloud Deployment Topology Diagram (<code>Chapter 15</code>)</li>
+<li><code>Figure 16.1</code>: End-to-End Multi-Agent ML Inference Pipeline Diagram (<code>Chapter 16</code>)</li>
+<li><code>Figure 16.2</code>: Feature Store Dual-Layer Architecture Diagram (<code>Chapter 16</code>)</li>
+<li><code>Figure 17.1</code>: Turborepo Monorepo Codebase Tree Architecture (<code>Chapter 17</code>)</li>
+<li><code>Figure 20.1</code>: Multi-Stage Security-Hardened Docker Build Pipeline (<code>Chapter 20</code>)</li>
+<li><code>Figure 21.1</code>: Shared Engineering Packages Dependency Graph (<code>Chapter 21</code>)</li>
+<li><code>Figure 22.1</code>: GitHub Actions CI/CD Quality Gate Pipeline (<code>Chapter 22</code>)</li>
+</ul>
+<hr />
+<h2 id="list-of-tables">List of Tables</h2>
+<ul>
+<li><code>Table 1.1</code>: SentinelAI Strategic Platform Summary (<code>Chapter 1</code>)</li>
+<li><code>Table 2.1</code>: Evolutionary Phases of Security Incident Response Systems (<code>Chapter 2</code>)</li>
+<li><code>Table 3.1</code>: Comparative Matrix: Legacy SIEM/SOAR vs. SentinelAI Architecture (<code>Chapter 3</code>)</li>
+<li><code>Table 4.1</code>: Product Philosophy Core Principles &amp; Operational Mandates (<code>Chapter 4</code>)</li>
+<li><code>Table 5.1</code>: Quantified Business Objectives &amp; Target Performance Key Performance Indicators (<code>Chapter 5</code>)</li>
+<li><code>Table 6.1</code>: Comprehensive Functional &amp; Technical Scope Boundary Matrix (<code>Chapter 6</code>)</li>
+<li><code>Table 7.1</code>: Stakeholder Roles, Perspectives, and Governance Responsibilities (<code>Chapter 7</code>)</li>
+<li><code>Table 7.2</code>: RACI Responsibility Matrix for Engineering &amp; Operational Workstreams (<code>Chapter 7</code>)</li>
+<li><code>Table 8.1</code>: Strategic Business Objectives &amp; Operational KPI Targets (<code>Chapter 8</code>)</li>
+<li><code>Table 8.2</code>: Comprehensive User Persona Summary (<code>Chapter 8</code>)</li>
+<li><code>Table 9.1</code>: Inside vs. Outside System Boundary Definition (<code>Chapter 9</code>)</li>
+<li><code>Table 9.2</code>: Human External Actor Classification &amp; Access Levels (<code>Chapter 9</code>)</li>
+<li><code>Table 9.3</code>: Automated External System Interfaces (<code>Chapter 9</code>)</li>
+<li><code>Table 10.1</code>: Complete System Use Case Catalogue (UC-001 to UC-012) (<code>Chapter 10</code>)</li>
+<li><code>Table 11.1</code>: Formal Business Rules Specification Matrix (BR-001 to BR-006) (<code>Chapter 11</code>)</li>
+<li><code>Table 12.1</code>: Functional Requirements Summary Matrix (SRS-FR-001 to 024) (<code>Chapter 12</code>)</li>
+<li><code>Table 12.2</code>: Non-Functional Requirements Performance &amp; Security Summary (<code>Chapter 12</code>)</li>
+<li><code>Table 12.3</code>: Software Module Architecture Breakdown (<code>Chapter 12</code>)</li>
+<li><code>Table 13.1</code>: Architectural Principles &amp; Governing ADR References (<code>Chapter 13</code>)</li>
+<li><code>Table 14.1</code>: Architecture Decision Records (ADR-0001 to ADR-0020) Summary Index (<code>Chapter 14</code>)</li>
+<li><code>Table 15.1</code>: Microservice Landscape Decomposition (11 Microservices) (<code>Chapter 15</code>)</li>
+<li><code>Table 15.2</code>: Observability Telemetry Matrix (<code>Chapter 15</code>)</li>
+<li><code>Table 15.3</code>: Master Architecture Traceability Matrix (<code>Chapter 15</code>)</li>
+<li><code>Table 16.1</code>: ML Algorithm Selection &amp; Design Rationale Comparison (<code>Chapter 16</code>)</li>
+<li><code>Table 16.2</code>: Adversarial ML Threat Matrix &amp; Mitigation Strategies (<code>Chapter 16</code>)</li>
+<li><code>Table 16.3</code>: AI Architecture Traceability Matrix (<code>Chapter 16</code>)</li>
+<li><code>Table 17.1</code>: Monorepo Directory Boundary Matrix (<code>Chapter 17</code>)</li>
+<li><code>Table 18.1</code>: Development &amp; Coding Standards Summary (<code>Chapter 18</code>)</li>
+<li><code>Table 19.1</code>: Dotenv Configuration Hierarchy &amp; Environment Profiles (<code>Chapter 19</code>)</li>
+<li><code>Table 21.1</code>: Shared Engineering Packages Specifications (12 Packages) (<code>Chapter 21</code>)</li>
+<li><code>Table 22.1</code>: CI/CD Pipeline Automation Workflows (<code>Chapter 22</code>)</li>
+</ul>
+<hr />
+<h2 id="list-of-diagrams">List of Diagrams</h2>
+<ul>
+<li><code>Diagram 1.1</code>: High-Level Data Ingestion to Action Flow (<code>Chapter 1</code>)</li>
+<li><code>Diagram 2.1</code>: Fragmented Telemetry Silos Flow Diagram (<code>Chapter 2</code>)</li>
+<li><code>Diagram 3.1</code>: Alert Explosion Bottleneck Flowchart (<code>Chapter 3</code>)</li>
+<li><code>Diagram 4.1</code>: Deterministic XAI Validation Loop (<code>Chapter 4</code>)</li>
+<li><code>Diagram 6.1</code>: System In-Scope vs Out-of-Scope Architecture Boundary Diagram (<code>Chapter 6</code>)</li>
+<li><code>Diagram 8.1</code>: Current Painful State vs. SentinelAI Desired State Flow (<code>Chapter 8</code>)</li>
+<li><code>Diagram 9.1</code>: ASCII System Context Model Diagram (<code>Chapter 9</code>)</li>
+<li><code>Diagram 11.1</code>: Policy-Governed Action Evaluation Sequence (<code>Chapter 11</code>)</li>
+<li><code>Diagram 12.1</code>: High-Level Software Subsystem Sequence Model (<code>Chapter 12</code>)</li>
+<li><code>Diagram 13.1</code>: Hybrid Communication Model Sequence Flow (<code>Chapter 13</code>)</li>
+<li><code>Diagram 15.1</code>: End-to-End Event Stream to Remediation Sequence Flow (<code>Chapter 15</code>)</li>
+<li><code>Diagram 16.1</code>: Offline vs. Online Inference Feature Flow (<code>Chapter 16</code>)</li>
+<li><code>Diagram 16.2</code>: Analyst Feedback Active Learning Loop Flow (<code>Chapter 16</code>)</li>
+</ul>
+<hr />
+<h2 id="abbreviations">Abbreviations</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Abbreviation</th>
+<th style="text-align: left;">Full Term / Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ABAC</strong></td>
+<td style="text-align: left;">Attribute-Based Access Control</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR</strong></td>
+<td style="text-align: left;">Architecture Decision Record</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>API</strong></td>
+<td style="text-align: left;">Application Programming Interface</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AWS</strong></td>
+<td style="text-align: left;">Amazon Web Services</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BRS</strong></td>
+<td style="text-align: left;">Business Requirements Specification</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CISO</strong></td>
+<td style="text-align: left;">Chief Information Security Officer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CTO</strong></td>
+<td style="text-align: left;">Chief Technology Officer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DDD</strong></td>
+<td style="text-align: left;">Domain-Driven Design</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EDR</strong></td>
+<td style="text-align: left;">Endpoint Detection and Response</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EPS</strong></td>
+<td style="text-align: left;">Events Per Second</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gRPC</strong></td>
+<td style="text-align: left;">gRPC Remote Procedure Call</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HLD</strong></td>
+<td style="text-align: left;">High-Level Design</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>KMS</strong></td>
+<td style="text-align: left;">Key Management Service</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MITRE</strong></td>
+<td style="text-align: left;">MITRE ATT&amp;CK Framework</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MLAD</strong></td>
+<td style="text-align: left;">Machine Learning Architecture Document</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mTLS</strong></td>
+<td style="text-align: left;">Mutual Transport Layer Security</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MTTD</strong></td>
+<td style="text-align: left;">Mean Time to Detect</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MTTR</strong></td>
+<td style="text-align: left;">Mean Time to Respond</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>OCSF</strong></td>
+<td style="text-align: left;">Open Cybersecurity Schema Framework</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PVD</strong></td>
+<td style="text-align: left;">Product Vision Document</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RACI</strong></td>
+<td style="text-align: left;">Responsible, Accountable, Consulted, Informed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RBAC</strong></td>
+<td style="text-align: left;">Role-Based Access Control</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SHAP</strong></td>
+<td style="text-align: left;">SHapley Additive exPlanations</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SIEM</strong></td>
+<td style="text-align: left;">Security Information and Event Management</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SOAR</strong></td>
+<td style="text-align: left;">Security Orchestration, Automation, and Response</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SOC</strong></td>
+<td style="text-align: left;">Security Operations Center</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SRS</strong></td>
+<td style="text-align: left;">Software Requirements Specification</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TDIR</strong></td>
+<td style="text-align: left;">Threat Detection, Investigation, and Incident Response</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XAI</strong></td>
+<td style="text-align: left;">Explainable Artificial Intelligence</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="glossary-overview">Glossary Overview</h2>
+<ul>
+<li><strong>Causal Graph Engine</strong>: The core in-memory temporal graph module that correlates security events into directional entity attack chains across time.</li>
+<li><strong>Incident Story</strong>: A unified, contextual security incident output aggregating multiple related alerts into a single actionable narrative.</li>
+<li><strong>Noise Suppression</strong>: Algorithmic filtering of benign, routine enterprise activity baselines to eliminate alert fatigue.</li>
+<li><strong>Stage 1 Assistive Mode</strong>: Operator-in-the-loop response mode requiring one-click human confirmation before action execution.</li>
+<li><strong>Stage 2 Automated Mode</strong>: Autonomous execution of verified remediation actions on non-critical assets based on strict policy rules.</li>
+<li><strong>XAI Lineage Validation</strong>: Cryptographic and token-level verification proving that every AI claim is backed by raw log line evidence.</li>
+</ul>
+<div class="page-break"></div>
+
+<h1 class="part-header">PART I: PROJECT FOUNDATION</h1>
+
+<hr />
+<h1 id="chapter-1-executive-summary">Chapter 1: Executive Summary</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Provide an executive-level introduction to SentinelAI, outlining the market rationale, high-level platform architecture, key operational goals, and strategic impact for enterprise SOC operations.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Establish the strategic rationale for the SentinelAI platform.</li>
+    <li>Detail the high-level platform architecture and operational throughput parameters.</li>
+    <li>Summarize the core target performance metrics (MTTD, MTTR, Noise Reduction).</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>SentinelAI is an Autonomous AI-Powered Threat Detection, Investigation, and Incident Response (TDIR) Platform engineered to resolve alert fatigue and response delays in modern enterprise SOCs.</p>
+</div>
+
+<h2 id="11-platform-rationale">1.1 Platform Rationale</h2>
+<p>Modern Security Operations Centers (SOCs) are overwhelmed by thousands of disconnected security alerts per day across endpoint, cloud, identity, and network telemetry sources. SentinelAI unifies these siloed streams into a dynamic temporal causal graph, triages incidents using specialized AI subagents, grounds all generated narrative assertions in raw log evidence, and executes automated remediation playbooks under strict policy guardrails.</p>
+<div class="codehilite"><pre><span></span><code>+-----------------------------------------------------------------------------------+
+|         FIGURE 1.1: SENTINELAI PLATFORM CONCEPTUAL ARCHITECTURE                   |
++-----------------------------------------------------------------------------------+
+|  [ Multi-Source Telemetry Ingestion ] (100k+ EPS, OCSF v1.1 Normalization)        |
+|                                   │                                               |
+|                                   ▼                                               |
+|  [ Dynamic Temporal Causal Graph Engine ] (In-Memory Entity &amp; Edge Graph)         |
+|                                   │                                               |
+|                                   ▼                                               |
+|  [ Multi-Agent AI Supervisor ] (Isolation Forest + XGBoost + MITRE Mapping)       |
+|                                   │                                               |
+|                                   ▼                                               |
+|  [ Explainable AI (XAI) Lineage Engine ] (100% Deterministic Evidence Validation) |
+|                                   │                                               |
+|                                   ▼                                               |
+|  [ Policy Guardrail &amp; Action Orchestrator ] (Stage 1 Assistive / Stage 2 Automated) |
++-----------------------------------------------------------------------------------+
+</code></pre></div>
+
+<div class="figure-caption">Figure 1.1: SentinelAI Platform Conceptual Architecture</div>
+
+<h2 id="12-operational-performance-metrics">1.2 Operational Performance Metrics</h2>
+<p>Table 1.1 details the strategic platform parameters established for the SentinelAI platform baseline.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pillar / Metric Parameter</th>
+<th style="text-align: left;">Approved Baseline Value</th>
+<th style="text-align: left;">Governing Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Mean Time to Detect (MTTD)</strong></td>
+<td style="text-align: left;"><code>&lt; 60 seconds</code> end-to-end execution</td>
+<td style="text-align: left;"><code>BO-1</code>, <code>PVD Section 4.1</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mean Time to Respond (MTTR)</strong></td>
+<td style="text-align: left;"><code>&lt; 5 minutes</code> automated remediation</td>
+<td style="text-align: left;"><code>BO-2</code>, <code>PVD Section 4.2</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Noise Suppression Rate</strong></td>
+<td style="text-align: left;"><code>&gt; 80%</code> false positive alert reduction</td>
+<td style="text-align: left;"><code>BO-3</code>, <code>PVD Section 4.3</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XAI Grounding Guarantee</strong></td>
+<td style="text-align: left;"><code>100%</code> verified token lineage to raw logs</td>
+<td style="text-align: left;"><code>BR-001</code>, <code>ADR-0010</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ingestion Target Velocity</strong></td>
+<td style="text-align: left;"><code>100,000+ EPS</code> per cluster node</td>
+<td style="text-align: left;"><code>SRS-NFR-PERF-01</code></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 1.1: SentinelAI Strategic Platform Summary</div>
+
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>SentinelAI solves alert fatigue by synthesizing thousands of raw alerts into actionable Incident Stories.</li>
+    <li>Strict target SLA: MTTD < 60s, MTTR < 5m, Noise Cut > 80%, 100% XAI lineage.</li>
+    <li>Decoupled, event-driven reactive microservices architecture.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-2-cyber-security-industry-background">Chapter 2</a> for Cyber Security Industry Background and <a href="#chapter-4-vision-mission--product-philosophy">Chapter 4</a> for Product Philosophy.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 2 explores the evolution of TDIR systems from Gen 1 legacy SIEMs to Gen 4 Autonomous AI platforms.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-2-cyber-security-industry-background">Chapter 2: Cyber Security Industry Background</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Examine the evolutionary history of Threat Detection, Investigation, and Response (TDIR) systems and document the industry tailwinds driving the need for autonomous AI architecture.</p>
+</div>
+
+<h2 id="21-evolution-of-tdir-systems">2.1 Evolution of TDIR Systems</h2>
+<p>Table 2.1 traces the four generational phases of security incident response systems.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Generation</th>
+<th style="text-align: left;">Era</th>
+<th style="text-align: left;">Primary Architecture</th>
+<th style="text-align: left;">Key Deficiencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Gen 1: SIEM</strong></td>
+<td style="text-align: left;">2000s</td>
+<td style="text-align: left;">Centralized SQL/Log Storage</td>
+<td style="text-align: left;">Static threshold rules; massive false positive alert noise.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gen 2: SOAR</strong></td>
+<td style="text-align: left;">2010s</td>
+<td style="text-align: left;">Scripted Workflow Automation</td>
+<td style="text-align: left;">Brittle Python playbooks; high maintenance overhead.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gen 3: XDR</strong></td>
+<td style="text-align: left;">2020s</td>
+<td style="text-align: left;">Proprietary Vendor Ecosystems</td>
+<td style="text-align: left;">Vendor lock-in; fragmented across non-native telemetry.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gen 4: SentinelAI</strong></td>
+<td style="text-align: left;">2026+</td>
+<td style="text-align: left;">Dynamic Causal Graph + Multi-Agent AI</td>
+<td style="text-align: left;">Vendor-agnostic OCSF, XAI evidence lineage, policy guardrails.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 2.1: Evolutionary Phases of Security Incident Response Systems</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-3-problem-statement">Chapter 3: Problem Statement</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Define the core systemic bottlenecks in modern SOC operations, detailing the alert explosion crisis, context fragmentation, and human analyst burnout.</p>
+</div>
+
+<h2 id="31-the-alert-explosion-crisis">3.1 The Alert Explosion Crisis</h2>
+<p>Modern enterprises log over 100,000 security events per second across multi-cloud infrastructure. Legacy SIEM systems generate thousands of alerts daily, 85%+ of which are false positives or routine noise, leading to analyst burnout and missed critical breaches.</p>
+<div class="codehilite"><pre><span></span><code>+-----------------------------------------------------------------------------------+
+|      DIAGRAM 3.1: ALERT EXPLOSION BOTTLENECK FLOWCHART                            |
++-----------------------------------------------------------------------------------+
+|  [ 100,000+ Raw Log Events / sec ]                                                |
+|                   │                                                               |
+|                   ▼                                                               |
+|  [ Legacy SIEM Rules Engine ] ──► Generates 5,000+ Alerts / day                   |
+|                   │                                                               |
+|                   ▼                                                               |
+|  [ Human Analyst Team ] ──► Capacity: ~150 Alerts / day (Fatigue &amp; Burnout)       |
+|                   │                                                               |
+|                   ▼                                                               |
+|  [ 4,850+ Unexamined Alerts ] ──► Critical Attack Vectors Missed                  |
++-----------------------------------------------------------------------------------+
+</code></pre></div>
+
+<div class="diagram-caption">Diagram 3.1: Alert Explosion Bottleneck Flowchart</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-4-vision-mission-product-philosophy">Chapter 4: Vision, Mission &amp; Product Philosophy</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Articulate the core vision, mission, and strategic engineering philosophy guiding SentinelAI platform design.</p>
+</div>
+
+<h2 id="41-four-pillars-of-product-philosophy">4.1 Four Pillars of Product Philosophy</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|      FIGURE 4</span><span class="nt">.</span><span class="c">1: THE FOUR PILLARS OF SENTINELAI DESIGN PHILOSOPHY                 |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|   Pillar 1: Evidence</span><span class="nb">-</span><span class="c">Grounded XAI  │  Pillar 2: Dynamic Temporal Graph            |</span>
+<span class="c">|  (Zero Hallucinations</span><span class="nt">,</span><span class="c"> Raw Logs)   │  (Entity Chains</span><span class="nt">,</span><span class="c"> Cross</span><span class="nb">-</span><span class="c">Domain Context)       |</span>
+<span class="c">|  ──────────────────────────────────┼───────────────────────────────────────────── |</span>
+<span class="c">|   Pillar 3: Multi</span><span class="nb">-</span><span class="c">Agent Triage     │  Pillar 4: Policy</span><span class="nb">-</span><span class="c">Governed Remediation      |</span>
+<span class="c">|  (Isolation Forest </span><span class="nb">+</span><span class="c"> XGBoost)      │  (Stage 1 Assistive / Stage 2 Guardrails)   |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 4.1: The Four Pillars of SentinelAI Design Philosophy</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-5-business-objectives">Chapter 5: Business Objectives</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Detail the six quantified business objectives (`BO-1` through `BO-6`) driving platform metrics.</p>
+</div>
+
+<h2 id="51-quantified-business-objectives-matrix">5.1 Quantified Business Objectives Matrix</h2>
+<p>Table 5.1 lists the governing business objectives and baseline targets.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Objective Description</th>
+<th style="text-align: left;">Target Metric Baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>BO-1</strong></td>
+<td style="text-align: left;">Rapid Threat Detection SLA</td>
+<td style="text-align: left;">MTTD &lt; 60 seconds end-to-end</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-2</strong></td>
+<td style="text-align: left;">Autonomous Incident Remediation</td>
+<td style="text-align: left;">MTTR &lt; 5 minutes for Stage 2 actions</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-3</strong></td>
+<td style="text-align: left;">False Positive Reduction</td>
+<td style="text-align: left;">&gt; 80% reduction in alert volume</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-4</strong></td>
+<td style="text-align: left;">Zero Hallucination Lineage</td>
+<td style="text-align: left;">100% verified breadcrumb linkage</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-5</strong></td>
+<td style="text-align: left;">Open Standard Native Ingestion</td>
+<td style="text-align: left;">OCSF v1.1 native schema normalization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-6</strong></td>
+<td style="text-align: left;">Policy-Governed Action Control</td>
+<td style="text-align: left;">100% ABAC asset guardrail enforcement</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 5.1: Quantified Business Objectives & Target Performance Key Performance Indicators</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-6-business-scope">Chapter 6: Business Scope</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Define the functional and technical scope boundaries of the SentinelAI platform baseline.</p>
+</div>
+
+<h2 id="61-scope-boundary-definition">6.1 Scope Boundary Definition</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|      DIAGRAM 6</span><span class="nt">.</span><span class="c">1: SYSTEM IN</span><span class="nb">-</span><span class="c">SCOPE VS OUT</span><span class="nb">-</span><span class="c">OF</span><span class="nb">-</span><span class="c">SCOPE ARCHITECTURE BOUNDARY           |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|  IN</span><span class="nb">-</span><span class="c">SCOPE (SentinelAI Core Platform Boundary)                                     |</span>
+<span class="c">|  • OCSF Normalization • Temporal Causal Graph • Multi</span><span class="nb">-</span><span class="c">Agent AI • XAI Lineage      |</span>
+<span class="c">|  ───────────────────────────────────────────────────────────────────────────────  |</span>
+<span class="c">|  OUT</span><span class="nb">-</span><span class="c">OF</span><span class="nb">-</span><span class="c">SCOPE (External Enterprise Ecosystem)                                     |</span>
+<span class="c">|  • Raw Log Storage Data Lakes • Proprietary EDR Agents • Identity Providers      |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="diagram-caption">Diagram 6.1: System In-Scope vs Out-of-Scope Architecture Boundary Diagram</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-7-stakeholders">Chapter 7: Stakeholders</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Map the organizational stakeholder ecosystem and RACI responsibilities governing the platform.</p>
+</div>
+
+<h2 id="71-raci-responsibility-matrix">7.1 RACI Responsibility Matrix</h2>
+<p>Table 7.2 details the RACI responsibility allocations across key workstreams.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Workstream Domain</th>
+<th style="text-align: left;">CTO</th>
+<th style="text-align: left;">CISO</th>
+<th style="text-align: left;">Lead Arch</th>
+<th style="text-align: left;">ML Lead</th>
+<th style="text-align: left;">Sec Ops Lead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Core Platform Architecture</strong></td>
+<td style="text-align: left;"><strong>A</strong></td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Multi-Agent AI Design</strong></td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;">C</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Policy Guardrails &amp; Security</strong></td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;"><strong>A</strong></td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;"><strong>R</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Incident Response Operations</strong></td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: left;"><strong>R</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 7.2: RACI Responsibility Matrix for Engineering & Operational Workstreams</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART II: REQUIREMENTS ENGINEERING</h1>
+
+<hr />
+<h1 id="chapter-8-business-requirements">Chapter 8: Business Requirements</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the formal business requirements, operational KPIs, user personas, and strategic release roadmap.</p>
+</div>
+
+<h2 id="81-user-personas-summary">8.1 User Personas Summary</h2>
+<p>Table 8.2 summarizes the primary operational personas interacting with SentinelAI.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Persona ID</th>
+<th style="text-align: left;">Role Title</th>
+<th style="text-align: left;">Key Operational Goals</th>
+<th style="text-align: left;">Primary Pain Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PERS-01</strong></td>
+<td style="text-align: left;">Tier-1 SOC Analyst</td>
+<td style="text-align: left;">Fast incident triage, clear context.</td>
+<td style="text-align: left;">Alert fatigue, fragmented tools.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PERS-02</strong></td>
+<td style="text-align: left;">Lead Threat Hunter</td>
+<td style="text-align: left;">Deep root cause analysis, timeline graph.</td>
+<td style="text-align: left;">Lack of cross-domain visibility.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PERS-03</strong></td>
+<td style="text-align: left;">CISO / Security Director</td>
+<td style="text-align: left;">Compliance, lower MTTR, risk metrics.</td>
+<td style="text-align: left;">Uncontrolled automated actions.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 8.2: Comprehensive User Persona Summary</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-9-system-context">Chapter 9: System Context</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Define the external human actors, automated system interfaces, and environment boundaries (`SCUCS`).</p>
+</div>
+
+<h2 id="91-external-system-interfaces">9.1 External System Interfaces</h2>
+<p>Table 9.3 defines the external API interfaces integrated with SentinelAI.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Interface ID</th>
+<th style="text-align: left;">Target System Category</th>
+<th style="text-align: left;">Integration Standard</th>
+<th style="text-align: left;">Data Flow Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>INT-01</strong></td>
+<td style="text-align: left;">Cloud Telemetry (AWS/Azure)</td>
+<td style="text-align: left;">REST / Webhook Stream</td>
+<td style="text-align: left;">Inbound Telemetry</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>INT-02</strong></td>
+<td style="text-align: left;">EDR Agents (CrowdStrike/Defender)</td>
+<td style="text-align: left;">REST / gRPC API</td>
+<td style="text-align: left;">Inbound Telemetry &amp; Outbound Remediation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>INT-03</strong></td>
+<td style="text-align: left;">Identity Providers (Okta/Entra ID)</td>
+<td style="text-align: left;">OAuth 2.0 / OIDC</td>
+<td style="text-align: left;">Outbound Account Lockout Actions</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 9.3: Automated External System Interfaces</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-10-use-cases">Chapter 10: Use Cases</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Specify the complete system use case catalogue (`UC-001` through `UC-012`).</p>
+</div>
+
+<h2 id="101-use-case-catalogue-summary">10.1 Use Case Catalogue Summary</h2>
+<p>Table 10.1 details the system use cases governing platform interactions.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Use Case ID</th>
+<th style="text-align: left;">Use Case Title</th>
+<th style="text-align: left;">Primary Actor</th>
+<th style="text-align: left;">Trigger Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>UC-001</strong></td>
+<td style="text-align: left;">Ingest Multi-Source Telemetry</td>
+<td style="text-align: left;">Stream Ingestion Engine</td>
+<td style="text-align: left;">Raw log stream arrival</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-002</strong></td>
+<td style="text-align: left;">Normalize Log Stream to OCSF</td>
+<td style="text-align: left;">Normalizer Microservice</td>
+<td style="text-align: left;">Ingested JSON event stream</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-003</strong></td>
+<td style="text-align: left;">Construct Temporal Causal Graph</td>
+<td style="text-align: left;">Graph Engine</td>
+<td style="text-align: left;">Normalized OCSF event</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-004</strong></td>
+<td style="text-align: left;">Execute Multi-Agent AI Triage</td>
+<td style="text-align: left;">AI Supervisor</td>
+<td style="text-align: left;">Graph entity cluster detection</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-005</strong></td>
+<td style="text-align: left;">Validate XAI Lineage Evidence</td>
+<td style="text-align: left;">XAI Lineage Engine</td>
+<td style="text-align: left;">Model narrative prediction</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-006</strong></td>
+<td style="text-align: left;">Synthesize Unified Incident Story</td>
+<td style="text-align: left;">Story Aggregator</td>
+<td style="text-align: left;">Validated XAI evidence bundle</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-007</strong></td>
+<td style="text-align: left;">Execute Stage 1 Assistive Action</td>
+<td style="text-align: left;">Tier-1 SOC Analyst</td>
+<td style="text-align: left;">Analyst click confirmation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-008</strong></td>
+<td style="text-align: left;">Execute Stage 2 Automated Remediation</td>
+<td style="text-align: left;">Policy Guardrail Engine</td>
+<td style="text-align: left;">High-confidence policy match</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-009</strong></td>
+<td style="text-align: left;">Process Analyst Active Feedback</td>
+<td style="text-align: left;">Analyst Workspace</td>
+<td style="text-align: left;">Analyst confirm/dismiss input</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-010</strong></td>
+<td style="text-align: left;">Perform Natural Language Copilot QA</td>
+<td style="text-align: left;">Analyst / Threat Hunter</td>
+<td style="text-align: left;">User conversational query</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-011</strong></td>
+<td style="text-align: left;">Enforce Asset Guardrail Rules</td>
+<td style="text-align: left;">Policy Guardrail Engine</td>
+<td style="text-align: left;">Remediation request</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UC-012</strong></td>
+<td style="text-align: left;">Log Immutable Compliance Audit</td>
+<td style="text-align: left;">Audit Governance Service</td>
+<td style="text-align: left;">Any state change / action</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 10.1: Complete System Use Case Catalogue (UC-001 to UC-012)</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-11-business-rules">Chapter 11: Business Rules</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the formal business rules (`BR-001` through `BR-006`) dictating core operational logic.</p>
+</div>
+
+<h2 id="111-business-rules-matrix">11.1 Business Rules Matrix</h2>
+<p>Table 11.1 details the formal business rules enforced across the system.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Rule ID</th>
+<th style="text-align: left;">Rule Category</th>
+<th style="text-align: left;">Technical Rule Mandate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>BR-001</strong></td>
+<td style="text-align: left;">XAI Lineage Validation</td>
+<td style="text-align: left;">100% of AI narrative claims must map to verified raw log line IDs (<code>ocsf_event_id</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BR-002</strong></td>
+<td style="text-align: left;">Asset Criticality Guardrail</td>
+<td style="text-align: left;">Stage 2 automated action is strictly forbidden on <code>Critical</code> assets ($W_{asset} \ge 2.0$).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BR-003</strong></td>
+<td style="text-align: left;">Immutable Audit Logging</td>
+<td style="text-align: left;">All response actions and state transitions must be appended to hash-chained log stores.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BR-004</strong></td>
+<td style="text-align: left;">Noise Suppression Filter</td>
+<td style="text-align: left;">Events matching baseline routine patterns must be suppressed from primary incident feeds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BR-005</strong></td>
+<td style="text-align: left;">Uncertainty Escalation</td>
+<td style="text-align: left;">Models with confidence $C_{model} &lt; 0.80$ must escalate to human analysts.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BR-006</strong></td>
+<td style="text-align: left;">KMS CMK Isolation</td>
+<td style="text-align: left;">Tenant encryption keys must remain cryptographically isolated in cloud KMS.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 11.1: Formal Business Rules Specification Matrix (BR-001 to BR-006)</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-12-software-requirements">Chapter 12: Software Requirements</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Specify the IEEE 830 / ISO 29148 Software Requirements Specification (SRS), detailing 24 Functional Requirements and 12 Non-Functional Requirements.</p>
+</div>
+
+<h2 id="121-functional-requirements-summary">12.1 Functional Requirements Summary</h2>
+<p>Table 12.1 details the functional requirements across seven core platform subsystems.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Subsystem</th>
+<th style="text-align: left;">Requirement ID</th>
+<th style="text-align: left;">Functional Specification Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Ingestion</strong></td>
+<td style="text-align: left;"><code>SRS-FR-001..005</code></td>
+<td style="text-align: left;">High-throughput Kafka/gRPC stream ingestion, OCSF v1.1 mapping, metadata tagging.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Causal Graph</strong></td>
+<td style="text-align: left;"><code>SRS-FR-006..008</code></td>
+<td style="text-align: left;">In-memory temporal graph entity creation, sliding time windows, edge correlation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Subsystem</strong></td>
+<td style="text-align: left;"><code>SRS-FR-009..013</code></td>
+<td style="text-align: left;">Isolation Forest anomaly score, XGBoost threat tiering, uncertainty escalation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XAI Subsystem</strong></td>
+<td style="text-align: left;"><code>SRS-FR-014..015</code></td>
+<td style="text-align: left;">SHAP attribution weighting, token-level raw log evidence validation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Story Engine</strong></td>
+<td style="text-align: left;"><code>SRS-FR-016..018</code></td>
+<td style="text-align: left;">Story synthesis, deduplication, real-time workspace pushes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Policy Engine</strong></td>
+<td style="text-align: left;"><code>SRS-FR-019..021</code></td>
+<td style="text-align: left;">Stage 1/2 remediation, ABAC asset guardrail evaluation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Audit Engine</strong></td>
+<td style="text-align: left;"><code>SRS-FR-022..024</code></td>
+<td style="text-align: left;">Cryptographic audit logging, compliance export, analytics reporting.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 12.1: Functional Requirements Summary Matrix (SRS-FR-001 to 024)</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART III: ENTERPRISE ARCHITECTURE</h1>
+
+<hr />
+<h1 id="chapter-13-architecture-overview">Chapter 13: Architecture Overview</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Provide an overview of the event-driven reactive microservices architecture, communication models, and governing architectural principles.</p>
+</div>
+
+<h2 id="131-decoupled-reactive-substrate">13.1 Decoupled Reactive Substrate</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|      FIGURE 13</span><span class="nt">.</span><span class="c">1: DECOUPLED REACTIVE MICROSERVICES SUBSTRATE DIAGRAM              |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> Ingestion Service </span><span class="k">]</span><span class="c"> ──► Stream Bus ──► </span><span class="k">[</span><span class="c"> OCSF Normalizer </span><span class="k">]</span><span class="c"> ──► Stream Bus     |</span>
+<span class="c">|                                                                       │           |</span>
+<span class="c">|                                                                       ▼           |</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> AI Supervisor </span><span class="k">]</span><span class="c"> ◄── Stream Bus ◄── </span><span class="k">[</span><span class="c"> Temporal Causal Graph Engine </span><span class="k">]</span><span class="c">           |</span>
+<span class="c">|         │                                                                         |</span>
+<span class="c">|         ▼                                                                         |</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> XAI Lineage </span><span class="k">]</span><span class="c"> ──► </span><span class="k">[</span><span class="c"> Story Aggregator </span><span class="k">]</span><span class="c"> ──► </span><span class="k">[</span><span class="c"> Policy Guardrail &amp; Action Exec </span><span class="k">]</span><span class="c">  |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 13.1: Decoupled Reactive Microservices Substrate Diagram</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-14-architecture-decision-records">Chapter 14: Architecture Decision Records</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Present the complete set of twenty Architecture Decision Records (ADR-0001 through ADR-0020) in formal MADR format.</p>
+</div>
+
+<h2 id="141-adr-summary-index">14.1 ADR Summary Index</h2>
+<p>Table 14.1 lists all twenty approved Architecture Decision Records.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ADR ID</th>
+<th style="text-align: left;">Title</th>
+<th style="text-align: left;">Architectural Decision Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ADR-0001</strong></td>
+<td style="text-align: left;">Turborepo Monorepo Strategy</td>
+<td style="text-align: left;">Unified monorepo codebase for all services and packages.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0002</strong></td>
+<td style="text-align: left;">Reactive Event-Driven Substrate</td>
+<td style="text-align: left;">Kafka/gRPC streaming substrate for asynchronous microservices.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0003</strong></td>
+<td style="text-align: left;">gRPC &amp; ProtoBuf Contract-First</td>
+<td style="text-align: left;">Strict interface definition via Protocol Buffers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0004</strong></td>
+<td style="text-align: left;">High-Velocity Log Ingestion Stream</td>
+<td style="text-align: left;">Decoupled streaming ingestion supporting 100k+ EPS.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0005</strong></td>
+<td style="text-align: left;">OCSF v1.1 Schema Standard</td>
+<td style="text-align: left;">Universal log normalization standard across all vendors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0006</strong></td>
+<td style="text-align: left;">Cloud KMS Envelope Encryption</td>
+<td style="text-align: left;">AES-256 GCM encryption with customer-managed keys.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0007</strong></td>
+<td style="text-align: left;">Dual-Layer Feature Store</td>
+<td style="text-align: left;">In-memory key-value online store + Lakehouse offline store.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0008</strong></td>
+<td style="text-align: left;">Dynamic Temporal Causal Graph</td>
+<td style="text-align: left;">Property graph entity correlation across temporal windows.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0009</strong></td>
+<td style="text-align: left;">Multi-Agent AI Architecture</td>
+<td style="text-align: left;">Decoupled specialized ML subagents with AI Supervisor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0010</strong></td>
+<td style="text-align: left;">Explainable AI (XAI) Lineage</td>
+<td style="text-align: left;">Deterministic raw log token validation for AI claims.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0011</strong></td>
+<td style="text-align: left;">Zero-Trust Inter-Service Auth</td>
+<td style="text-align: left;">Mutual TLS 1.3 with SPIFFE/SPIRE workload identities.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0012</strong></td>
+<td style="text-align: left;">ABAC Asset Guardrails</td>
+<td style="text-align: left;">Attribute-based policy engine for remediation boundaries.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0013</strong></td>
+<td style="text-align: left;">OpenTelemetry Observability</td>
+<td style="text-align: left;">Unified metrics, logs, and distributed tracing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0014</strong></td>
+<td style="text-align: left;">Horizontal Pod Autoscaling</td>
+<td style="text-align: left;">Kubernetes HPA based on stream lag and CPU utilization.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0015</strong></td>
+<td style="text-align: left;">Relational Audit Governance</td>
+<td style="text-align: left;">Immutable append-only PostgreSQL store for audit logs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0016</strong></td>
+<td style="text-align: left;">Cloud-Agnostic Containerization</td>
+<td style="text-align: left;">OCI-compliant multi-stage Docker builds &amp; Helm charts.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0017</strong></td>
+<td style="text-align: left;">Environment Dotenv Hierarchy</td>
+<td style="text-align: left;">Tiered configuration management with boot schema validation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0018</strong></td>
+<td style="text-align: left;">Protobuf Contract Compatibility</td>
+<td style="text-align: left;">Automated breaking change detection via Buf in CI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0019</strong></td>
+<td style="text-align: left;">Automated Test Pyramid</td>
+<td style="text-align: left;">Enforced 80%+ unit test coverage quality gate.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ADR-0020</strong></td>
+<td style="text-align: left;">Multi-Tenant Data Isolation</td>
+<td style="text-align: left;">Cryptographic tenant key separation in shared storage.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 14.1: Architecture Decision Records (ADR-0001 to ADR-0020) Summary Index</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-15-high-level-design">Chapter 15: High-Level Design</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Provide the High-Level Design (HLD) specification including C4 Models, DDD Bounded Contexts, Microservices Landscape, Security Architecture, and Master Traceability Matrix.</p>
+</div>
+
+<h2 id="151-microservices-landscape-decomposition">15.1 Microservices Landscape Decomposition</h2>
+<p>Table 15.1 details the 11 microservices comprising the SentinelAI backend landscape.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Service Name</th>
+<th style="text-align: left;">Tech Stack</th>
+<th style="text-align: left;">Primary Responsibility</th>
+<th style="text-align: left;">Governing ADR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>Ingestion-Collector</code></strong></td>
+<td style="text-align: left;">Go / Node.js</td>
+<td style="text-align: left;">Multi-source stream capture &amp; webhook receiver</td>
+<td style="text-align: left;"><code>ADR-0004</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>OCSF-Normalizer</code></strong></td>
+<td style="text-align: left;">Go</td>
+<td style="text-align: left;">Vendor JSON parsing to OCSF v1.1 standard</td>
+<td style="text-align: left;"><code>ADR-0005</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Causal-Graph</code></strong></td>
+<td style="text-align: left;">Go / C++</td>
+<td style="text-align: left;">In-memory temporal entity graph engine</td>
+<td style="text-align: left;"><code>ADR-0008</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Story-Aggregator</code></strong></td>
+<td style="text-align: left;">Node.js / TS</td>
+<td style="text-align: left;">Incident story clustering &amp; narrative assembly</td>
+<td style="text-align: left;"><code>ADR-0002</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>AI-Supervisor</code></strong></td>
+<td style="text-align: left;">Python / FastAPI</td>
+<td style="text-align: left;">Multi-agent triage coordination (Isolation Forest/XGBoost)</td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>XAI-Lineage</code></strong></td>
+<td style="text-align: left;">Python / Go</td>
+<td style="text-align: left;">SHAP attribution &amp; raw log token validation</td>
+<td style="text-align: left;"><code>ADR-0010</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Policy-Guardrail</code></strong></td>
+<td style="text-align: left;">Go / OPA</td>
+<td style="text-align: left;">Asset criticality ABAC rule evaluation</td>
+<td style="text-align: left;"><code>ADR-0012</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Action-Orchestrator</code></strong></td>
+<td style="text-align: left;">Go</td>
+<td style="text-align: left;">Outbound EDR/IAM action execution connectors</td>
+<td style="text-align: left;"><code>ADR-0012</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Copilot-Service</code></strong></td>
+<td style="text-align: left;">Python / LangChain</td>
+<td style="text-align: left;">Natural language conversational QA engine</td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Audit-Governance</code></strong></td>
+<td style="text-align: left;">Go</td>
+<td style="text-align: left;">Hash-chained SHA-256 immutable audit logging</td>
+<td style="text-align: left;"><code>ADR-0015</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>Executive-Analytics</code></strong></td>
+<td style="text-align: left;">React / Node.js</td>
+<td style="text-align: left;">Real-time MTTD/MTTR analytics dashboard</td>
+<td style="text-align: left;"><code>ADR-0013</code></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 15.1: Microservice Landscape Decomposition (11 Microservices)</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART IV: ARTIFICIAL INTELLIGENCE</h1>
+
+<hr />
+<h1 id="chapter-16-machine-learning-architecture">Chapter 16: Machine Learning Architecture</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Provide a comprehensive specification of the Artificial Intelligence and Machine Learning Architecture for SentinelAI, detailing the multi-agent ensemble, algorithm selection rationales, XAI lineage, drift detection, and MLOps lifecycle.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the Multi-Agent AI architecture and end-to-end ML pipeline (`ADR-0009`).</li>
+    <li>Provide explicit algorithmic design rationales comparing Isolation Forest, XGBoost, SHAP, and Graph algorithms against alternative approaches.</li>
+    <li>Formulate composite confidence ($C_{model}$) and risk scoring ($R_{incident}$) equations.</li>
+    <li>Specify MLOps governance, drift detection (KS-test / PSI), active feedback loops, and adversarial threat defenses.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter documents the intelligence layer converting temporal attack graphs into explainable, policy-governed threat insights.</p>
+</div>
+
+<h2 id="161-ai-system-architecture-overview">16.1 AI System Architecture Overview</h2>
+<p>The SentinelAI intelligence layer decouples raw anomaly detection from supervised threat classification, explainability, and policy enforcement (<code>ADR-0009</code>).</p>
+<div class="codehilite"><pre><span></span><code><span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">     </span><span class="n">FIGURE</span><span class="w"> </span><span class="mf">16.1</span><span class="o">:</span><span class="w"> </span><span class="n">END</span><span class="o">-</span><span class="n">TO</span><span class="o">-</span><span class="n">END</span><span class="w"> </span><span class="n">MULTI</span><span class="o">-</span><span class="n">AGENT</span><span class="w"> </span><span class="n">ML</span><span class="w"> </span><span class="n">INFERENCE</span><span class="w"> </span><span class="n">PIPELINE</span><span class="w"> </span><span class="n">DIAGRAM</span><span class="w">             </span><span class="o">|</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="n">Dynamic</span><span class="w"> </span><span class="n">Temporal</span><span class="w"> </span><span class="n">Causal</span><span class="w"> </span><span class="n">Graph</span><span class="w"> </span><span class="n">Engine</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">Entity</span><span class="w"> </span><span class="n">Nodes</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Time</span><span class="w"> </span><span class="n">Edges</span><span class="p">)</span><span class="w">              </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">│</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">▼</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">+-----------------------------------------------------------------------------+</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">MULTI</span><span class="o">-</span><span class="n">AGENT</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">TRIAGE</span><span class="w"> </span><span class="n">ENSEMBLE</span><span class="w"> </span><span class="p">(</span><span class="err">`</span><span class="n">AI</span><span class="o">-</span><span class="n">Supervisor</span><span class="o">-</span><span class="n">Service</span><span class="err">`</span><span class="p">)</span><span class="w">                     </span><span class="o">|</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">Subagent</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="n">Isolation</span><span class="w"> </span><span class="n">Forest</span><span class="w"> </span><span class="p">(</span><span class="n">Unsupervised</span><span class="w"> </span><span class="n">Anomaly</span><span class="w"> </span><span class="n">Score</span><span class="w"> </span><span class="n">$A$</span><span class="p">)</span><span class="w">              </span><span class="o">|</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">Subagent</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="n">XGBoost</span><span class="w"> </span><span class="n">Classifier</span><span class="w"> </span><span class="p">(</span><span class="n">Supervised</span><span class="w"> </span><span class="n">Threat</span><span class="w"> </span><span class="n">Severity</span><span class="w"> </span><span class="n">Score</span><span class="w"> </span><span class="n">$S_</span><span class="p">{</span><span class="n">XGB</span><span class="p">}</span><span class="n">$</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">Subagent</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="n">MITRE</span><span class="w"> </span><span class="n">ATT</span><span class="o">&amp;</span><span class="n">CK</span><span class="w"> </span><span class="n">Mapper</span><span class="w"> </span><span class="p">(</span><span class="n">Technique</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="n">Pattern</span><span class="w"> </span><span class="n">Matching</span><span class="p">)</span><span class="w">            </span><span class="o">|</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="n">Subagent</span><span class="w"> </span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="n">SHAP</span><span class="w"> </span><span class="n">Explainer</span><span class="w"> </span><span class="p">(</span><span class="n">Feature</span><span class="w"> </span><span class="n">Attribution</span><span class="w"> </span><span class="n">Weights</span><span class="p">)</span><span class="w">                   </span><span class="o">|</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="o">+-----------------------------------------------------------------------------+</span><span class="w">  </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">│</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">▼</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="n">Risk</span><span class="w"> </span><span class="n">Engine</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">──►</span><span class="w"> </span><span class="n">Calculates</span><span class="w"> </span><span class="n">$C_</span><span class="p">{</span><span class="n">model</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="n">P</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2</span><span class="n">G$</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">$R_</span><span class="p">{</span><span class="n">incident</span><span class="p">}</span><span class="n">$</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">│</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                                         </span><span class="err">▼</span><span class="w">                                         </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="n">XAI</span><span class="w"> </span><span class="n">Lineage</span><span class="w"> </span><span class="n">Engine</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">──►</span><span class="w"> </span><span class="n">Validates</span><span class="w"> </span><span class="mi">100</span><span class="o">%</span><span class="w"> </span><span class="n">Claims</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="err">`</span><span class="n">ocsf_event_id</span><span class="err">`</span><span class="w"> </span><span class="n">Tokens</span><span class="w">       </span><span class="o">|</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 16.1: End-to-End Multi-Agent ML Inference Pipeline Diagram</div>
+
+<h2 id="162-feature-engineering-dual-layer-feature-store">16.2 Feature Engineering &amp; Dual-Layer Feature Store</h2>
+<p>Feature extraction operates across three dimensions: Entity Behavioral (velocity, entropy), Graph Topological (degree centrality, hop count), and Threat Intel (IoC distance, ATT&amp;CK co-occurrence).</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|             FIGURE 16</span><span class="nt">.</span><span class="c">2: FEATURE STORE DUAL</span><span class="nb">-</span><span class="c">LAYER ARCHITECTURE DIAGRAM            |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> ONLINE FEATURE STORE </span><span class="k">]</span><span class="c">                  </span><span class="k">[</span><span class="c"> OFFLINE FEATURE STORE </span><span class="k">]</span><span class="c">              |</span>
+<span class="c">|  (In</span><span class="nb">-</span><span class="c">Memory Key</span><span class="nb">-</span><span class="c">Value Store)               (Columnar Lakehouse Storage)           |</span>
+<span class="c">|  </span><span class="nb">---------------------------</span><span class="c">               </span><span class="nb">----------------------------</span><span class="c">           |</span>
+<span class="c">|  • Sub</span><span class="nb">-</span><span class="c">millisecond lookup latency          • Historical multi</span><span class="nb">-</span><span class="c">year time series    |</span>
+<span class="c">|  • Serves real</span><span class="nb">-</span><span class="c">time ML inference (</span><span class="nv">&lt;</span><span class="c">5s SLA) • Serves model training &amp; backtesting  |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 16.2: Feature Store Dual-Layer Architecture Diagram</div>
+
+<h2 id="163-algorithmic-component-analysis-design-rationales">16.3 Algorithmic Component Analysis &amp; Design Rationales</h2>
+<p>Table 16.1 details the algorithmic design rationales explaining why SentinelAI selected specific algorithms instead of alternative approaches.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ML Component</th>
+<th style="text-align: left;">Inputs &amp; Outputs</th>
+<th style="text-align: left;">Primary Function</th>
+<th style="text-align: left;">Why Selected (Design Rationale vs. Alternatives)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Isolation Forest</strong></td>
+<td style="text-align: left;"><strong>In:</strong> Entity feature vectors<br><strong>Out:</strong> Anomaly Score $A \in [0, 1]$</td>
+<td style="text-align: left;">Unsupervised Anomaly Detection</td>
+<td style="text-align: left;"><strong>Why selected:</strong> Isolates anomalies via random partitioning with $O(n)$ time complexity. <em>Alternative Rejected:</em> Autoencoders are computationally heavy and lack streaming speed.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XGBoost Classifier</strong></td>
+<td style="text-align: left;"><strong>In:</strong> OCSF attributes + Graph metrics<br><strong>Out:</strong> Severity Tier ($S_{XGB}$)</td>
+<td style="text-align: left;">Supervised Threat Classification</td>
+<td style="text-align: left;"><strong>Why selected:</strong> Highest precision on tabular data, handles missing values natively, sub-millisecond execution. <em>Alternative Rejected:</em> Deep Neural Nets overfit tabular log data.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SHAP Explainer</strong></td>
+<td style="text-align: left;"><strong>In:</strong> XGBoost prediction weights<br><strong>Out:</strong> Local feature attribution $\phi_i$</td>
+<td style="text-align: left;">Explainable AI Attribution</td>
+<td style="text-align: left;"><strong>Why selected:</strong> Game-theoretic consistency guarantees exact local feature importance. <em>Alternative Rejected:</em> LIME is non-deterministic and yields unstable weights across runs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Louvain &amp; PageRank</strong></td>
+<td style="text-align: left;"><strong>In:</strong> Causal Property Graph<br><strong>Out:</strong> Cluster IDs &amp; Node Centrality</td>
+<td style="text-align: left;">Temporal Graph Analytics</td>
+<td style="text-align: left;"><strong>Why selected:</strong> Louvain aggregates dense attack clusters in $O(N \log N)$ time; PageRank identifies primary compromised entry nodes (<code>ADR-0008</code>).</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 16.1: ML Algorithm Selection & Design Rationale Comparison</div>
+
+<h2 id="164-scoring-engines-confidence-incident-risk">16.4 Scoring Engines: Confidence &amp; Incident Risk</h2>
+<h3 id="composite-confidence-score-c_model">Composite Confidence Score ($C_{model}$)</h3>
+<p>Model confidence combines Isolation Forest anomaly score ($A$), XGBoost probability ($P$), and Graph edge density ($G$):</p>
+<p>$$C_{model} = (0.3 \cdot A) + (0.5 \cdot P) + (0.2 \cdot G)$$</p>
+<p>If $C_{model} &lt; 0.80$, the Incident Story is automatically tagged with <code>UNCERTAINTY_ESCALATION</code> for mandatory human triage (<code>BR-005</code>, <code>SRS-FR-013</code>).</p>
+<h3 id="incident-risk-score-r_incident">Incident Risk Score ($R_{incident}$)</h3>
+<p>Incident severity is calculated by combining asset criticality weight ($W_{asset}$), threat score ($S_{threat}$), and confidence ($C_{model}$):</p>
+<p>$$R_{incident} = W_{asset}  imes S_{threat}     imes C_{model}$$</p>
+<p>Where $W_{asset} = 2.5$ for <code>Critical</code> infrastructure assets and $1.0$ for standard endpoints (<code>BR-002</code>).</p>
+<h2 id="165-model-drift-detection-active-learning-mlops">16.5 Model Drift Detection, Active Learning &amp; MLOps</h2>
+<ul>
+<li><strong>Drift Monitoring:</strong> Serves daily Kolmogorov-Smirnov (KS) tests and Population Stability Index (PSI) tracking. If PSI $&gt; 0.25$, an automated retraining trigger is issued.</li>
+<li><strong>Analyst Active Learning:</strong> Confirmed true positive or false positive labels from analysts update the active learning sample pool, tuning behavioral baselines (<code>BR-004</code>).</li>
+<li><strong>Adversarial Security:</strong> Table 16.2 lists mitigations against adversarial ML attacks.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Threat ID</th>
+<th style="text-align: left;">Adversarial Threat Description</th>
+<th style="text-align: left;">Impact</th>
+<th style="text-align: left;">Technical Mitigation Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AML-001</strong></td>
+<td style="text-align: left;">Telemetry Log Poisoning</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Robust feature scaling and supervised analyst label verification.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AML-002</strong></td>
+<td style="text-align: left;">Adversarial Log Evasion</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Multi-modal feature extraction combining graph topology with command entropy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AML-003</strong></td>
+<td style="text-align: left;">Prompt Injection in Log Fields</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Complete segregation of natural language prompts from telemetry payload schemas.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 16.2: Adversarial ML Threat Matrix & Mitigation Strategies</div>
+
+<h2 id="166-ai-architecture-traceability-matrix">16.6 AI Architecture Traceability Matrix</h2>
+<p>Table 16.3 maps ML components back to Software Requirements, Microservices, and ADRs.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">AI / ML Component</th>
+<th style="text-align: left;">Software Requirement ID</th>
+<th style="text-align: left;">Implementing Microservice</th>
+<th style="text-align: left;">Governing ADR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Isolation Forest Subagent</strong></td>
+<td style="text-align: left;"><code>SRS-FR-009</code>, <code>SRS-FR-010</code></td>
+<td style="text-align: left;"><code>AI-Supervisor-Service</code></td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XGBoost Classifier</strong></td>
+<td style="text-align: left;"><code>SRS-FR-009</code></td>
+<td style="text-align: left;"><code>AI-Supervisor-Service</code></td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SHAP Lineage Explainer</strong></td>
+<td style="text-align: left;"><code>SRS-FR-014</code>, <code>SRS-FR-015</code></td>
+<td style="text-align: left;"><code>XAI-Lineage-Service</code></td>
+<td style="text-align: left;"><code>ADR-0010</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Supervisor Coordinator</strong></td>
+<td style="text-align: left;"><code>SRS-FR-009</code>, <code>SRS-FR-013</code></td>
+<td style="text-align: left;"><code>AI-Supervisor-Service</code></td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 16.3: AI Architecture Traceability Matrix</div>
+
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>The ML architecture combines Isolation Forest (Unsupervised) and XGBoost (Supervised) into a multi-agent ensemble.</li>
+    <li>SHAP attribution weights enable `XAI-Lineage-Service` to validate 100% of claims back to raw log tokens (`BR-001`).</li>
+    <li>Drift detection (PSI > 0.25) and active analyst feedback loops ensure continuous model optimization.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-15-high-level-design">Chapter 15</a> for HLD Microservices and <a href="#chapter-17-repository-structure">Chapter 17</a> for Repository Structure.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 17 introduces Part V (Engineering Foundation), detailing the Turborepo monorepo codebase structure and directory boundaries.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART V: ENGINEERING FOUNDATION</h1>
+
+<hr />
+<h1 id="chapter-17-repository-structure">Chapter 17: Repository Structure</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the Turborepo monorepo codebase structure, package boundaries, directory organization, and governance standards (`ADR-0001`).</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the Turborepo monorepo directory tree (`sentinelai/`).</li>
+    <li>Define package boundary rules separating applications, services, shared packages, and contracts.</li>
+    <li>Evaluate architectural trade-offs, engineering benefits, and future scalability.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter provides the codebase organization specification governing all software implementation across the monorepo.</p>
+</div>
+
+<h2 id="171-turborepo-monorepo-architecture">17.1 Turborepo Monorepo Architecture</h2>
+<p>SentinelAI utilizes a single unified Turborepo monorepo codebase (<code>sentinelai/</code>), as specified in <code>ADR-0001</code> and illustrated in Figure 17.1.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">         </span><span class="n">FIGURE</span><span class="w"> </span><span class="mf">17.1</span><span class="p">:</span><span class="w"> </span><span class="n">TURBOREPO</span><span class="w"> </span><span class="n">MONOREPO</span><span class="w"> </span><span class="n">CODEBASE</span><span class="w"> </span><span class="n">TREE</span><span class="w"> </span><span class="n">ARCHITECTURE</span><span class="w">                </span><span class="o">|</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">  </span><span class="n">sentinelai</span><span class="o">/</span><span class="w">                                                                      </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="o">.</span><span class="n">github</span><span class="o">/</span><span class="n">workflows</span><span class="o">/</span><span class="w">          </span><span class="c1"># CI/CD GitHub Actions pipelines (`ci.yml`)      |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">contracts</span><span class="o">/</span><span class="w">                                                                   </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">proto</span><span class="o">/</span><span class="w">                  </span><span class="c1"># gRPC Protocol Buffer service definitions        |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">ocsf</span><span class="o">/</span><span class="w">                   </span><span class="c1"># OCSF v1.1 event schema definitions             |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">docs</span><span class="o">/</span><span class="w">                       </span><span class="c1"># Architecture &amp; specification baselines         |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">services</span><span class="o">/</span><span class="w">                   </span><span class="c1"># Microservice Backends                          |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">ingestion</span><span class="o">-</span><span class="n">collector</span><span class="o">/</span><span class="w">    </span><span class="c1"># Stream ingestion service                       |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">ocsf</span><span class="o">-</span><span class="n">normalizer</span><span class="o">/</span><span class="w">        </span><span class="c1"># Schema parsing &amp; UUID service                  |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">causal</span><span class="o">-</span><span class="n">graph</span><span class="o">/</span><span class="w">           </span><span class="c1"># In-memory temporal graph engine                |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">story</span><span class="o">-</span><span class="n">aggregator</span><span class="o">/</span><span class="w">       </span><span class="c1"># Incident story aggregation service             |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">ai</span><span class="o">-</span><span class="n">supervisor</span><span class="o">/</span><span class="w">          </span><span class="c1"># Multi-agent AI coordinator service             |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">xai</span><span class="o">-</span><span class="n">lineage</span><span class="o">/</span><span class="w">            </span><span class="c1"># Raw log evidence validation service            |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">policy</span><span class="o">-</span><span class="n">guardrail</span><span class="o">/</span><span class="w">       </span><span class="c1"># Asset tag &amp; Stage 1/2 policy service           |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">action</span><span class="o">-</span><span class="n">orchestrator</span><span class="o">/</span><span class="w">    </span><span class="c1"># External EDR/IAM action executor service       |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">copilot</span><span class="o">-</span><span class="n">service</span><span class="o">/</span><span class="w">        </span><span class="c1"># Natural language conversation service          |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">audit</span><span class="o">-</span><span class="n">governance</span><span class="o">/</span><span class="w">       </span><span class="c1"># Immutable audit &amp; compliance service           |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">executive</span><span class="o">-</span><span class="n">analytics</span><span class="o">/</span><span class="w">    </span><span class="c1"># Real-time MTTD/MTTR analytics service          |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">ml</span><span class="o">/</span><span class="w">                         </span><span class="c1"># AI Models &amp; Pipelines                          |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">models</span><span class="o">/</span><span class="w">                 </span><span class="c1"># Isolation Forest &amp; XGBoost inference workers   |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">feature</span><span class="o">-</span><span class="n">store</span><span class="o">/</span><span class="w">          </span><span class="c1"># Online/Offline feature store interfaces        |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">pipelines</span><span class="o">/</span><span class="w">              </span><span class="c1"># Training &amp; drift detection scripts             |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="w">                       </span><span class="c1"># Frontend User Workspaces                       |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">analyst</span><span class="o">-</span><span class="n">workspace</span><span class="o">/</span><span class="w">      </span><span class="c1"># Incident UI, Graph Canvas &amp; Copilot Drawer     |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">packages</span><span class="o">/</span><span class="w">                   </span><span class="c1"># 12 Shared Monorepo Engineering Libraries       |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">├──</span><span class="w"> </span><span class="n">deploy</span><span class="o">/</span><span class="w">                     </span><span class="c1"># Kubernetes Helm Charts &amp; OpenTofu IaC          |</span>
+<span class="o">|</span><span class="w">  </span><span class="err">└──</span><span class="w"> </span><span class="n">tools</span><span class="o">/</span><span class="w">                      </span><span class="c1"># Log stream generators &amp; load testing tools     |</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 17.1: Turborepo Monorepo Codebase Tree Architecture</div>
+
+<h2 id="172-directory-boundary-matrix">17.2 Directory Boundary Matrix</h2>
+<p>Table 17.1 details the engineering boundaries governing top-level monorepo directories.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Directory Path</th>
+<th style="text-align: left;">Engineering Scope</th>
+<th style="text-align: left;">Governing Standard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>contracts/</code></td>
+<td style="text-align: left;">gRPC ProtoBuf &amp; OCSF JSON schema definitions</td>
+<td style="text-align: left;">Contract-First Development (<code>ADR-0003</code>, <code>ADR-0018</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>services/</code></td>
+<td style="text-align: left;">11 Microservice Backend implementations</td>
+<td style="text-align: left;">Reactive Microservices (<code>ADR-0002</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ml/</code></td>
+<td style="text-align: left;">AI Subagents, Feature Store interfaces, training pipelines</td>
+<td style="text-align: left;">Multi-Agent AI Architecture (<code>ADR-0009</code>, <code>MLAD</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apps/</code></td>
+<td style="text-align: left;">Frontend Web Analyst Workspace &amp; UI components</td>
+<td style="text-align: left;">Next.js / React Web Standards (<code>SRS-UI-001</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>packages/</code></td>
+<td style="text-align: left;">12 Shared TypeScript/Python engineering libraries</td>
+<td style="text-align: left;">Code Reuse &amp; Package Boundaries (<code>Chapter 21</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deploy/</code></td>
+<td style="text-align: left;">Helm Charts &amp; OpenTofu IaC manifests</td>
+<td style="text-align: left;">Cloud-Agnostic IaC (<code>ADR-0016</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 17.1: Monorepo Directory Boundary Matrix</div>
+
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>The monorepo structure guarantees single-commit atomic PRs across contracts, microservices, and UI apps.</li>
+    <li>Strict package boundaries prevent circular dependencies between shared packages and services.</li>
+    <li>Turborepo build caching ensures fast CI compilation times.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-18-development-standards">Chapter 18</a> for Development Standards and <a href="#chapter-21-shared-engineering-libraries">Chapter 21</a> for Shared Libraries.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 18 specifies coding standards, naming conventions, Git Trunk-Based development strategies, and commit specifications.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-18-development-standards">Chapter 18: Development Standards</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Specify coding standards, naming conventions, Git branch strategies, and conventional commit standards governing software development.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Establish strict language standards: TypeScript (strict mode) and Python (PEP 8, MyPy, Ruff).</li>
+    <li>Detail the Trunk-Based Development Git branch strategy and short-lived feature branch workflow.</li>
+    <li>Specify Conventional Commit requirements enforced via Commitlint and Husky git hooks.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter provides the code quality and version control guidelines required for all engineering contributions.</p>
+</div>
+
+<h2 id="181-coding-standards-naming-conventions">18.1 Coding Standards &amp; Naming Conventions</h2>
+<p>Table 18.1 details the language standards and naming conventions enforced across the codebase.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain / Language</th>
+<th style="text-align: left;">Standard / Formatter</th>
+<th style="text-align: left;">Naming Convention Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TypeScript / Node.js</strong></td>
+<td style="text-align: left;">ESLint + Prettier + Strict <code>tsconfig</code></td>
+<td style="text-align: left;">PascalCase for Classes/Interfaces; camelCase for variables/functions; UPPER_CASE for constants.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Python Services &amp; ML</strong></td>
+<td style="text-align: left;">PEP 8 + Black + Ruff + MyPy</td>
+<td style="text-align: left;">PascalCase for Classes; snake_case for functions/variables; UPPER_CASE for constants.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Go Microservices</strong></td>
+<td style="text-align: left;"><code>gofmt</code> + <code>golangci-lint</code></td>
+<td style="text-align: left;">PascalCase for exported symbols; camelCase for unexported symbols.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gRPC Protocol Buffers</strong></td>
+<td style="text-align: left;"><code>protolint</code></td>
+<td style="text-align: left;">PascalCase for Message types; snake_case for field names; lowercase for package IDs.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 18.1: Development & Coding Standards Summary</div>
+
+<h2 id="182-git-strategy-branching-philosophy">18.2 Git Strategy &amp; Branching Philosophy</h2>
+<p>SentinelAI enforces <strong>Trunk-Based Development</strong> supplemented by dynamic feature flags (<code>ADR-0017</code>):</p>
+<ul>
+<li><strong>Main Branch (<code>main</code>):</strong> Production-ready trunk. Direct pushes are prohibited (<code>SRS-NFR-SEC-05</code>).</li>
+<li><strong>Feature Branches (<code>feature/FEAT-x.y-description</code>):</strong> Short-lived branches merged daily to <code>main</code>.</li>
+<li><strong>Commit Specifications:</strong> All commits must comply with the Conventional Commits format:
+  <code>feat(ingestion): add OCSF v1.1 parser for CrowdStrike EDR logs (FEAT-1.2)</code></li>
+<li><strong>Git Hooks:</strong> Pre-commit hooks (Husky) execute linting, type-checking, and commit-msg verification automatically.</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>Trunk-Based Development ensures short branch lifecycles and daily integrations into main behind feature flags.</li>
+    <li>Pre-commit hooks validate linting, type safety, and Conventional Commit specifications.</li>
+    <li>Strict static analysis (TypeScript strict mode, MyPy, golangci-lint) prevents runtime type errors.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-17-repository-structure">Chapter 17</a> for Repository Structure and <a href="#chapter-22-cicd-pipeline">Chapter 22</a> for CI/CD Pipelines.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 19 documents the Environment Configuration Strategy, Dotenv hierarchy, and secret management guidelines.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-19-environment-configuration">Chapter 19: Environment Configuration</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the environment configuration hierarchy, variable schema validation, and secret management strategy (`ADR-0017`).</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the Dotenv configuration file hierarchy across local, staging, and production profiles.</li>
+    <li>Specify runtime configuration schema validation using Zod.</li>
+    <li>Document secret management and cloud KMS Customer-Managed Key (CMK) integration (`ADR-0006`).</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter provides the configuration management baseline ensuring zero secret hardcoding and safe multi-environment deployments.</p>
+</div>
+
+<h2 id="191-dotenv-configuration-hierarchy">19.1 Dotenv Configuration Hierarchy</h2>
+<p>Configuration variables are resolved hierarchically as detailed in Table 19.1.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Profile Level</th>
+<th style="text-align: left;">File Identifier</th>
+<th style="text-align: left;">Purpose &amp; Access Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Template Baseline</strong></td>
+<td style="text-align: left;"><code>.env.example</code></td>
+<td style="text-align: left;">Checked into Git; documents all required config keys with dummy values.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Local Development</strong></td>
+<td style="text-align: left;"><code>.env.local</code></td>
+<td style="text-align: left;">Git-ignored; local developer override values for container ports and mock keys.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Staging Profile</strong></td>
+<td style="text-align: left;"><code>.env.staging</code></td>
+<td style="text-align: left;">Managed via CI/CD secrets; staging cluster database endpoints.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Production Profile</strong></td>
+<td style="text-align: left;"><code>.env.production</code></td>
+<td style="text-align: left;">Managed via cloud KMS secrets engine; encrypted production environment values.</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 19.1: Dotenv Configuration Hierarchy & Environment Profiles</div>
+
+<h2 id="192-schema-validation-secret-management">19.2 Schema Validation &amp; Secret Management</h2>
+<ul>
+<li><strong>Runtime Schema Validation:</strong> Every microservice validates its environment variables at boot using <code>@sentinelai/config</code> (Zod schema parser). If a required variable is missing or invalid, the service aborts boot immediately with an explicit error log (<code>SRS-EH-001</code>).</li>
+<li><strong>Secret Storage Isolation:</strong> API keys, database credentials, and mTLS certificates are stored exclusively in cloud secret managers (HashiCorp Vault / AWS Secrets Manager) and injected at runtime (<code>ADR-0006</code>).</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>Services validate configuration schemas at boot using Zod, preventing silent runtime failures.</li>
+    <li>Zero secrets are checked into source control; production credentials use cloud KMS engines.</li>
+    <li>Multi-environment profiles decouple local container testing from production Kubernetes clusters.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-20-containerization-strategy">Chapter 20</a> for Containerization and <a href="#chapter-21-shared-engineering-libraries">Chapter 21</a> for `@sentinelai/config`.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 20 details the Containerization Strategy, multi-stage Docker builds, and Docker Compose local orchestration.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-20-containerization-strategy">Chapter 20: Containerization Strategy</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the containerization standards, multi-stage production Docker build optimization, non-root security contexts, and Docker Compose local emulation setup (`ADR-0016`).</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail multi-stage OCI-compliant Dockerfile build strategies.</li>
+    <li>Specify non-root container security hardening practices.</li>
+    <li>Document local development orchestration via `docker-compose.yml`.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter specifies container packaging rules ensuring fast build times, minimal attack surfaces, and reproducible deployments.</p>
+</div>
+
+<h2 id="201-multi-stage-production-build-optimization">20.1 Multi-Stage Production Build Optimization</h2>
+<p>All microservices are containerized using multi-stage Dockerfiles, as shown in Figure 20.1.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|      FIGURE 20</span><span class="nt">.</span><span class="c">1: MULTI</span><span class="nb">-</span><span class="c">STAGE SECURITY</span><span class="nb">-</span><span class="c">HARDENED DOCKER BUILD PIPELINE             |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|  STAGE 1: BUILDER STAGE (Full SDK</span><span class="nt">,</span><span class="c"> Node/Go compilers</span><span class="nt">,</span><span class="c"> installs dependencies)       |</span>
+<span class="c">|            │                                                                      |</span>
+<span class="c">|            ▼ (Compiles binary / bundles JS)                                       |</span>
+<span class="c">|  STAGE 2: RUNTIME STAGE (Minimal Alpine/Distroless image</span><span class="nt">,</span><span class="c"> non</span><span class="nb">-</span><span class="c">root user `appuser`)|</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 20.1: Multi-Stage Security-Hardened Docker Build Pipeline</div>
+
+<h2 id="202-non-root-security-context-local-emulation">20.2 Non-Root Security Context &amp; Local Emulation</h2>
+<ul>
+<li><strong>Non-Root Execution:</strong> All production container images execute as non-root user <code>appuser</code> (UID 10001) with read-only root filesystems (<code>SRS-NFR-SEC-05</code>).</li>
+<li><strong>Local Emulation Stack (<code>docker-compose.yml</code>):</strong> Local developers launch the complete 11-microservice stack, stream buffer, in-memory graph, and PostgreSQL instance using a single command: <code>docker-compose up</code>.</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>Multi-stage Docker builds produce minimal runtime images (<50MB Alpine/Distroless), reducing vulnerability surfaces.</li>
+    <li>All containers run as non-root users with read-only filesystems for Zero-Trust compliance.</li>
+    <li>`docker-compose.yml` enables full 11-microservice local stack emulation.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-16-machine-learning-architecture">Chapter 16</a> for ML Serving Containers and <a href="#chapter-22-cicd-pipeline">Chapter 22</a> for Container Scanning in CI/CD.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 21 presents the twelve shared monorepo engineering libraries (`packages/`).</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-21-shared-engineering-libraries">Chapter 21: Shared Engineering Libraries</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Specify the design, package boundaries, and specifications for the twelve shared monorepo engineering libraries (`packages/`).</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the functional specifications for all 12 shared monorepo packages.</li>
+    <li>Render the shared package dependency graph.</li>
+    <li>Establish code reuse standards across frontend and backend applications.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter documents the foundational software libraries supporting all microservices and user interfaces.</p>
+</div>
+
+<h2 id="211-monorepo-shared-packages-topology">21.1 Monorepo Shared Packages Topology</h2>
+<p>SentinelAI organizes reusable logic into twelve shared TypeScript/Python packages within <code>packages/</code>, as detailed in Table 21.1 and Figure 21.1.</p>
+<div class="codehilite"><pre><span></span><code><span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">          </span><span class="nx">FIGURE</span><span class="w"> </span><span class="m m-Double">21.1</span><span class="p">:</span><span class="w"> </span><span class="nx">SHARED</span><span class="w"> </span><span class="nx">ENGINEERING</span><span class="w"> </span><span class="nx">PACKAGES</span><span class="w"> </span><span class="nx">DEPENDENCY</span><span class="w"> </span><span class="nx">GRAPH</span><span class="w">                </span><span class="o">|</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">shared</span><span class="o">-</span><span class="nx">types</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">──►</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">ocsf</span><span class="o">-</span><span class="nx">types</span><span class="w"> </span><span class="p">]</span><span class="w">                      </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">│</span><span class="w">                                </span><span class="err">│</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">▼</span><span class="w">                                </span><span class="err">▼</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">errors</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">────────►</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">validation</span><span class="w"> </span><span class="p">]</span><span class="w">                      </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">│</span><span class="w">                                </span><span class="err">│</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">▼</span><span class="w">                                </span><span class="err">▼</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">logger</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">────────►</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">telemetry</span><span class="w"> </span><span class="p">]</span><span class="w">                       </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">│</span><span class="w">                                </span><span class="err">│</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">                 </span><span class="err">▼</span><span class="w">                                </span><span class="err">▼</span><span class="w">                                </span><span class="o">|</span>
+<span class="o">|</span><span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">security</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">──────►</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">@</span><span class="nx">sentinelai</span><span class="o">/</span><span class="nx">secrets</span><span class="w"> </span><span class="p">]</span><span class="w">                         </span><span class="o">|</span>
+<span class="o">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 21.1: Shared Engineering Packages Dependency Graph</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package Name</th>
+<th style="text-align: left;">Functional Scope &amp; Primary Modules</th>
+<th style="text-align: left;">Governing Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/shared-types</code></strong></td>
+<td style="text-align: left;">Global TypeScript interfaces (<code>IncidentStory</code>, <code>EntityNode</code>, <code>UserRole</code>).</td>
+<td style="text-align: left;"><code>ADR-0001</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/ocsf-types</code></strong></td>
+<td style="text-align: left;">OCSF v1.1 event class definitions &amp; enum types.</td>
+<td style="text-align: left;"><code>SRS-FR-004</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/logger</code></strong></td>
+<td style="text-align: left;">Structured JSON logging with trace injection (<code>trace_id</code>).</td>
+<td style="text-align: left;"><code>ADR-0013</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/telemetry</code></strong></td>
+<td style="text-align: left;">OpenTelemetry SDK wrappers for Prometheus metrics &amp; Jaeger tracing.</td>
+<td style="text-align: left;"><code>ADR-0013</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/errors</code></strong></td>
+<td style="text-align: left;">Standardized domain exception classes (<code>ValidationError</code>, <code>AuthError</code>).</td>
+<td style="text-align: left;"><code>SRS-EH-001</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/config</code></strong></td>
+<td style="text-align: left;">Centralized Zod environment variable schema parsing.</td>
+<td style="text-align: left;"><code>ADR-0017</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/security</code></strong></td>
+<td style="text-align: left;">mTLS certificate validation &amp; JWT token verification helpers.</td>
+<td style="text-align: left;"><code>ADR-0011</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/secrets</code></strong></td>
+<td style="text-align: left;">Cloud KMS &amp; Vault secret fetchers with in-memory caching.</td>
+<td style="text-align: left;"><code>ADR-0006</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/utils</code></strong></td>
+<td style="text-align: left;">Shared helper utilities (UUID generators, time formatters).</td>
+<td style="text-align: left;"><code>ADR-0001</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/validation</code></strong></td>
+<td style="text-align: left;">Data payload validators &amp; sanitizers.</td>
+<td style="text-align: left;"><code>SRS-FR-004</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/test-utils</code></strong></td>
+<td style="text-align: left;">Mock OCSF event generators &amp; gRPC test client harnesses.</td>
+<td style="text-align: left;"><code>ADR-0019</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>@sentinelai/tsconfig</code></strong></td>
+<td style="text-align: left;">Shared strict TypeScript compiler configuration files (<code>tsconfig.json</code>).</td>
+<td style="text-align: left;"><code>ADR-0001</code></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 21.1: Shared Engineering Packages Specifications (12 Packages)</div>
+
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>Twelve shared packages standardize logging, errors, types, telemetry, and security across the monorepo.</li>
+    <li>Package boundaries prevent code duplication between microservices and frontend workspace applications.</li>
+    <li>Shared `@sentinelai/tsconfig` enforces identical strict type-checking across all packages.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-17-repository-structure">Chapter 17</a> for Monorepo Structure and <a href="#chapter-22-cicd-pipeline">Chapter 22</a> for CI/CD Pipelines.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 22 details the CI/CD Pipeline, GitHub Actions workflows, quality gates, and branch protection rules.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-22-cicd-pipeline">Chapter 22: CI/CD Pipeline</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Specify the CI/CD pipeline automation workflows, automated quality gates, security vulnerability scanning, and GitHub Actions architectures.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the GitHub Actions workflows (`ci.yml`, `docker-build.yml`, `security.yml`).</li>
+    <li>Specify automated quality gates: 80%+ unit test coverage, gRPC contract verification, and Trivy CVE scanning.</li>
+    <li>Document branch protection rules enforcing mandatory green builds prior to main branch merging.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter provides the continuous integration and delivery automation blueprint guaranteeing platform quality and deployment safety.</p>
+</div>
+
+<h2 id="221-github-actions-automation-architecture">22.1 GitHub Actions Automation Architecture</h2>
+<p>CI/CD automation is executed via three GitHub Actions workflows in <code>.github/workflows/</code>, as shown in Figure 22.1 and Table 22.1.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|          FIGURE 22</span><span class="nt">.</span><span class="c">1: GITHUB ACTIONS CI/CD QUALITY GATE PIPELINE                  |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> Pull Request Opened </span><span class="k">]</span><span class="c">                                                          |</span>
+<span class="c">|            │                                                                      |</span>
+<span class="c">|            ▼                                                                      |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|  | WORKFLOW 1: `ci</span><span class="nt">.</span><span class="c">yml` (Continuous Integration)                               |  |</span>
+<span class="c">|  |  • Step 1: Linting &amp; Static Analysis (ESLint</span><span class="nt">,</span><span class="c"> MyPy</span><span class="nt">,</span><span class="c"> golangci</span><span class="nb">-</span><span class="c">lint)            |  |</span>
+<span class="c">|  |  • Step 2: gRPC Proto Contract Compatibility Check (`buf breaking`)           |  |</span>
+<span class="c">|  |  • Step 3: Automated Unit Tests (Enforce 80%</span><span class="nb">+</span><span class="c"> Coverage)                        |  |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|            │                                                                      |</span>
+<span class="c">|            ▼                                                                      |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|  | WORKFLOW 2: `security</span><span class="nt">.</span><span class="c">yml` (Security Scanning)                              |  |</span>
+<span class="c">|  |  • Step 1: Dependency Vulnerability Scanning (Snyk / npm audit)              |  |</span>
+<span class="c">|  |  • Step 2: Secret Leak Detection (Gitleaks)                                    |  |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|            │                                                                      |</span>
+<span class="c">|            ▼                                                                      |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|  | WORKFLOW 3: `docker</span><span class="nb">-</span><span class="c">build</span><span class="nt">.</span><span class="c">yml` (Container Build &amp; Vulnerability Scan)        |  |</span>
+<span class="c">|  |  • Step 1: Multi</span><span class="nb">-</span><span class="c">Stage Docker Image Build                                      |  |</span>
+<span class="c">|  |  • Step 2: Trivy Container CVE Scan (Zero Critical/High CVEs Allowed)         |  |</span>
+<span class="c">|  |  • Step 3: Push OCI Image to Registry (Only on `main` merge)                  |  |</span>
+<span class="c">|  </span><span class="nb">+-----------------------------------------------------------------------------+</span><span class="c">  |</span>
+<span class="c">|            │                                                                      |</span>
+<span class="c">|            ▼                                                                      |</span>
+<span class="c">|  </span><span class="k">[</span><span class="c"> Mandatory Peer Review &amp; Green Build Check </span><span class="k">]</span><span class="c"> ──► </span><span class="k">[</span><span class="c"> Merge to `main` Branch </span><span class="k">]</span><span class="c">    |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 22.1: GitHub Actions CI/CD Quality Gate Pipeline</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Workflow Identifier</th>
+<th style="text-align: left;">Trigger Event</th>
+<th style="text-align: left;">Primary Automated Tasks</th>
+<th style="text-align: left;">Quality Gate Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>ci.yml</code></strong></td>
+<td style="text-align: left;">PR / Push to <code>main</code></td>
+<td style="text-align: left;">Linting, gRPC contract check, unit testing.</td>
+<td style="text-align: left;">80%+ Unit Coverage; zero breaking proto changes (<code>ADR-0018</code>, <code>ADR-0019</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>security.yml</code></strong></td>
+<td style="text-align: left;">PR / Daily Cron</td>
+<td style="text-align: left;">Secret scanning (Gitleaks), dependency audit.</td>
+<td style="text-align: left;">Zero committed secrets; zero Critical vulnerabilities.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>docker-build.yml</code></strong></td>
+<td style="text-align: left;">Merge to <code>main</code></td>
+<td style="text-align: left;">Multi-stage Docker build, Trivy CVE scan.</td>
+<td style="text-align: left;">Zero Critical/High CVEs; image signed &amp; pushed (<code>ADR-0016</code>).</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 22.1: CI/CD Pipeline Automation Workflows</div>
+
+<h2 id="222-quality-gates-branch-protection-rules">22.2 Quality Gates &amp; Branch Protection Rules</h2>
+<ul>
+<li><strong>Branch Protection Policies:</strong> Direct pushes to <code>main</code> are strictly blocked. Merging requires at least one approved peer review and passing status checks for all three CI workflows.</li>
+<li><strong>Definition of Done (DoD) Integration:</strong> A feature is deemed <em>Done</em> only when source code passes unit tests (80%+), contract checks, container scans, and XAI lineage validation (<code>Chapter 23</code>).</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>CI/CD workflows enforce 80%+ unit coverage, gRPC proto contract safety, and Trivy CVE scanning automatically.</li>
+    <li>Branch protection rules prevent unreviewed code or failing builds from reaching the `main` branch.</li>
+    <li>Part V establishes the complete Engineering Foundation (Repository Structure, Development Standards, Environment Strategy, Containerization, Shared Libraries, CI/CD).</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>This concludes **Part V: Engineering Foundation**. Refer to <a href="#chapter-23-engineering-roadmap">Chapter 23</a> to begin **Part VI: Implementation**.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 23 introduces Part VI (Implementation), detailing the 14-week 7-sprint Engineering Roadmap, milestones M0-M6, and Gantt schedule.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART VI: IMPLEMENTATION</h1>
+
+<hr />
+<h1 id="chapter-23-engineering-roadmap">Chapter 23: Engineering Roadmap</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Document the 14-week 7-sprint Engineering Roadmap, program milestones, critical path, RACI team allocations, Definition of Done, and MVP exit criteria.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Detail the 14-week 7-sprint execution schedule (Sprints 0 through 6).</li>
+    <li>Specify Milestone deliverables M0 through M6 and critical path dependencies.</li>
+    <li>Establish team RACI matrix allocations across engineering workstreams.</li>
+    <li>Define Definition of Done (DoD) and MVP Exit Criteria.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter presents the operational execution roadmap converting architectural specifications into delivered software software components.</p>
+</div>
+
+<h2 id="231-14-week-sprint-schedule-milestones">23.1 14-Week Sprint Schedule &amp; Milestones</h2>
+<p>The SentinelAI platform baseline is implemented across seven two-week sprints:</p>
+<ul>
+<li><strong>Sprint 0 (Weeks 1–2):</strong> Architecture Baseline &amp; Publishing System (<code>Milestone M0</code>).</li>
+<li><strong>Sprint 1 (Weeks 3–4):</strong> Telemetry Ingestion, OCSF Schematization &amp; Lakehouse Storage (<code>Milestone M1</code>).</li>
+<li><strong>Sprint 2 (Weeks 5–6):</strong> Dynamic Temporal Causal Graph &amp; Entity Engine (<code>Milestone M2</code>).</li>
+<li><strong>Sprint 3 (Weeks 7–8):</strong> Multi-Agent AI Triage, XAI Lineage &amp; Risk Engine (<code>Milestone M3</code>).</li>
+<li><strong>Sprint 4 (Weeks 9–10):</strong> Policy Guardrails, Stage 1/2 Remediation &amp; Action Connectors (<code>Milestone M4</code>).</li>
+<li><strong>Sprint 5 (Weeks 11–12):</strong> Analyst Workspace UI, Visual Graph Canvas &amp; Copilot (<code>Milestone M5</code>).</li>
+<li><strong>Sprint 6 (Weeks 13–14):</strong> End-to-End Load Testing, Hardening &amp; Production Pilot (<code>Milestone M6</code>).</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|            FIGURE 23</span><span class="nt">.</span><span class="c">1: 14</span><span class="nb">-</span><span class="c">WEEK GANTT PROGRAM EXECUTION SCHEDULE                  |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">| Workstream          | Wk 1</span><span class="nb">-</span><span class="c">2 | Wk 3</span><span class="nb">-</span><span class="c">4 | Wk 5</span><span class="nb">-</span><span class="c">6 | Wk 7</span><span class="nb">-</span><span class="c">8 | Wk 9</span><span class="nb">-</span><span class="c">10 | Wk 11</span><span class="nb">-</span><span class="c">12 | Wk 13</span><span class="nb">-</span><span class="c">14 | Milestone |</span>
+<span class="nb">+---------------------+--------+--------+--------+--------+---------+----------+----------+-----------+</span>
+<span class="c">| Infra &amp; DevOps      | </span><span class="k">[</span><span class="c">M0</span><span class="k">]</span><span class="c">===|========|========|========|=========|==========|==========| M0        |</span>
+<span class="c">| Data Engineering    |        |</span><span class="k">[</span><span class="c">M1</span><span class="k">]</span><span class="c">====|========|========|=========|==========|==========| M1        |</span>
+<span class="c">| Backend (Graph/Core)|        |        |</span><span class="k">[</span><span class="c">M2</span><span class="k">]</span><span class="c">====|========|=========|==========|==========| M2        |</span>
+<span class="c">| ML &amp; XAI Services   |        |        |        |</span><span class="k">[</span><span class="c">M3</span><span class="k">]</span><span class="c">====|=========|==========|==========| M3        |</span>
+<span class="c">| Policy &amp; Connectors |        |        |        |        |</span><span class="k">[</span><span class="c">M4</span><span class="k">]</span><span class="c">=====|==========|==========| M4        |</span>
+<span class="c">| Frontend &amp; Copilot  |        |        |        |        |         |</span><span class="k">[</span><span class="c">M5</span><span class="k">]</span><span class="c">======|==========| M5        |</span>
+<span class="c">| Hardening &amp; Pilot   |        |        |        |        |         |          |</span><span class="k">[</span><span class="c">M6</span><span class="k">]</span><span class="c">======| M6        |</span>
+<span class="nb">+-----------------------------------------------------------------------------------+</span>
+</code></pre></div>
+
+<div class="figure-caption">Figure 23.1: 14-Week Gantt Program Execution Schedule</div>
+
+<h2 id="232-definition-of-done-dod-mvp-exit-criteria">23.2 Definition of Done (DoD) &amp; MVP Exit Criteria</h2>
+<h3 id="definition-of-done-dod">Definition of Done (DoD)</h3>
+<p>A feature is deemed <strong>Done</strong> only when source code passes unit tests (80%+ coverage target, <code>ADR-0019</code>), contract checks (<code>ADR-0018</code>), Trivy container scans (<code>ADR-0016</code>), and XAI evidence lineage validation (<code>BR-001</code>).</p>
+<h3 id="mvp-exit-criteria">MVP Exit Criteria</h3>
+<ul>
+<li><strong>MTTD Latency:</strong> Verified <code>&lt; 60 seconds</code> end-to-end execution at 100,000 EPS load (<code>BO-1</code>).</li>
+<li><strong>MTTR Latency:</strong> Verified <code>&lt; 5 minutes</code> for Stage 2 automated containment (<code>BO-2</code>).</li>
+<li><strong>Noise Suppression:</strong> <strong>&gt; 80%</strong> false positive alert reduction (<code>BO-3</code>).</li>
+<li><strong>XAI Lineage:</strong> <strong>100%</strong> verified raw log line evidence linkage (<code>BR-001</code>).</li>
+<li><strong>Uptime Availability:</strong> <strong>99.99%</strong> operational availability (<code>SRS-NFR-AVAIL-01</code>).</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>14-week 7-sprint roadmap structured around Milestones M0 through M6.</li>
+    <li>Strict Definition of Done enforces 80%+ unit coverage and XAI lineage validation.</li>
+    <li>Quantified MVP exit criteria ensure high performance under load.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#chapter-24-sprint-0-foundation-release-retrospective">Chapter 24</a> for the Sprint 0 Retrospective.</p>
+
+<h4>Next Chapter Preview</h4>
+<p>Chapter 24 presents the official retrospective and engineering record of the completed Sprint 0 Release.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="chapter-24-sprint-0-foundation-release-retrospective">Chapter 24: Sprint 0 Foundation Release Retrospective</h1>
+<div class="chapter-meta-block">
+<h4>Chapter Purpose</h4>
+<p>Provide the official engineering record and comprehensive task-by-task retrospective of the completed Sprint 0 Foundation Release.</p>
+
+<h4>Chapter Objectives</h4>
+<ul>
+    <li>Document technical objectives, architecture decisions, standards satisfied, and traceability for all 10 Sprint 0 tasks.</li>
+    <li>Establish Sprint 0 as the official approved engineering baseline for SentinelAI.</li>
+</ul>
+
+<h4>Chapter Overview</h4>
+<p>This chapter serves as the authoritative retrospective log capturing lessons learned, risks mitigated, and deliverables completed in Sprint 0.</p>
+</div>
+
+<h2 id="241-comprehensive-task-retrospective-matrix">24.1 Comprehensive Task Retrospective Matrix</h2>
+<p>Table 24.1 summarizes the completed Sprint 0 engineering tasks.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Task ID &amp; Name</th>
+<th style="text-align: left;">Primary Deliverables Created</th>
+<th style="text-align: left;">Architectural Impact &amp; Traceability</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Task 1: Product Vision Document</strong></td>
+<td style="text-align: left;"><code>Product_Vision_Document.md</code></td>
+<td style="text-align: left;">Defined core platform philosophy &amp; 4 pillars (<code>PVD</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 2: Business Requirements</strong></td>
+<td style="text-align: left;"><code>Business_Requirements_Specification.md</code></td>
+<td style="text-align: left;">Defined BO-1..BO-6, user personas, operational KPIs (<code>BRS</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 3: System Context &amp; Use Cases</strong></td>
+<td style="text-align: left;"><code>System_Context_and_Use_Case_Specification.md</code></td>
+<td style="text-align: left;">Defined UC-001..UC-012, human actors, automated APIs (<code>SCUCS</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 4: Software Requirements</strong></td>
+<td style="text-align: left;"><code>Software_Requirements_Specification.md</code></td>
+<td style="text-align: left;">Defined SRS-FR-001..024 &amp; SRS-NFR-001..012 (<code>SRS</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 5: Architecture Decision Records</strong></td>
+<td style="text-align: left;"><code>ADR-0001</code> through <code>ADR-0020</code></td>
+<td style="text-align: left;">Formulated 20 ADRs in MADR format (<code>ADRs</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 6: High-Level Design</strong></td>
+<td style="text-align: left;"><code>High_Level_Design.md</code></td>
+<td style="text-align: left;">Detailed C4 model, DDD map, 11 microservices (<code>HLD</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 7: Machine Learning Architecture</strong></td>
+<td style="text-align: left;"><code>Machine_Learning_Architecture_Document.md</code></td>
+<td style="text-align: left;">Specified Multi-Agent ML, SHAP XAI, Risk engines (<code>MLAD</code>).</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 8: Environment Strategy</strong></td>
+<td style="text-align: left;"><code>Environment_Configuration_Strategy.md</code></td>
+<td style="text-align: left;">Specified Dotenv hierarchy &amp; Zod schema validation.</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 9: CI/CD Pipeline Architecture</strong></td>
+<td style="text-align: left;"><code>CI_CD_Pipeline_and_Branch_Protection.md</code></td>
+<td style="text-align: left;">Configured GitHub Actions workflows &amp; quality gates.</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Task 10: Publishing System &amp; Handbook</strong></td>
+<td style="text-align: left;"><code>SentinelAI_Enterprise_Engineering_Handbook_Volume_I.md</code></td>
+<td style="text-align: left;">Produced Volume I handbook publishing system baseline.</td>
+<td style="text-align: left;"><strong>APPROVED</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table 24.1: Comprehensive Task Retrospective Matrix</div>
+
+<h2 id="242-lessons-learned-risk-mitigations">24.2 Lessons Learned &amp; Risk Mitigations</h2>
+<ul>
+<li><strong>Lesson Learned:</strong> Decoupling contract definitions (<code>contracts/proto</code>) from backend microservices early in Sprint 0 prevented interface drift across polyglot services (Go, Python, TypeScript).</li>
+<li><strong>Risk Mitigated:</strong> Requiring 100% deterministic raw log token verification (<code>BR-001</code>) eliminated generative AI hallucinations prior to UI story publication.</li>
+</ul>
+<div class="chapter-summary-block">
+<h4>Key Takeaways</h4>
+<ul>
+    <li>All 10 Sprint 0 tasks completed and approved as the official platform baseline.</li>
+    <li>Architecture baselines fully trace back from Business Objectives to microservices and ML subagents.</li>
+    <li>Part VI completes the implementation execution plan.</li>
+</ul>
+
+<h4>Related Chapters</h4>
+<p>Refer to <a href="#appendix-a-complete-glossary">Appendix A</a> to begin **Part VII: Appendices**.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h1 class="part-header">PART VII: APPENDICES</h1>
+
+<hr />
+<h1 id="appendix-a-complete-glossary">Appendix A: Complete Glossary</h1>
+<ul>
+<li><strong>Attribute-Based Access Control (ABAC)</strong>: Access control model evaluating subject attributes, resource tags, and environmental conditions (<code>ADR-0012</code>).</li>
+<li><strong>Causal Graph Engine</strong>: In-memory temporal graph engine correlating streaming events into directional attack chains (<code>ADR-0008</code>).</li>
+<li><strong>Incident Story</strong>: Contextual security incident output unifying related alerts into a single actionable narrative.</li>
+<li><strong>Isolation Forest</strong>: Unsupervised anomaly detection algorithm partitioning feature space to identify novel outliers (<code>MLAD</code>).</li>
+<li><strong>Mean Time to Detect (MTTD)</strong>: Average time elapsed from threat occurrence to incident alert synthesis (&lt;60s target).</li>
+<li><strong>Mean Time to Respond (MTTR)</strong>: Average time elapsed from incident detection to remediation action execution (&lt;5m target).</li>
+<li><strong>Open Cybersecurity Schema Framework (OCSF v1.1)</strong>: Vendor-agnostic open schema standard for security log events (<code>SRS-FR-004</code>).</li>
+<li><strong>Population Stability Index (PSI)</strong>: Quantitative metric measuring feature distribution drift over time (PSI &gt; 0.25 triggers retraining).</li>
+<li><strong>SHapley Additive exPlanations (SHAP)</strong>: Game-theoretic approach for explaining individual machine learning model predictions (<code>ADR-0010</code>).</li>
+<li><strong>XGBoost</strong>: Gradient boosted decision tree framework providing supervised threat severity classification (<code>MLAD</code>).</li>
+</ul>
+<hr />
+<h1 id="appendix-b-references">Appendix B: References</h1>
+<ol>
+<li><strong>IEEE 830-1998</strong>: <em>IEEE Recommended Practice for Software Requirements Specifications</em>.</li>
+<li><strong>ISO/IEC/IEEE 29148:2018</strong>: <em>Systems and software engineering — Life cycle processes — Requirements engineering</em>.</li>
+<li><strong>OCSF Schema Consortium</strong>: <em>Open Cybersecurity Schema Framework (OCSF) Specification v1.1.0</em> (2023).</li>
+<li><strong>MITRE Corporation</strong>: <em>MITRE ATT&amp;CK Enterprise Matrix v14.1</em> (2023).</li>
+<li><strong>NIST SP 800-53 Rev. 5</strong>: <em>Security and Privacy Controls for Information Systems and Organizations</em>.</li>
+<li><strong>Lundberg, S. M., &amp; Lee, S.-I.</strong>: <em>A Unified Approach to Interpreting Model Predictions</em>. Advances in Neural Information Processing Systems (NeurIPS 2017).</li>
+<li><strong>Liu, F. T., Ting, K. M., &amp; Zhou, Z.-H.</strong>: <em>Isolation Forest</em>. IEEE International Conference on Data Mining (ICDM 2008).</li>
+</ol>
+<hr />
+<h1 id="appendix-c-architecture-traceability-matrix">Appendix C: Architecture Traceability Matrix</h1>
+<p>Table C.1 presents the master end-to-end traceability matrix mapping Business Objectives through Requirements, ADRs, Microservices, and Test Pyramids.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Business Obj</th>
+<th style="text-align: left;">Business Req</th>
+<th style="text-align: left;">Use Case</th>
+<th style="text-align: left;">SRS Requirement</th>
+<th style="text-align: left;">Governing ADR</th>
+<th style="text-align: left;">Implementing Microservice</th>
+<th style="text-align: left;">Test Pyramid Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>BO-1</strong> (MTTD &lt;60s)</td>
+<td style="text-align: left;"><code>BRS-01</code></td>
+<td style="text-align: left;"><code>UC-001</code>, <code>UC-002</code></td>
+<td style="text-align: left;"><code>SRS-FR-001..005</code></td>
+<td style="text-align: left;"><code>ADR-0004</code>, <code>ADR-0005</code></td>
+<td style="text-align: left;"><code>Ingestion-Collector</code>, <code>OCSF-Normalizer</code></td>
+<td style="text-align: left;">Stream Load Test (150k EPS)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-2</strong> (MTTR &lt;5m)</td>
+<td style="text-align: left;"><code>BRS-02</code></td>
+<td style="text-align: left;"><code>UC-007</code>, <code>UC-008</code></td>
+<td style="text-align: left;"><code>SRS-FR-016..019</code></td>
+<td style="text-align: left;"><code>ADR-0012</code></td>
+<td style="text-align: left;"><code>Policy-Guardrail</code>, <code>Action-Orchestrator</code></td>
+<td style="text-align: left;">Policy Integration Tests</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-3</strong> (Noise &gt;80%)</td>
+<td style="text-align: left;"><code>BRS-03</code></td>
+<td style="text-align: left;"><code>UC-004</code></td>
+<td style="text-align: left;"><code>SRS-FR-009, 010</code></td>
+<td style="text-align: left;"><code>ADR-0009</code></td>
+<td style="text-align: left;"><code>AI-Supervisor-Service</code></td>
+<td style="text-align: left;">Anomaly Model Benchmark</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-4</strong> (XAI Lineage)</td>
+<td style="text-align: left;"><code>BRS-04</code></td>
+<td style="text-align: left;"><code>UC-005</code></td>
+<td style="text-align: left;"><code>SRS-FR-014, 015</code></td>
+<td style="text-align: left;"><code>ADR-0010</code></td>
+<td style="text-align: left;"><code>XAI-Lineage-Service</code></td>
+<td style="text-align: left;">Token Verification Test</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-5</strong> (OCSF Native)</td>
+<td style="text-align: left;"><code>BRS-05</code></td>
+<td style="text-align: left;"><code>UC-002</code></td>
+<td style="text-align: left;"><code>SRS-FR-004</code></td>
+<td style="text-align: left;"><code>ADR-0005</code></td>
+<td style="text-align: left;"><code>OCSF-Normalizer-Service</code></td>
+<td style="text-align: left;">Proto Contract Check</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BO-6</strong> (ABAC Rules)</td>
+<td style="text-align: left;"><code>BRS-06</code></td>
+<td style="text-align: left;"><code>UC-011</code></td>
+<td style="text-align: left;"><code>SRS-FR-019</code></td>
+<td style="text-align: left;"><code>ADR-0012</code></td>
+<td style="text-align: left;"><code>Policy-Guardrail-Service</code></td>
+<td style="text-align: left;">ABAC Policy Rule Suite</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table C.1: Master Architecture Traceability Matrix</div>
+
+<hr />
+<h1 id="appendix-d-technology-decision-summary">Appendix D: Technology Decision Summary</h1>
+<p>Table D.1 summarizes all major core technology stack choices.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">Selected Technology</th>
+<th style="text-align: left;">Alternative Rejected</th>
+<th style="text-align: left;">Primary Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Codebase Monorepo</strong></td>
+<td style="text-align: left;">Turborepo</td>
+<td style="text-align: left;">Polyrepo / Nx</td>
+<td style="text-align: left;">Single-commit atomic PRs &amp; fast build caching (<code>ADR-0001</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inter-Service API</strong></td>
+<td style="text-align: left;">gRPC / ProtoBuf</td>
+<td style="text-align: left;">REST / JSON</td>
+<td style="text-align: left;">High-performance binary serialization &amp; strict contracts (<code>ADR-0003</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Log Normalization</strong></td>
+<td style="text-align: left;">OCSF v1.1</td>
+<td style="text-align: left;">Proprietary JSON</td>
+<td style="text-align: left;">Open-standard multi-vendor interoperability (<code>ADR-0005</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temporal Graph</strong></td>
+<td style="text-align: left;">Custom In-Memory</td>
+<td style="text-align: left;">Neo4j / AWS Neptune</td>
+<td style="text-align: left;">Sub-second streaming traversal latency (<code>ADR-0008</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Ensemble</strong></td>
+<td style="text-align: left;">Isolation Forest + XGBoost</td>
+<td style="text-align: left;">Deep Neural Nets</td>
+<td style="text-align: left;">State-of-the-art precision on tabular data (<code>MLAD</code>).</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table D.1: Technology Decision Summary</div>
+
+<hr />
+<h1 id="appendix-e-engineering-metrics">Appendix E: Engineering Metrics</h1>
+<p>Table E.1 details the quantitative metric baselines for the Sprint 0 Foundation Release.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric Domain</th>
+<th style="text-align: left;">Metric Identifier</th>
+<th style="text-align: left;">Metric Quantitative Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Architecture Baselines</strong></td>
+<td style="text-align: left;">Approved ADRs</td>
+<td style="text-align: left;"><strong>20 ADRs</strong> (<code>ADR-0001</code> to <code>ADR-0020</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Requirements</strong></td>
+<td style="text-align: left;">Functional / Non-Functional</td>
+<td style="text-align: left;"><strong>24 FRs / 12 NFRs</strong> (<code>SRS</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Rules &amp; Use Cases</strong></td>
+<td style="text-align: left;">Business Rules / System Use Cases</td>
+<td style="text-align: left;"><strong>6 Business Rules / 12 Use Cases</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Microservices Landscape</strong></td>
+<td style="text-align: left;">Backend Microservices Count</td>
+<td style="text-align: left;"><strong>11 Microservices</strong> (<code>HLD Table 15.1</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Codebase Libraries</strong></td>
+<td style="text-align: left;">Shared Monorepo Packages</td>
+<td style="text-align: left;"><strong>12 Packages</strong> (<code>packages/</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Machine Learning</strong></td>
+<td style="text-align: left;">Primary ML Algorithms</td>
+<td style="text-align: left;"><strong>4 Algorithms</strong> (IsoForest, XGBoost, SHAP, Graph)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Action Connectors</strong></td>
+<td style="text-align: left;">Outbound Integrations</td>
+<td style="text-align: left;"><strong>6 Connectors</strong> (CrowdStrike, Okta, Defender, AWS, Jira, ServiceNow)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quality &amp; Tests</strong></td>
+<td style="text-align: left;">Unit Test Coverage Target</td>
+<td style="text-align: left;"><strong>&gt; 80% Automated Coverage</strong> (<code>ADR-0019</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Documentation</strong></td>
+<td style="text-align: left;">Master Handbook Word Count</td>
+<td style="text-align: left;"><strong>~35,000+ Words</strong> across 24 Chapters</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table E.1: Quantitative Engineering Metrics Summary</div>
+
+<hr />
+<h1 id="appendix-f-risk-register">Appendix F: Risk Register</h1>
+<p>Table F.1 presents the master risk register governing platform development.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk ID</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Risk Description</th>
+<th style="text-align: left;">Severity</th>
+<th style="text-align: left;">Mitigation Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RSK-001</strong></td>
+<td style="text-align: left;">Architecture</td>
+<td style="text-align: left;">Ingestion stream lag under peak 150k EPS loads</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Dynamic HPA autoscaling based on stream consumer lag (<code>ADR-0014</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RSK-002</strong></td>
+<td style="text-align: left;">Machine Learning</td>
+<td style="text-align: left;">Concept drift in novel zero-day attack vectors</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Continuous PSI drift tracking (PSI &gt; 0.25) triggering automated retraining.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RSK-003</strong></td>
+<td style="text-align: left;">Security</td>
+<td style="text-align: left;">Unintended Stage 2 execution on critical server</td>
+<td style="text-align: left;">Critical</td>
+<td style="text-align: left;">Strict ABAC asset guardrail blocking Stage 2 on $W_{asset} \ge 2.0$ (<code>BR-002</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RSK-004</strong></td>
+<td style="text-align: left;">Operations</td>
+<td style="text-align: left;">Third-party EDR action connector API rate limits</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Backoff retry queues and automatic fallback to ITSM ticket creation (<code>SRS-EH-002</code>).</td>
+</tr>
+</tbody>
+</table>
+<div class="table-caption">Table F.1: Master Risk Register</div>
+
+<hr />
+<h1 id="appendix-g-future-roadmap">Appendix G: Future Roadmap</h1>
+<ul>
+<li><strong>Release v1.0 MVP (Sprint 0–6):</strong> Core platform ingestion, OCSF normalizer, temporal graph engine, multi-agent AI, XAI lineage, policy guardrails, analyst workspace UI, and production pilot deployment.</li>
+<li><strong>Volume II – Platform Engine (Release v2.0):</strong> Graph Neural Networks (GNNs) for direct deep learning on dynamic temporal attack graphs, predictive lateral movement simulation.</li>
+<li><strong>Volume III – Advanced Security Operations (Release v3.0):</strong> Autonomous AI Decoy Network orchestration deploying dynamic honeypots, post-quantum cryptographic posture monitoring.</li>
+</ul>
+<hr />
+<h1 id="appendix-h-executive-sign-off">Appendix H: Executive Sign-Off</h1>
+<p>This <em>SentinelAI Enterprise Engineering Handbook (Volume I)</em> constitutes the official approved architectural, functional, and engineering baseline for the platform.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-----------------------------------------------------------------------------------+</span>
+<span class="c">|                        EXECUTIVE PUBLICATION SIGN</span><span class="nb">-</span><span class="c">OFF                             |</span>
+<span class="nb">+-------------------+------------------------------------+--------------------------+</span>
+<span class="c">| Role              | Name / Title                       | Status                   |</span>
+<span class="nb">+-------------------+------------------------------------+--------------------------+</span>
+<span class="c">| Chief Tech Officer| CTO</span><span class="nt">,</span><span class="c"> SentinelAI Inc</span><span class="nt">.</span><span class="c">               | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="c">| Chief Info Sec Off| CISO</span><span class="nt">,</span><span class="c"> SentinelAI Inc</span><span class="nt">.</span><span class="c">              | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="c">| Chief Architect   | Chief Enterprise Architect         | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="c">| Product Owner     | VP of Product Management           | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="c">| Engineering Mgr   | VP of Software Engineering         | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="c">| QA Lead           | Head of Quality Assurance          | APPROVED BASELINE v1</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">0 |</span>
+<span class="nb">+-------------------+------------------------------------+--------------------------+</span>
+</code></pre></div>
+
+<hr />
+<p><em>End of SentinelAI Enterprise Engineering Handbook (Volume I) – Sprint 0 Foundation Release</em></p>
+</body>
+</html>

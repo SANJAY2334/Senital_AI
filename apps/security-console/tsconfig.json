@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@sentinelai/ocsf-types": ["../../packages/ocsf-types/src/index.ts"],
+      "@sentinelai/shared-types": ["../../packages/shared-types/src/index.ts"],
+      "@sentinelai/synthetic-log-generator": ["../../tools/synthetic-log-generator/src/index.ts"],
+      "@sentinelai/ocsf-normalizer": ["../../services/ocsf-normalizer/src/index.ts"],
+      "@sentinelai/utils": ["../../packages/utils/src/index.ts"],
+      "@sentinelai/errors": ["../../packages/errors/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

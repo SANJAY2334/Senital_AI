@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package sentinelai.v1.normalizer;
+
+option go_package = "github.com/sentinelai/sentinelai/contracts/proto/normalizer;normalizerv1";
+option java_package = "com.sentinelai.v1.normalizer";
+option java_multiple_files = true;
+
+// OCSFClassUid matches OCSF v1.1.0 specification (SRS-FR-004)
+enum OCSFClassUid {
+  OCSF_CLASS_UNSPECIFIED = 0;
+  OCSF_CLASS_PROCESS_ACTIVITY = 1007;
+  OCSF_CLASS_AUTHENTICATION = 3001;
+  OCSF_CLASS_NETWORK_ACTIVITY = 4001;
+  OCSF_CLASS_CLOUD_AUDIT = 6001;
+}
+
+// OCSFNormalizedEvent defines standardized OCSF event attributes
+message OCSFNormalizedEvent {
+  string ocsf_event_id = 1;       // 128-bit RFC 4122 UUID (SRS-FR-005)
+  int32 category_uid = 2;         // OCSF Category UID
+  OCSFClassUid class_uid = 3;     // OCSF Class UID
+  string time = 4;                // ISO-8601 UTC timestamp
+  string tenant_id = 5;           // Tenant ID
+  string provider = 6;            // AWS, CrowdStrike, Okta
+  int32 severity_id = 7;          // 1: Low, 2: Medium, 3: High, 4: Critical
+  string message = 8;             // Human-readable event summary
+  bytes raw_payload = 9;          // Preserved raw payload reference (SRS-FR-001)
+  map<string, string> attributes = 10; // Dynamic OCSF class attributes (JSON serialized)
+}
+
+// NormalizeEventRequest carries raw log payload for synchronous OCSF translation
+message NormalizeEventRequest {
+  string event_id = 1;
+  string tenant_id = 2;
+  string provider = 3;
+  bytes raw_payload = 4;
+}
+
+// NormalizeEventResponse returns schematized OCSF event object
+message NormalizeEventResponse {
+  OCSFNormalizedEvent event = 1;
+  bool validation_success = 2;
+  repeated string validation_errors = 3;
+}
+
+// NormalizerService provides contract interfaces for OCSF schematization (ADR-0003, ADR-0005)
+service NormalizerService {
+  // Synchronous OCSF event normalization
+  rpc NormalizeEvent(NormalizeEventRequest) returns (NormalizeEventResponse);
+  
+  // Stream normalized OCSF event feed
+  rpc StreamNormalizedEvents(stream NormalizeEventRequest) returns (stream NormalizeEventResponse);
+}

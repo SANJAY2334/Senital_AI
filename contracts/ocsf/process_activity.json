@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OCSF Process Activity Event Mapping Specification",
+  "description": "OCSF v1.1.0 Class 1007 Process Activity Schema Mapping Specification for CrowdStrike EDR, AWS EC2, and Linux/Windows audit telemetry.",
+  "category_uid": 1,
+  "class_uid": 1007,
+  "version": "1.1.0",
+  "mappings": {
+    "CrowdStrike_EDR": {
+      "ocsf_event_id": "event.id | generate_uuid_v4()",
+      "category_uid": 1,
+      "class_uid": 1007,
+      "time": "event.ProcessStartTime | to_iso8601_utc()",
+      "tenant_id": "headers.tenant_id",
+      "provider": "'CrowdStrike'",
+      "severity_id": "event.Severity | map_severity_int()",
+      "process": {
+        "name": "event.ImageFileName",
+        "pid": "event.ProcessId",
+        "cmd_line": "event.CommandLine",
+        "parent_process_name": "event.ParentBaseFileName",
+        "parent_pid": "event.ParentProcessId"
+      },
+      "actor": {
+        "user": {
+          "name": "event.UserName",
+          "uid": "event.UserSid"
+        }
+      },
+      "device": {
+        "hostname": "event.ComputerName",
+        "ip": "event.LocalIP"
+      }
+    }
+  },
+  "required": [
+    "ocsf_event_id",
+    "category_uid",
+    "class_uid",
+    "time",
+    "tenant_id",
+    "provider",
+    "severity_id",
+    "process"
+  ]
+}

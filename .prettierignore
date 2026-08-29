@@ -1,0 +1,14 @@
+# Ignore build outputs & dependencies
+dist/
+build/
+.next/
+coverage/
+node_modules/
+.turbo/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Ignore auto-generated code
+contracts/proto/generated/
+packages/ocsf-types/src/generated/

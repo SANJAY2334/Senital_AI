@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OCSF Authentication Event Mapping Specification",
+  "description": "OCSF v1.1.0 Class 3001 Authentication Schema Mapping Specification for Okta IAM, Azure AD, and AWS IAM authentication telemetry.",
+  "category_uid": 3,
+  "class_uid": 3001,
+  "version": "1.1.0",
+  "mappings": {
+    "Okta_IAM": {
+      "ocsf_event_id": "uuid | generate_uuid_v4()",
+      "category_uid": 3,
+      "class_uid": 3001,
+      "time": "published | to_iso8601_utc()",
+      "tenant_id": "headers.tenant_id",
+      "provider": "'Okta'",
+      "severity_id": "outcome.result == 'SUCCESS' ? 1 : 3",
+      "actor": {
+        "user": {
+          "name": "actor.displayName",
+          "email": "actor.alternateId"
+        }
+      },
+      "src_endpoint": {
+        "ip": "client.ipAddress",
+        "user_agent": "client.userAgent.rawUserAgent"
+      },
+      "status_id": "outcome.result == 'SUCCESS' ? 1 : 2"
+    }
+  },
+  "required": [
+    "ocsf_event_id",
+    "category_uid",
+    "class_uid",
+    "time",
+    "tenant_id",
+    "provider",
+    "severity_id",
+    "actor",
+    "status_id"
+  ]
+}

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package sentinelai.v1.ingestion;
+
+option go_package = "github.com/sentinelai/sentinelai/contracts/proto/ingestion;ingestionv1";
+option java_package = "com.sentinelai.v1.ingestion";
+option java_multiple_files = true;
+
+// ProviderSource identifies raw log telemetry vendors (SRS-FR-001, SRS-FR-002)
+enum ProviderSource {
+  PROVIDER_SOURCE_UNSPECIFIED = 0;
+  PROVIDER_SOURCE_AWS_CLOUDTRAIL = 1;
+  PROVIDER_SOURCE_CROWDSTRIKE_EDR = 2;
+  PROVIDER_SOURCE_OKTA_IAM = 3;
+  PROVIDER_SOURCE_AZURE_ACTIVITY = 4;
+  PROVIDER_SOURCE_GENERIC_SYSLOG = 5;
+}
+
+// IngestRawTelemetryRequest carries individual raw log payloads for ingestion
+message IngestRawTelemetryRequest {
+  string event_id = 1;              // 128-bit UUID (SRS-FR-005)
+  string tenant_id = 2;             // Cryptographically isolated Tenant ID (ADR-0006)
+  ProviderSource provider = 3;      // Vendor provider source
+  string timestamp_utc = 4;        // ISO-8601 UTC timestamp
+  string correlation_id = 5;       // Distributed tracing correlation ID
+  bytes raw_payload = 6;            // Unaltered raw vendor log payload (SRS-FR-001)
+  map<string, string> metadata = 7; // Optional ingestion headers & network metadata
+}
+
+// IngestRawTelemetryResponse details ingestion status and queue acknowledgement
+message IngestRawTelemetryResponse {
+  string event_id = 1;
+  bool acknowledged = 2;
+  string kafka_offset = 3;
+  string ingested_at = 4;
+}
+
+// BatchIngestRawTelemetryRequest supports high-velocity burst batches up to 100,000 EPS
+message BatchIngestRawTelemetryRequest {
+  string tenant_id = 1;
+  repeated IngestRawTelemetryRequest events = 2;
+}
+
+// BatchIngestRawTelemetryResponse summarizes batch ingestion metrics
+message BatchIngestRawTelemetryResponse {
+  int32 total_received = 1;
+  int32 total_acknowledged = 2;
+  int32 total_failed = 3;
+  repeated string failed_event_ids = 4;
+}
+
+// IngestionService provides gRPC contract interfaces for raw log capture (ADR-0003)
+service IngestionService {
+  // Synchronous single raw event ingestion
+  rpc IngestRawTelemetry(IngestRawTelemetryRequest) returns (IngestRawTelemetryResponse);
+  
+  // High-throughput batch raw telemetry ingestion
+  rpc BatchIngestRawTelemetry(BatchIngestRawTelemetryRequest) returns (BatchIngestRawTelemetryResponse);
+  
+  // Streaming raw log ingestion for persistent high-speed telemetry feeds (ADR-0004)
+  rpc StreamRawTelemetry(stream IngestRawTelemetryRequest) returns (stream IngestRawTelemetryResponse);
+}

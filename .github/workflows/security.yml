@@ -1,0 +1,50 @@
+name: SentinelAI Security & Vulnerability Scanning
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * *' # Nightly security scan at 02:00 UTC
+
+jobs:
+  # =========================================================================
+  # JOB 1: DEPENDENCY AUDIT & KNOWN CVE SCANNING
+  # =========================================================================
+  dependency-audit:
+    name: Node.js Dependency Audit (CVE Check)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8.15.4
+
+      - name: Run PNPM Security Audit
+        run: pnpm audit --audit-level high
+
+  # =========================================================================
+  # JOB 2: STATIC CODE SECURITY ANALYSIS (SAST & SECRET SCANNING)
+  # =========================================================================
+  sast-secret-scan:
+    name: Secret Scanning & SAST Code Security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks Secret Scanner
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

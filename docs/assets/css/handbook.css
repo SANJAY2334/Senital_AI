@@ -1,0 +1,435 @@
+/* ==========================================================================
+   SentinelAI Enterprise Engineering Handbook Publishing System Stylesheet
+   Volume I – Foundation, Requirements & Architecture (v1.0.0)
+   Designed for Print-Ready A4 PDF Generation & Web Publication
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --primary-color: #0f172a;
+  --secondary-color: #0284c7;
+  --accent-color: #38bdf8;
+  --dark-bg: #0b0f19;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --bg-light: #f8fafc;
+  --bg-alt: #f1f5f9;
+  
+  --callout-tip-bg: #f0fdf4;
+  --callout-tip-border: #16a34a;
+  --callout-note-bg: #f0f9ff;
+  --callout-note-border: #0284c7;
+  --callout-warning-bg: #fffbeeb;
+  --callout-warning-border: #d97706;
+  --callout-caution-bg: #fef2f2;
+  --callout-caution-border: #dc2626;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, "Courier New", monospace;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 20mm 18mm 22mm 18mm;
+  @top-left {
+    content: "SentinelAI Enterprise Engineering Handbook";
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 500;
+    color: #64748b;
+  }
+  @top-right {
+    content: "Volume I – Foundation, Requirements & Architecture";
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 500;
+    color: #64748b;
+  }
+  @bottom-left {
+    content: "SentinelAI Enterprise Engineering Handbook | Vol I — Foundation & Architecture | v1.0.0 | Confidential";
+    font-family: var(--font-sans);
+    font-size: 7.5pt;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 600;
+    color: #0284c7;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Cover Page & Front Matter
+   ========================================================================== */
+
+.cover-page {
+  page-break-after: always;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0369a1 100%);
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.cover-header {
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 20px;
+}
+
+.cover-brand {
+  font-size: 14pt;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--accent-color);
+  text-transform: uppercase;
+}
+
+.cover-title-container {
+  margin-top: 60px;
+}
+
+.cover-title {
+  font-size: 32pt;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 15px 0;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.cover-subtitle {
+  font-size: 16pt;
+  font-weight: 400;
+  color: #93c5fd;
+  margin: 0;
+}
+
+.cover-badge {
+  display: inline-block;
+  background-color: rgba(56, 189, 248, 0.15);
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  font-size: 9pt;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cover-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 8.5pt;
+  color: #cbd5e1;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+/* ==========================================================================
+   Typography & Hierarchy
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--primary-color);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  page-break-after: avoid;
+}
+
+h1.part-header {
+  font-size: 26pt;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(90deg, #0f172a 0%, #0369a1 100%);
+  padding: 30px;
+  border-radius: 6px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  page-break-before: always;
+}
+
+h1.chapter-title {
+  font-size: 20pt;
+  font-weight: 800;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--secondary-color);
+  padding-bottom: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  page-break-before: always;
+}
+
+h2 {
+  font-size: 14pt;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 4px;
+  color: #0f172a;
+}
+
+h3 {
+  font-size: 11.5pt;
+  color: #0284c7;
+}
+
+h4 {
+  font-size: 10pt;
+  color: #334155;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-align: justify;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Chapter Structure Elements (Purpose, Objectives, Overview, Takeaways)
+   ========================================================================== */
+
+.chapter-meta-block {
+  background-color: var(--bg-light);
+  border-left: 4px solid var(--secondary-color);
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  border-radius: 0 6px 6px 0;
+}
+
+.chapter-meta-block h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-size: 8.5pt;
+  letter-spacing: 1px;
+  color: var(--secondary-color);
+}
+
+.chapter-meta-block ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 9.5pt;
+}
+
+.chapter-summary-block {
+  background-color: var(--bg-alt);
+  border-top: 2px solid var(--primary-color);
+  padding: 18px 22px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+  page-break-inside: avoid;
+}
+
+.chapter-summary-block h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+  font-size: 10pt;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Tables, Lists & Code Blocks
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 8.5pt;
+  page-break-inside: avoid;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+}
+
+table td {
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--bg-light);
+}
+
+caption, .table-caption, .figure-caption {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-style: italic;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  background-color: var(--bg-alt);
+  color: #091e42;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid #e2e8f0;
+}
+
+pre {
+  background-color: var(--dark-bg);
+  color: #f8fafc;
+  padding: 14px 18px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  line-height: 1.5;
+  margin: 18px 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+}
+
+/* ==========================================================================
+   Callout Boxes (Best Practice, Architecture Note, Warning, Tip)
+   ========================================================================== */
+
+.callout {
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 4px;
+  border-left: 4px solid;
+  page-break-inside: avoid;
+  font-size: 9pt;
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-size: 8pt;
+  letter-spacing: 0.5px;
+}
+
+.callout-best-practice {
+  background-color: #f0fdf4;
+  border-color: #16a34a;
+  color: #14532d;
+}
+.callout-best-practice .callout-title { color: #15803d; }
+
+.callout-architecture {
+  background-color: #f0f9ff;
+  border-color: #0284c7;
+  color: #0c4a6e;
+}
+.callout-architecture .callout-title { color: #0369a1; }
+
+.callout-warning {
+  background-color: #fffbeeb;
+  border-color: #d97706;
+  color: #78350f;
+}
+.callout-warning .callout-title { color: #b45309; }
+
+.callout-tip {
+  background-color: #faf5ff;
+  border-color: #9333ea;
+  color: #581c87;
+}
+.callout-tip .callout-title { color: #7e22ce; }
+
+/* ==========================================================================
+   Executive Dashboard & Diagrams
+   ========================================================================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.dashboard-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+}
+
+.dashboard-card .metric-value {
+  font-size: 18pt;
+  font-weight: 800;
+  color: var(--secondary-color);
+}
+
+.dashboard-card .metric-label {
+  font-size: 8pt;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.diagram-box {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 16px;
+  margin: 20px 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.diagram-box pre {
+  text-align: left;
+  background-color: #0f172a;
+}

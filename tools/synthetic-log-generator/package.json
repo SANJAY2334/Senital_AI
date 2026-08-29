@@ -1,0 +1,27 @@
+{
+  "name": "@sentinelai/synthetic-log-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "High-Throughput Synthetic Streaming Telemetry Generator for SentinelAI",
+  "main": "./dist/index.js",
+  "bin": {
+    "generate-logs": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@sentinelai/ocsf-types": "workspace:*",
+    "@sentinelai/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@sentinelai/tsconfig": "workspace:*",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  }
+}

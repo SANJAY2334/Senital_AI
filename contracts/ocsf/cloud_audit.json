@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OCSF Cloud Audit Event Mapping Specification",
+  "description": "OCSF v1.1.0 Class 6001 Cloud Audit Schema Mapping Specification for AWS CloudTrail, GCP Audit Logs, and Azure Activity Logs.",
+  "category_uid": 6,
+  "class_uid": 6001,
+  "version": "1.1.0",
+  "mappings": {
+    "AWS_CloudTrail": {
+      "ocsf_event_id": "eventID | generate_uuid_v4()",
+      "category_uid": 6,
+      "class_uid": 6001,
+      "time": "eventTime | to_iso8601_utc()",
+      "tenant_id": "headers.tenant_id",
+      "provider": "'AWS'",
+      "severity_id": "errorCode ? 3 : 1",
+      "actor": {
+        "user": {
+          "name": "userIdentity.userName || userIdentity.principalId",
+          "uid": "userIdentity.arn"
+        }
+      },
+      "src_endpoint": {
+        "ip": "sourceIPAddress",
+        "user_agent": "userAgent"
+      },
+      "cloud": {
+        "provider": "'AWS'",
+        "region": "awsRegion",
+        "account_id": "recipientAccountId"
+      },
+      "api": {
+        "service_name": "eventSource",
+        "operation": "eventName"
+      }
+    }
+  },
+  "required": [
+    "ocsf_event_id",
+    "category_uid",
+    "class_uid",
+    "time",
+    "tenant_id",
+    "provider",
+    "severity_id",
+    "actor",
+    "cloud",
+    "api"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "sentinelai-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SentinelAI - AI-Powered Cybersecurity Threat Detection & Incident Response Platform",
+  "author": "SentinelAI Enterprise Architecture Team",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "turbo run codegen",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md,yml,yaml}\"",
+    "clean": "turbo run clean && rimraf node_modules",
+    "prepare": "husky install"
+  },
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "contracts/*",
+    "ml/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
