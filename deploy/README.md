@@ -1,4 +1,5 @@
 # deploy/
+
 Infrastructure-as-Code and Kubernetes deployment manifests (ADR-0016, HLD Section 14).
 
 - `helm/`: Kubernetes Helm charts per microservice pod pool.

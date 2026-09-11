@@ -6,17 +6,20 @@
   "author": "SentinelAI Enterprise Architecture Team",
   "license": "UNLICENSED",
   "scripts": {
-    "codegen": "turbo run codegen",
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
-    "test:cov": "turbo run test:cov",
+    "codegen": "turbo run codegen --filter=\\!//",
+    "build": "turbo run build --filter=\\!//",
+    "dev": "turbo run dev --filter=\\!//",
+    "lint": "turbo run lint --filter=\\!//",
+    "typecheck": "turbo run typecheck --filter=\\!//",
+    "test": "turbo run test --filter=\\!//",
+    "test:cov": "turbo run test:cov --filter=\\!//",
     "format": "prettier --write \"**/*.{ts,tsx,json,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md,yml,yaml}\"",
-    "clean": "turbo run clean && rimraf node_modules",
+    "clean": "turbo run clean --filter=\\!// && rimraf node_modules",
     "prepare": "husky install"
+  },
+  "overrides": {
+    "vite": "^6.4.3"
   },
   "workspaces": [
     "apps/*",
@@ -29,6 +32,8 @@
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.57.0",

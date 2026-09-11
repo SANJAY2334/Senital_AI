@@ -1,8 +1,8 @@
 export interface SyntheticGeneratorConfig {
-  targetEPS: number;          // Target Events Per Second (e.g. 100,000)
-  durationSeconds: number;    // Run duration in seconds (0 for infinite)
-  tenantId: string;           // Target tenant ID
-  seed?: number;              // PRNG seed for reproducible test mode
+  targetEPS: number; // Target Events Per Second (e.g. 100,000)
+  durationSeconds: number; // Run duration in seconds (0 for infinite)
+  tenantId: string; // Target tenant ID
+  seed?: number; // PRNG seed for reproducible test mode
   providers?: ('AWS_CLOUDTRAIL' | 'CROWDSTRIKE_EDR' | 'OKTA_IAM')[];
 }
 

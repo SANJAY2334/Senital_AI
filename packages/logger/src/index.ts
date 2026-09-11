@@ -64,7 +64,7 @@ export class SentinelLogger implements ILogger {
   child(context: LogContext): ILogger {
     const childPino = this.pinoInstance.child(context);
     const childLogger = new SentinelLogger(context.serviceName || 'child');
-    (childLogger as any).pinoInstance = childPino;
+    (childLogger as unknown as { pinoInstance: PinoLogger }).pinoInstance = childPino;
     return childLogger;
   }
 }

@@ -9,16 +9,19 @@ export class LocalMockSecretProvider implements ISecretProvider {
   constructor(masterKeyHex?: string) {
     const key = masterKeyHex || '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
     this.masterKey = Buffer.from(key.substring(0, 64), 'hex');
-    
+
     // Default development secrets seed
     this.mockVault.set('KAFKA_CLIENT_SECRET', 'local-kafka-dev-secret-key-12345');
     this.mockVault.set('DATABASE_PASSWORD', 'local-pg-dev-password-secure');
   }
 
-  async encryptSecret(plaintext: string | Buffer, tenantId?: string): Promise<EncryptedSecretPayload> {
+  async encryptSecret(
+    plaintext: string | Buffer,
+    tenantId?: string,
+  ): Promise<EncryptedSecretPayload> {
     const iv = crypto.randomBytes(12);
     const dataBuffer = typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
-    
+
     const cipher = crypto.createCipheriv('aes-256-gcm', this.masterKey, iv);
     const ciphertext = Buffer.concat([cipher.update(dataBuffer), cipher.final()]);
     const authTag = cipher.getAuthTag();
@@ -43,7 +46,11 @@ export class LocalMockSecretProvider implements ISecretProvider {
     if (!payload.iv || !payload.authTag) {
       throw new Error('SecretError: Missing IV or AuthTag in local mock encrypted payload');
     }
-    const decipher = crypto.createDecipheriv('aes-256-gcm', this.masterKey, Buffer.from(payload.iv, 'base64'));
+    const decipher = crypto.createDecipheriv(
+      'aes-256-gcm',
+      this.masterKey,
+      Buffer.from(payload.iv, 'base64'),
+    );
     decipher.setAuthTag(Buffer.from(payload.authTag, 'base64'));
 
     return Buffer.concat([

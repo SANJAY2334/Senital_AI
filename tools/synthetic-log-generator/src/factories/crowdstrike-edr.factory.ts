@@ -14,7 +14,10 @@ export class CrowdStrikeEdrFactory {
     const timestampUtc = new Date().toISOString();
 
     const processes = [
-      { name: 'powershell.exe', cmd: 'powershell.exe -ExecutionPolicy Bypass -Command EncodedCommand...' },
+      {
+        name: 'powershell.exe',
+        cmd: 'powershell.exe -ExecutionPolicy Bypass -Command EncodedCommand...',
+      },
       { name: 'cmd.exe', cmd: 'cmd.exe /c net user attacker P@ssword123 /add' },
       { name: 'wmic.exe', cmd: 'wmic shadowcopy delete' },
       { name: 'lsass.exe', cmd: 'C:\\Windows\\System32\\lsass.exe' },

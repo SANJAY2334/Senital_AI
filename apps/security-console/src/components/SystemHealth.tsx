@@ -47,8 +47,12 @@ export const SystemHealthComponent: React.FC<SystemHealthProps> = ({ health }) =
             <span>telemetry.raw.v1</span>
             <Layers className="w-4 h-4 text-amber-400" />
           </div>
-          <div className={`font-bold flex items-center space-x-1.5 ${health.kafkaRawTopicStatus === 'OUTAGE' ? 'text-red-400' : 'text-emerald-400'}`}>
-            <span className={`w-2 h-2 rounded-full ${health.kafkaRawTopicStatus === 'OUTAGE' ? 'bg-red-400 animate-ping' : 'bg-emerald-400 animate-pulse'}`} />
+          <div
+            className={`font-bold flex items-center space-x-1.5 ${health.kafkaRawTopicStatus === 'OUTAGE' ? 'text-red-400' : 'text-emerald-400'}`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${health.kafkaRawTopicStatus === 'OUTAGE' ? 'bg-red-400 animate-ping' : 'bg-emerald-400 animate-pulse'}`}
+            />
             <span>{health.kafkaRawTopicStatus}</span>
           </div>
           <p className="text-[10px] text-slate-500">Raw Vendor Stream</p>
@@ -60,8 +64,12 @@ export const SystemHealthComponent: React.FC<SystemHealthProps> = ({ health }) =
             <span>telemetry.ocsf.v1</span>
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
           </div>
-          <div className={`font-bold flex items-center space-x-1.5 ${health.kafkaOcsfTopicStatus === 'OUTAGE' ? 'text-red-400' : 'text-emerald-400'}`}>
-            <span className={`w-2 h-2 rounded-full ${health.kafkaOcsfTopicStatus === 'OUTAGE' ? 'bg-red-400 animate-ping' : 'bg-emerald-400 animate-pulse'}`} />
+          <div
+            className={`font-bold flex items-center space-x-1.5 ${health.kafkaOcsfTopicStatus === 'OUTAGE' ? 'text-red-400' : 'text-emerald-400'}`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${health.kafkaOcsfTopicStatus === 'OUTAGE' ? 'bg-red-400 animate-ping' : 'bg-emerald-400 animate-pulse'}`}
+            />
             <span>{health.kafkaOcsfTopicStatus}</span>
           </div>
           <p className="text-[10px] text-slate-500">Normalized Event Stream</p>
@@ -73,7 +81,9 @@ export const SystemHealthComponent: React.FC<SystemHealthProps> = ({ health }) =
             <span>Stream Ring Buffer</span>
             <AlertOctagon className="w-4 h-4 text-orange-400" />
           </div>
-          <div className={`font-bold flex items-center space-x-1.5 ${health.ringBufferState === 'BACKPRESSURE_ACTIVE' ? 'text-amber-400' : 'text-slate-300'}`}>
+          <div
+            className={`font-bold flex items-center space-x-1.5 ${health.ringBufferState === 'BACKPRESSURE_ACTIVE' ? 'text-amber-400' : 'text-slate-300'}`}
+          >
             <span>{health.ringBufferState}</span>
           </div>
           <p className="text-[10px] text-slate-400 font-bold">

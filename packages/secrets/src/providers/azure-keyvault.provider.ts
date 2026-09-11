@@ -13,9 +13,13 @@ export class AzureKeyVaultSecretProvider implements ISecretProvider {
     this.config = config;
   }
 
-  async encryptSecret(plaintext: string | Buffer, tenantId?: string): Promise<EncryptedSecretPayload> {
+  async encryptSecret(
+    plaintext: string | Buffer,
+    tenantId?: string,
+  ): Promise<EncryptedSecretPayload> {
     const effectiveTenant = tenantId || 'tenant-default';
-    const payloadBuffer = typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
+    const payloadBuffer =
+      typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
 
     return {
       keyId: `${this.config.vaultUrl}/keys/${this.config.keyName}`,

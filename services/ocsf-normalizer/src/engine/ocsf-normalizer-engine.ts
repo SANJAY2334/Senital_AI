@@ -40,16 +40,20 @@ export class OCSFNormalizerEngine {
       throw new ValidationError('NormalizerError: Missing rawPayload in raw telemetry package');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let parsedRaw: any;
     try {
       parsedRaw = typeof pkg.rawPayload === 'string' ? JSON.parse(pkg.rawPayload) : pkg.rawPayload;
     } catch (err) {
       this.metrics.recordRejected();
       this.metrics.recordFailure();
-      throw new ValidationError('NormalizerError: Malformed JSON rawPayload', { rawPayload: pkg.rawPayload });
+      throw new ValidationError('NormalizerError: Malformed JSON rawPayload', {
+        rawPayload: pkg.rawPayload,
+      });
     }
 
-    const correlationId = pkg.correlationId || `corr-norm-${Math.random().toString(36).substring(2, 9)}`;
+    const correlationId =
+      pkg.correlationId || `corr-norm-${Math.random().toString(36).substring(2, 9)}`;
 
     // 2. Provider-Aware Schematization (SRS-FR-004, AC-001.2)
     let ocsfEvent: OCSFBaseEvent;
@@ -72,7 +76,9 @@ export class OCSFNormalizerEngine {
     // 3. Mandatory Timestamp & RFC 4122 UUID Verification (SRS-FR-005)
     if (isNaN(new Date(ocsfEvent.time).getTime())) {
       this.metrics.recordFailure();
-      throw new ValidationError('NormalizerError: Invalid UTC timestamp produced during normalization');
+      throw new ValidationError(
+        'NormalizerError: Invalid UTC timestamp produced during normalization',
+      );
     }
 
     const durationMs = Date.now() - startTime;

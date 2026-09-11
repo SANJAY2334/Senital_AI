@@ -1,4 +1,5 @@
 # packages/
+
 Shared internal libraries across microservices and applications (ADR-0001, ADR-0013).
 
 - `logger/`: Structured JSON logger with automatic `correlation_id` and `trace_id` injection.

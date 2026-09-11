@@ -1,18 +1,19 @@
 # SentinelAI: EPIC-1 Milestone M1 Verification & Sign-Off Report
+
 **Multi-Cloud Telemetry & Ingestion Subsystem Baseline**
 
 ---
 
-| Metadata Field | Value |
-| :--- | :--- |
-| **Document Version** | `1.0.0-APPROVED` |
-| **Document Classification** | Enterprise Technical Specification / Milestone Verification |
-| **Target Audience** | Enterprise Architects, DevOps Engineers, Security Engineers, Lead Software Engineers, Program Managers |
-| **Author** | Senior Software Architect & Principal Engineer, SentinelAI |
-| **Parent Baselines** | • [Product Vision Document (v1.1.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [Software Requirements Specification (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [High-Level Design (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md)<br>• [Engineering Implementation Roadmap (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/implementation/Engineering_Implementation_Roadmap.md) |
-| **Milestone Identifier**| **`M1` – Ingestion & Schematization Engine Operational** |
-| **Governance Status** | **T-1.6: COMPLETE — AWAITING APPROVAL**<br>**M1: PROVISIONALLY ACCEPTED FUNCTIONAL BASELINE — PENDING FORMAL APPROVAL** |
-| **Effective Date** | August 2026 |
+| Metadata Field              | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Document Version**        | `1.0.0-APPROVED`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Document Classification** | Enterprise Technical Specification / Milestone Verification                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Target Audience**         | Enterprise Architects, DevOps Engineers, Security Engineers, Lead Software Engineers, Program Managers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Author**                  | Senior Software Architect & Principal Engineer, SentinelAI                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **Parent Baselines**        | • [Product Vision Document (v1.1.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [Software Requirements Specification (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [High-Level Design (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md)<br>• [Engineering Implementation Roadmap (v1.0.0)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/implementation/Engineering_Implementation_Roadmap.md) |
+| **Milestone Identifier**    | **`M1` – Ingestion & Schematization Engine Operational**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| **Governance Status**       | **T-1.6: COMPLETE — AWAITING APPROVAL**<br>**M1: PROVISIONALLY ACCEPTED FUNCTIONAL BASELINE — PENDING FORMAL APPROVAL**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **Effective Date**          | August 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 ---
 
@@ -45,31 +46,31 @@ The **EPIC-1 Milestone M1 Verification Report** formally evaluates the operation
 
 ## 3. Acceptance Criteria Evaluation Matrix
 
-| Acceptance Criterion | Functional Requirement / Description | Verification Evidence & Scope | Milestone Status |
-| :--- | :--- | :--- | :---: |
-| **`AC-001.1`** | **Multi-Source Ingestion:** Ingest raw payloads from AWS CloudTrail, CrowdStrike EDR, and Okta IAM without connection drops (`SRS-FR-001`, `SRS-FR-002`). | 300/300 synthetic events ingested and accepted via HTTP/gRPC handlers (`e2e-pipeline.test.ts`). | **PASS** ✅ |
-| **`AC-001.2`** | **OCSF Schematization:** Map 100% of valid raw logs to OCSF v1.1 Classes 6001 (`Cloud Audit`), 1007 (`Process Activity`), and 3001 (`Authentication`) (`SRS-FR-004`). | Verified in `ocsf-correctness.test.ts` against mapping JSON specifications. | **PASS** ✅ |
-| **`AC-001.3`** | **Event Identity & Timestamp:** Assign 128-bit RFC 4122 UUID v4 `ocsf_event_id` and ISO-8601 UTC timestamp to all events (`SRS-FR-005`). | 100% RFC 4122 UUID v4 format and UTC timestamp compliance verified. | **PASS** ✅ |
-| **`AC-001.4`** | **End-to-End Latency SLA:** Process streaming telemetry through the pipeline with end-to-end latency $< 1.0$ second (`SRS-NFR-PERF-001`). | Test-harness p99 processing latency = 0.32 ms. Live broker-backed Kafka latency not yet measured. | **NOT YET VERIFIED** ⏳ |
-| **`AC-001.5`** | **Stream Resiliency & Backpressure:** Buffer events during Kafka outage without service crash; auto-flush on recovery (`SRS-FR-003`). | Outage buffering and ring-buffer flushing verified in `resilience-failure.test.ts`. | **PASS (Test-Harness)** ✅ |
+| Acceptance Criterion | Functional Requirement / Description                                                                                                                                  | Verification Evidence & Scope                                                                     |      Milestone Status      |
+| :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :------------------------: |
+| **`AC-001.1`**       | **Multi-Source Ingestion:** Ingest raw payloads from AWS CloudTrail, CrowdStrike EDR, and Okta IAM without connection drops (`SRS-FR-001`, `SRS-FR-002`).             | 300/300 synthetic events ingested and accepted via HTTP/gRPC handlers (`e2e-pipeline.test.ts`).   |        **PASS** ✅         |
+| **`AC-001.2`**       | **OCSF Schematization:** Map 100% of valid raw logs to OCSF v1.1 Classes 6001 (`Cloud Audit`), 1007 (`Process Activity`), and 3001 (`Authentication`) (`SRS-FR-004`). | Verified in `ocsf-correctness.test.ts` against mapping JSON specifications.                       |        **PASS** ✅         |
+| **`AC-001.3`**       | **Event Identity & Timestamp:** Assign 128-bit RFC 4122 UUID v4 `ocsf_event_id` and ISO-8601 UTC timestamp to all events (`SRS-FR-005`).                              | 100% RFC 4122 UUID v4 format and UTC timestamp compliance verified.                               |        **PASS** ✅         |
+| **`AC-001.4`**       | **End-to-End Latency SLA:** Process streaming telemetry through the pipeline with end-to-end latency $< 1.0$ second (`SRS-NFR-PERF-001`).                             | Test-harness p99 processing latency = 0.32 ms. Live broker-backed Kafka latency not yet measured. |  **NOT YET VERIFIED** ⏳   |
+| **`AC-001.5`**       | **Stream Resiliency & Backpressure:** Buffer events during Kafka outage without service crash; auto-flush on recovery (`SRS-FR-003`).                                 | Outage buffering and ring-buffer flushing verified in `resilience-failure.test.ts`.               | **PASS (Test-Harness)** ✅ |
 
 ---
 
 ## 4. Requirements & Architecture Traceability
 
-| Requirement / ADR | Description | Implementing Component | Verification Artifact |
-| :--- | :--- | :--- | :--- |
-| **`SRS-FR-001`** | Raw Telemetry Evidence Preservation | `ingestion.proto` & `ingestion-collector` | Preserved in `raw_payload` attribute |
-| **`SRS-FR-002`** | Multi-Cloud Telemetry Streaming | `ProviderSource` enum & `SyntheticTelemetryGenerator` | AWS, CrowdStrike, Okta factories |
-| **`SRS-FR-003`** | Stream Resilience & Backpressure | [`StreamRingBuffer`](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/services/ingestion-collector/src/buffer/stream-ring-buffer.ts) (T-1.3) | `backpressure-buffer.test.ts` |
-| **`SRS-FR-004`** | OCSF v1.1 Schematization | [`OCSFNormalizerEngine`](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/services/ocsf-normalizer/src/engine/ocsf-normalizer-engine.ts) (T-1.4) | `ocsf-correctness.test.ts` |
-| **`SRS-FR-005`** | 128-bit UUID & UTC Timestamp | `generateUUID()` & ISO-8601 parser | Tested across all output events |
-| **`ADR-0003`** | Hybrid gRPC / Event Bus IPC | `IngestionService` & `NormalizerService` gRPC | Protocol Buffer definitions |
-| **`ADR-0004`** | Event-Driven Streaming Bus | Kafka topics `telemetry.raw.v1` & `telemetry.ocsf.v1` | Kafka producers and consumers |
-| **`ADR-0006`** | Multi-Tenant CMK Isolation | Tenant ID validation and context propagation | `tenant-isolation.test.ts` |
-| **`ADR-0011`** | Zero-Trust Security Architecture | `@sentinelai/security` integration | Input validation & secret masking |
-| **`ADR-0013`** | OpenTelemetry Observability | Metrics collectors (`ingestion-metrics`, `normalizer-metrics`)| Prometheus metric snapshots |
-| **`ADR-0018`** | API Lifecycle & SemVer | SemVer package namespaces (`sentinelai.v1`) | Clean gRPC contract test passes |
+| Requirement / ADR | Description                         | Implementing Component                                                                                                                        | Verification Artifact                |
+| :---------------- | :---------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------- |
+| **`SRS-FR-001`**  | Raw Telemetry Evidence Preservation | `ingestion.proto` & `ingestion-collector`                                                                                                     | Preserved in `raw_payload` attribute |
+| **`SRS-FR-002`**  | Multi-Cloud Telemetry Streaming     | `ProviderSource` enum & `SyntheticTelemetryGenerator`                                                                                         | AWS, CrowdStrike, Okta factories     |
+| **`SRS-FR-003`**  | Stream Resilience & Backpressure    | [`StreamRingBuffer`](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/services/ingestion-collector/src/buffer/stream-ring-buffer.ts) (T-1.3)     | `backpressure-buffer.test.ts`        |
+| **`SRS-FR-004`**  | OCSF v1.1 Schematization            | [`OCSFNormalizerEngine`](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/services/ocsf-normalizer/src/engine/ocsf-normalizer-engine.ts) (T-1.4) | `ocsf-correctness.test.ts`           |
+| **`SRS-FR-005`**  | 128-bit UUID & UTC Timestamp        | `generateUUID()` & ISO-8601 parser                                                                                                            | Tested across all output events      |
+| **`ADR-0003`**    | Hybrid gRPC / Event Bus IPC         | `IngestionService` & `NormalizerService` gRPC                                                                                                 | Protocol Buffer definitions          |
+| **`ADR-0004`**    | Event-Driven Streaming Bus          | Kafka topics `telemetry.raw.v1` & `telemetry.ocsf.v1`                                                                                         | Kafka producers and consumers        |
+| **`ADR-0006`**    | Multi-Tenant CMK Isolation          | Tenant ID validation and context propagation                                                                                                  | `tenant-isolation.test.ts`           |
+| **`ADR-0011`**    | Zero-Trust Security Architecture    | `@sentinelai/security` integration                                                                                                            | Input validation & secret masking    |
+| **`ADR-0013`**    | OpenTelemetry Observability         | Metrics collectors (`ingestion-metrics`, `normalizer-metrics`)                                                                                | Prometheus metric snapshots          |
+| **`ADR-0018`**    | API Lifecycle & SemVer              | SemVer package namespaces (`sentinelai.v1`)                                                                                                   | Clean gRPC contract test passes      |
 
 ---
 
@@ -116,11 +117,12 @@ Taxonomy Category                       | Measured Result / Status        | Exec
 ===================================================================================================================
   • Governance Status: T-1.6 COMPLETE — AWAITING APPROVAL
   • Milestone Decision: M1 — PROVISIONALLY ACCEPTED FUNCTIONAL BASELINE (PENDING FORMAL APPROVAL)
-  
+
   • Explicit Qualification:
     "AC-001.4 remains NOT YET VERIFIED and requires future broker-backed Kafka validation."
 ===================================================================================================================
 ```
 
 ---
-*End of EPIC-1 Milestone M1 Verification Report – SentinelAI*
+
+_End of EPIC-1 Milestone M1 Verification Report – SentinelAI_

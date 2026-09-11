@@ -1,5 +1,5 @@
 import { createNormalizerService } from '../src';
-import { OCSFClassUid, OCSFCategoryUid } from '@sentinelai/ocsf-types';
+import { OCSFClassUid, OCSFCategoryUid, OCSFAuthenticationEvent } from '@sentinelai/ocsf-types';
 
 describe('OCSF Normalizer: Okta IAM -> OCSF Authentication Suite', () => {
   const { engine } = createNormalizerService();
@@ -29,13 +29,15 @@ describe('OCSF Normalizer: Okta IAM -> OCSF Authentication Suite', () => {
       provider: 'OKTA_IAM',
       rawPayload,
       correlationId: 'corr-okta-300',
-    }) as any;
+    }) as OCSFAuthenticationEvent;
 
     expect(ocsfEvent.category_uid).toBe(OCSFCategoryUid.IDENTITY_MANAGEMENT);
     expect(ocsfEvent.class_uid).toBe(OCSFClassUid.AUTHENTICATION);
     expect(ocsfEvent.provider).toBe('Okta');
     expect(ocsfEvent.tenant_id).toBe('tenant-gamma');
-    expect(ocsfEvent.ocsf_event_id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(ocsfEvent.ocsf_event_id).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    );
     expect(ocsfEvent.actor.user.name).toBe('Alice Smith');
     expect(ocsfEvent.status_id).toBe(1); // Success
   });

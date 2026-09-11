@@ -34,9 +34,33 @@ describe('Ingestion Collector Backpressure & Ring Buffer Fallback Suite', () => 
   it('should drop oldest items on buffer overflow preserving backpressure limits', () => {
     const { ringBuffer, metrics } = createIngestionServer({ bufferMaxCapacity: 2 });
 
-    ringBuffer.push({ eventId: '1', tenantId: 't', provider: 'AWS_CLOUDTRAIL', timestampUtc: '', correlationId: '', rawPayload: '', metadata: {} });
-    ringBuffer.push({ eventId: '2', tenantId: 't', provider: 'AWS_CLOUDTRAIL', timestampUtc: '', correlationId: '', rawPayload: '', metadata: {} });
-    ringBuffer.push({ eventId: '3', tenantId: 't', provider: 'AWS_CLOUDTRAIL', timestampUtc: '', correlationId: '', rawPayload: '', metadata: {} });
+    ringBuffer.push({
+      eventId: '1',
+      tenantId: 't',
+      provider: 'AWS_CLOUDTRAIL',
+      timestampUtc: '',
+      correlationId: '',
+      rawPayload: '',
+      metadata: {},
+    });
+    ringBuffer.push({
+      eventId: '2',
+      tenantId: 't',
+      provider: 'AWS_CLOUDTRAIL',
+      timestampUtc: '',
+      correlationId: '',
+      rawPayload: '',
+      metadata: {},
+    });
+    ringBuffer.push({
+      eventId: '3',
+      tenantId: 't',
+      provider: 'AWS_CLOUDTRAIL',
+      timestampUtc: '',
+      correlationId: '',
+      rawPayload: '',
+      metadata: {},
+    });
 
     expect(ringBuffer.getDepth()).toBe(2);
     expect(metrics.getSnapshot().bufferOverflows).toBe(1);

@@ -1,12 +1,22 @@
-import { SyntheticTelemetryGenerator, SyntheticRawTelemetryPackage } from '@sentinelai/synthetic-log-generator';
+import {
+  SyntheticTelemetryGenerator,
+  SyntheticRawTelemetryPackage,
+  TelemetryProvider,
+} from '@sentinelai/synthetic-log-generator';
 import { OCSFNormalizerEngine, NormalizerMetricsCollector } from '@sentinelai/ocsf-normalizer';
-import { UIProcessedEvent, ExecutiveMetrics, ProviderDistribution, SystemHealthState } from '../types/demo.types';
+import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
+import {
+  UIProcessedEvent,
+  ExecutiveMetrics,
+  ProviderDistribution,
+  SystemHealthState,
+} from '../types/demo.types';
 
 export class DemoPipelineAdapter {
   private generator: SyntheticTelemetryGenerator;
   private normalizerEngine: OCSFNormalizerEngine;
   private normalizerMetrics: NormalizerMetricsCollector;
-  
+
   private eventsStore: UIProcessedEvent[] = [];
   private isOutageSimulated: boolean = false;
   private ringBufferStore: SyntheticRawTelemetryPackage[] = [];
@@ -32,19 +42,23 @@ export class DemoPipelineAdapter {
     return this.isOutageSimulated;
   }
 
-  public generateAndProcessEvents(count: number, tenantOverride?: string, providerFilter?: string): UIProcessedEvent[] {
+  public generateAndProcessEvents(
+    count: number,
+    tenantOverride?: string,
+    providerFilter?: string,
+  ): UIProcessedEvent[] {
     const newEvents: UIProcessedEvent[] = [];
     const startTime = Date.now();
 
     for (let i = 0; i < count; i++) {
       this.totalReceived++;
       const rawPkg = this.generator.generateNextPayload();
-      
+
       if (tenantOverride) {
         rawPkg.tenantId = tenantOverride;
       }
       if (providerFilter && providerFilter !== 'ALL') {
-        rawPkg.provider = providerFilter as any;
+        rawPkg.provider = providerFilter as TelemetryProvider;
       }
 
       if (this.isOutageSimulated) {
@@ -56,11 +70,11 @@ export class DemoPipelineAdapter {
           this.ringBufferStore.push(rawPkg);
         }
         this.totalAccepted++;
-        
+
         const bufferedUIEvent: UIProcessedEvent = {
           eventId: rawPkg.eventId,
           tenantId: rawPkg.tenantId,
-          provider: rawPkg.provider as any,
+          provider: rawPkg.provider as TelemetryProvider,
           ocsfClassUid: 0,
           ocsfClassName: 'Raw Buffer (Outage)',
           severityId: 2,
@@ -68,7 +82,7 @@ export class DemoPipelineAdapter {
           timestampUtc: rawPkg.timestampUtc,
           correlationId: rawPkg.correlationId,
           rawPayload: rawPkg.rawPayload,
-          ocsfNormalizedEvent: {} as any,
+          ocsfNormalizedEvent: {} as OCSFBaseEvent,
           processingStatus: 'BUFFERED_BACKPRESSURE',
         };
         this.eventsStore.unshift(bufferedUIEvent);
@@ -101,16 +115,20 @@ export class DemoPipelineAdapter {
         else if (ocsfEvent.severity_id === 3) severityLabel = 'HIGH';
         else if (ocsfEvent.severity_id === 2) severityLabel = 'MEDIUM';
 
+        const correlationId =
+          (ocsfEvent.metadata as { correlation_id?: string })?.correlation_id ||
+          rawPkg.correlationId;
+
         const processedUIEvent: UIProcessedEvent = {
           eventId: ocsfEvent.ocsf_event_id,
           tenantId: ocsfEvent.tenant_id,
-          provider: rawPkg.provider as any,
+          provider: rawPkg.provider as TelemetryProvider,
           ocsfClassUid: ocsfEvent.class_uid,
           ocsfClassName,
           severityId: ocsfEvent.severity_id,
           severityLabel,
           timestampUtc: ocsfEvent.time,
-          correlationId: (ocsfEvent.metadata as any)?.correlation_id || rawPkg.correlationId,
+          correlationId,
           rawPayload: rawPkg.rawPayload,
           ocsfNormalizedEvent: ocsfEvent,
           processingStatus: 'NORMALIZED',
@@ -137,7 +155,7 @@ export class DemoPipelineAdapter {
   public recoverPipelineAndFlush(): number {
     this.isOutageSimulated = false;
     const flushedCount = this.ringBufferStore.length;
-    
+
     // Process buffered events upon recovery
     const bufferedCopy = [...this.ringBufferStore];
     this.ringBufferStore = [];
@@ -146,17 +164,31 @@ export class DemoPipelineAdapter {
       try {
         const ocsfEvent = this.normalizerEngine.normalizeRawTelemetry(rawPkg);
         this.totalNormalized++;
-        
+
+        const correlationId =
+          (ocsfEvent.metadata as { correlation_id?: string })?.correlation_id ||
+          rawPkg.correlationId;
+
         const uiEvent: UIProcessedEvent = {
           eventId: ocsfEvent.ocsf_event_id,
           tenantId: ocsfEvent.tenant_id,
-          provider: rawPkg.provider as any,
+          provider: rawPkg.provider as TelemetryProvider,
           ocsfClassUid: ocsfEvent.class_uid,
-          ocsfClassName: ocsfEvent.class_uid === 1007 ? '1007 Process Activity' : ocsfEvent.class_uid === 3001 ? '3001 Authentication' : '6001 Cloud Audit',
+          ocsfClassName:
+            ocsfEvent.class_uid === 1007
+              ? '1007 Process Activity'
+              : ocsfEvent.class_uid === 3001
+                ? '3001 Authentication'
+                : '6001 Cloud Audit',
           severityId: ocsfEvent.severity_id,
-          severityLabel: ocsfEvent.severity_id === 4 ? 'CRITICAL' : ocsfEvent.severity_id === 3 ? 'HIGH' : 'MEDIUM',
+          severityLabel:
+            ocsfEvent.severity_id === 4
+              ? 'CRITICAL'
+              : ocsfEvent.severity_id === 3
+                ? 'HIGH'
+                : 'MEDIUM',
           timestampUtc: ocsfEvent.time,
-          correlationId: (ocsfEvent.metadata as any)?.correlation_id || rawPkg.correlationId,
+          correlationId,
           rawPayload: rawPkg.rawPayload,
           ocsfNormalizedEvent: ocsfEvent,
           processingStatus: 'NORMALIZED',
@@ -175,7 +207,10 @@ export class DemoPipelineAdapter {
   }
 
   public getExecutiveMetrics(): ExecutiveMetrics {
-    const avgLatency = this.totalReceived > 0 ? parseFloat((this.totalLatencySum / Math.max(this.totalReceived / 100, 1)).toFixed(2)) : 0.08;
+    const avgLatency =
+      this.totalReceived > 0
+        ? parseFloat((this.totalLatencySum / Math.max(this.totalReceived / 100, 1)).toFixed(2))
+        : 0.08;
     return {
       eventsReceived: this.totalReceived,
       eventsAccepted: this.totalAccepted,

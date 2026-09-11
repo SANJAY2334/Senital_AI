@@ -14,10 +14,12 @@ export const IngestionConfigSchema = z.object({
 export type IngestionConfig = z.infer<typeof IngestionConfigSchema>;
 
 export function loadIngestionConfig(override?: Partial<IngestionConfig>): IngestionConfig {
-  const envBrokers = process.env.KAFKA_BROKERS ? process.env.KAFKA_BROKERS.split(',') : ['localhost:9092'];
+  const envBrokers = process.env.KAFKA_BROKERS
+    ? process.env.KAFKA_BROKERS.split(',')
+    : ['localhost:9092'];
   const rawConfig = {
     serviceName: process.env.SERVICE_NAME || 'ingestion-collector',
-    env: (process.env.NODE_ENV as any) || 'development',
+    env: (process.env.NODE_ENV as IngestionConfig['env']) || 'development',
     port: parseInt(process.env.PORT || '8080', 10),
     grpcPort: parseInt(process.env.GRPC_PORT || '50051', 10),
     kafkaBrokers: envBrokers,

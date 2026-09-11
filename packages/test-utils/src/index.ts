@@ -1,7 +1,9 @@
 import { OCSFClassUid, OCSFCategoryUid, OCSFProcessActivityEvent } from '@sentinelai/ocsf-types';
 import { IncidentStory } from '@sentinelai/shared-types';
 
-export function createMockOCSFProcessEvent(overrides?: Partial<OCSFProcessActivityEvent>): OCSFProcessActivityEvent {
+export function createMockOCSFProcessEvent(
+  overrides?: Partial<OCSFProcessActivityEvent>,
+): OCSFProcessActivityEvent {
   return {
     ocsf_event_id: '123e4567-e89b-12d3-a456-426614174000',
     category_uid: OCSFCategoryUid.SYSTEM_ACTIVITY,
@@ -35,7 +37,8 @@ export function createMockIncidentStory(overrides?: Partial<IncidentStory>): Inc
     severity: 'HIGH',
     confidenceScore: 0.92,
     riskScore: 85,
-    narrativeSummary: 'Suspicious execution of encoded PowerShell command on workstation host-test-01.',
+    narrativeSummary:
+      'Suspicious execution of encoded PowerShell command on workstation host-test-01.',
     mitreTechniques: ['T1059.001'],
     affectedEntityIds: ['host-test-01', 'test-user'],
     breadcrumbs: [

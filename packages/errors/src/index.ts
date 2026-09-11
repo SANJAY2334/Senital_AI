@@ -2,7 +2,10 @@ export abstract class SentinelBaseError extends Error {
   abstract readonly code: string;
   abstract readonly statusCode: number;
 
-  constructor(message: string, public readonly context?: Record<string, unknown>) {
+  constructor(
+    message: string,
+    public readonly context?: Record<string, unknown>,
+  ) {
     super(message);
     Object.setPrototypeOf(this, new.target.prototype);
   }

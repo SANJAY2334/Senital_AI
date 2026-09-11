@@ -11,7 +11,9 @@ export * from './engine/ocsf-normalizer-engine';
 export * from './kafka/ocsf-telemetry-producer';
 export * from './kafka/raw-telemetry-consumer';
 
-export function createNormalizerService(overrideConfig?: Partial<ReturnType<typeof loadNormalizerConfig>>) {
+export function createNormalizerService(
+  overrideConfig?: Partial<ReturnType<typeof loadNormalizerConfig>>,
+) {
   const config = loadNormalizerConfig(overrideConfig);
   const metrics = new NormalizerMetricsCollector();
   const engine = new OCSFNormalizerEngine(metrics);
@@ -29,5 +31,7 @@ export function createNormalizerService(overrideConfig?: Partial<ReturnType<type
 
 if (require.main === module) {
   const { config } = createNormalizerService();
-  console.log(`[SentinelAI OCSF Normalizer] Running consumer group '${config.consumerGroupId}' on topic '${config.kafkaTopicRaw}'`);
+  console.log(
+    `[SentinelAI OCSF Normalizer] Running consumer group '${config.consumerGroupId}' on topic '${config.kafkaTopicRaw}'`,
+  );
 }

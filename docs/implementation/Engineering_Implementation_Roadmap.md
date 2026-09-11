@@ -1,17 +1,18 @@
 # SentinelAI: Engineering Implementation Roadmap
+
 **Execution Plan, Workstream Breakdown, Sprint Schedule & Task Backlog**
 
 ---
 
-| Metadata Field | Value |
-| :--- | :--- |
-| **Document Version** | `1.0.0-APPROVED` |
-| **Document Classification** | Enterprise Implementation Specification / Program Execution Baseline |
-| **Target Audience** | Engineering Managers, Technical Program Managers, Software Engineers, DevOps Leads, QA Leads, Security Engineers |
-| **Author** | Chief Engineering Manager & Principal Technical Program Manager, SentinelAI |
-| **Parent Baselines** | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [System Context & Use Case Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/analysis/System_Context_and_Use_Case_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md)<br>• [High-Level Design (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md)<br>• [Machine Learning Architecture Document (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/ml/Machine_Learning_Architecture_Document.md) |
-| **Status** | Approved Engineering Execution Baseline |
-| **Effective Date** | August 2026 |
+| Metadata Field              | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Document Version**        | `1.0.0-APPROVED`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Document Classification** | Enterprise Implementation Specification / Program Execution Baseline                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **Target Audience**         | Engineering Managers, Technical Program Managers, Software Engineers, DevOps Leads, QA Leads, Security Engineers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Author**                  | Chief Engineering Manager & Principal Technical Program Manager, SentinelAI                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Parent Baselines**        | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [System Context & Use Case Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/analysis/System_Context_and_Use_Case_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md)<br>• [High-Level Design (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md)<br>• [Machine Learning Architecture Document (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/ml/Machine_Learning_Architecture_Document.md) |
+| **Status**                  | Approved Engineering Execution Baseline                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **Effective Date**          | August 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ---
 
@@ -145,104 +146,122 @@ The 14-week engineering program is executed across seven two-week sprints:
 
 ## 7. Deliverables for Each Milestone
 
-* **Milestone M0 Deliverables:** Monorepo initialized, Protocol Buffer gRPC contracts versioned, OpenTofu base VPC templates created, CI/CD pipeline active.
-* **Milestone M1 Deliverables:** Ingestion stream processing AWS/CrowdStrike/Okta logs, OCSF v1.1 parser operational, columnar storage lakehouse ingesting OCSF events.
-* **Milestone M2 Deliverables:** In-memory Causal Graph Engine processing entity nodes/edges, visual temporal attack graph query API live.
-* **Milestone M3 Deliverables:** Isolation Forest & XGBoost triage pipeline operational, XAI lineage breadcrumb validator enforcing raw log evidence links (`BR-001`).
-* **Milestone M4 Deliverables:** Policy Guardrail Service evaluating asset criticality tags (`BR-002`), Stage 1 1-click & Stage 2 automated host isolation API operational.
-* **Milestone M5 Deliverables:** Analyst Workspace UI rendering Incident Stories, interactive graph canvas, conversational Copilot drawer, executive MTTD/MTTR analytics.
-* **Milestone M6 Deliverables:** End-to-end 150k EPS load test passed (<60s MTTD, <5s AI latency), mTLS/CMK security audit signed off, production pilot deployed.
+- **Milestone M0 Deliverables:** Monorepo initialized, Protocol Buffer gRPC contracts versioned, OpenTofu base VPC templates created, CI/CD pipeline active.
+- **Milestone M1 Deliverables:** Ingestion stream processing AWS/CrowdStrike/Okta logs, OCSF v1.1 parser operational, columnar storage lakehouse ingesting OCSF events.
+- **Milestone M2 Deliverables:** In-memory Causal Graph Engine processing entity nodes/edges, visual temporal attack graph query API live.
+- **Milestone M3 Deliverables:** Isolation Forest & XGBoost triage pipeline operational, XAI lineage breadcrumb validator enforcing raw log evidence links (`BR-001`).
+- **Milestone M4 Deliverables:** Policy Guardrail Service evaluating asset criticality tags (`BR-002`), Stage 1 1-click & Stage 2 automated host isolation API operational.
+- **Milestone M5 Deliverables:** Analyst Workspace UI rendering Incident Stories, interactive graph canvas, conversational Copilot drawer, executive MTTD/MTTR analytics.
+- **Milestone M6 Deliverables:** End-to-end 150k EPS load test passed (<60s MTTD, <5s AI latency), mTLS/CMK security audit signed off, production pilot deployed.
 
 ---
 
 ## 8. Task Breakdown (Epic $\rightarrow$ Feature $\rightarrow$ Task)
 
 ### EPIC-1: Telemetry Streaming & Schematization Pipeline
-* **Parent References:** `SRS-FR-001` to `005`, `HLD Section 5.3.1`, `ADR-0004`, `ADR-0016`
+
+- **Parent References:** `SRS-FR-001` to `005`, `HLD Section 5.3.1`, `ADR-0004`, `ADR-0016`
 
 #### FEAT-1.1: High-Throughput Stream Ingestion Engine
-* **Task T-1.1.1:** Setup distributed event stream bus topics (`telemetry.raw.v1`) with Tenant ID partition keys (`SRS-FR-001`, `HLD Section 10`, `ADR-0004`). *[Dependencies: None | Blocker: None]*
-* **Task T-1.1.2:** Develop `Ingestion-Collector-Service` stream receiver microservice handling AWS CloudTrail, CrowdStrike, and Okta webhook pushes (`SRS-FR-001`, `SRS-FR-002`, `SRS-FR-003`, `HLD Section 7`). *[Dependencies: T-1.1.1 | Blocker: None]*
-* **Task T-1.1.3:** Implement exponential backoff retry and stream buffer queue fallback handling (`SRS-EH-001`, `ADR-0004`). *[Dependencies: T-1.1.2 | Blocker: None]*
+
+- **Task T-1.1.1:** Setup distributed event stream bus topics (`telemetry.raw.v1`) with Tenant ID partition keys (`SRS-FR-001`, `HLD Section 10`, `ADR-0004`). _[Dependencies: None | Blocker: None]_
+- **Task T-1.1.2:** Develop `Ingestion-Collector-Service` stream receiver microservice handling AWS CloudTrail, CrowdStrike, and Okta webhook pushes (`SRS-FR-001`, `SRS-FR-002`, `SRS-FR-003`, `HLD Section 7`). _[Dependencies: T-1.1.1 | Blocker: None]_
+- **Task T-1.1.3:** Implement exponential backoff retry and stream buffer queue fallback handling (`SRS-EH-001`, `ADR-0004`). _[Dependencies: T-1.1.2 | Blocker: None]_
 
 #### FEAT-1.2: OCSF v1.1 Schematization & Data Lake Storage
-* **Task T-1.2.1:** Implement `OCSF-Normalizer-Service` parsing vendor JSON into standardized OCSF v1.1 event objects (`SRS-FR-004`, `HLD Section 7`). *[Dependencies: T-1.1.2 | Blocker: None]*
-* **Task T-1.2.2:** Add global 128-bit UUID and UTC timestamp assignment module (`SRS-FR-005`, `SRS-I18N-001`). *[Dependencies: T-1.2.1 | Blocker: None]*
-* **Task T-1.2.3:** Configure columnar lakehouse storage sink writer storing OCSF events (`SRS-FR-004`, `ADR-0007`). *[Dependencies: T-1.2.2 | Blocker: None]*
+
+- **Task T-1.2.1:** Implement `OCSF-Normalizer-Service` parsing vendor JSON into standardized OCSF v1.1 event objects (`SRS-FR-004`, `HLD Section 7`). _[Dependencies: T-1.1.2 | Blocker: None]_
+- **Task T-1.2.2:** Add global 128-bit UUID and UTC timestamp assignment module (`SRS-FR-005`, `SRS-I18N-001`). _[Dependencies: T-1.2.1 | Blocker: None]_
+- **Task T-1.2.3:** Configure columnar lakehouse storage sink writer storing OCSF events (`SRS-FR-004`, `ADR-0007`). _[Dependencies: T-1.2.2 | Blocker: None]_
 
 ---
 
 ### EPIC-2: Dynamic Temporal Causal Graphing Engine
-* **Parent References:** `SRS-FR-006` to `008`, `HLD Section 5.3.2`, `ADR-0008`
+
+- **Parent References:** `SRS-FR-006` to `008`, `HLD Section 5.3.2`, `ADR-0008`
 
 #### FEAT-2.1: In-Memory Temporal Graph Construction
-* **Task T-2.1.1:** Develop `Causal-Graph-Service` extracting entity nodes (`Host`, `User`, `IP`, `Process`) from OCSF event streams (`SRS-FR-006`, `HLD Section 7`, `ADR-0008`). *[Dependencies: T-1.2.2 | Blocker: None]*
-* **Task T-2.1.2:** Implement in-memory temporal edge linking module connecting events across rolling time windows (`SRS-FR-007`, `ADR-0008`). *[Dependencies: T-2.1.1 | Blocker: None]*
-* **Task T-2.1.3:** Implement entity PageRank and Louvain community detection graph algorithms (`MLAD Section 11.6`). *[Dependencies: T-2.1.2 | Blocker: None]*
+
+- **Task T-2.1.1:** Develop `Causal-Graph-Service` extracting entity nodes (`Host`, `User`, `IP`, `Process`) from OCSF event streams (`SRS-FR-006`, `HLD Section 7`, `ADR-0008`). _[Dependencies: T-1.2.2 | Blocker: None]_
+- **Task T-2.1.2:** Implement in-memory temporal edge linking module connecting events across rolling time windows (`SRS-FR-007`, `ADR-0008`). _[Dependencies: T-2.1.1 | Blocker: None]_
+- **Task T-2.1.3:** Implement entity PageRank and Louvain community detection graph algorithms (`MLAD Section 11.6`). _[Dependencies: T-2.1.2 | Blocker: None]_
 
 #### FEAT-2.2: Multi-Source Incident Story Aggregation
-* **Task T-2.2.1:** Develop `Story-Aggregator-Service` aggregating related causal graph clusters into unified Incident Story objects (`SRS-FR-008`, `HLD Section 7`). *[Dependencies: T-2.1.2 | Blocker: None]*
-* **Task T-2.2.2:** Implement rolling time-window graph cluster pruning and cold archive offloading (`ADR-0008`). *[Dependencies: T-2.2.1 | Blocker: None]*
+
+- **Task T-2.2.1:** Develop `Story-Aggregator-Service` aggregating related causal graph clusters into unified Incident Story objects (`SRS-FR-008`, `HLD Section 7`). _[Dependencies: T-2.1.2 | Blocker: None]_
+- **Task T-2.2.2:** Implement rolling time-window graph cluster pruning and cold archive offloading (`ADR-0008`). _[Dependencies: T-2.2.1 | Blocker: None]_
 
 ---
 
 ### EPIC-3: Multi-Agent AI Triage & XAI Lineage Subsystem
-* **Parent References:** `SRS-FR-009` to `015`, `HLD Section 7`, `ADR-0009`, `ADR-0010`, `MLAD Sections 10-18`
+
+- **Parent References:** `SRS-FR-009` to `015`, `HLD Section 7`, `ADR-0009`, `ADR-0010`, `MLAD Sections 10-18`
 
 #### FEAT-3.1: Multi-Agent Triage Ensemble & Noise Suppression
-* **Task T-3.1.1:** Implement Isolation Forest unsupervised anomaly detection subagent worker (`SRS-FR-010`, `MLAD Section 11.1`). *[Dependencies: T-2.2.1 | Blocker: None]*
-* **Task T-3.1.2:** Implement XGBoost supervised threat severity classification subagent worker (`SRS-FR-009`, `MLAD Section 11.2`). *[Dependencies: T-3.1.1 | Blocker: None]*
-* **Task T-3.1.3:** Implement `AI-Supervisor-Service` coordinating subagents, calculating composite confidence $C_{model}$ and risk score $R_{incident}$ (`SRS-FR-009`, `MLAD Sections 17-18`). *[Dependencies: T-3.1.2 | Blocker: None]*
-* **Task T-3.1.4:** Implement automatic noise suppression module suppressing benign anomalies matching enterprise baselines (>80% noise cut) (`SRS-FR-010`, `MLAD Section 11.1`). *[Dependencies: T-3.1.3 | Blocker: None]*
-* **Task T-3.1.5:** Implement MITRE ATT&CK technique mapping subagent (`SRS-FR-012`, `MLAD Section 11.5`). *[Dependencies: T-3.1.3 | Blocker: None]*
+
+- **Task T-3.1.1:** Implement Isolation Forest unsupervised anomaly detection subagent worker (`SRS-FR-010`, `MLAD Section 11.1`). _[Dependencies: T-2.2.1 | Blocker: None]_
+- **Task T-3.1.2:** Implement XGBoost supervised threat severity classification subagent worker (`SRS-FR-009`, `MLAD Section 11.2`). _[Dependencies: T-3.1.1 | Blocker: None]_
+- **Task T-3.1.3:** Implement `AI-Supervisor-Service` coordinating subagents, calculating composite confidence $C_{model}$ and risk score $R_{incident}$ (`SRS-FR-009`, `MLAD Sections 17-18`). _[Dependencies: T-3.1.2 | Blocker: None]_
+- **Task T-3.1.4:** Implement automatic noise suppression module suppressing benign anomalies matching enterprise baselines (>80% noise cut) (`SRS-FR-010`, `MLAD Section 11.1`). _[Dependencies: T-3.1.3 | Blocker: None]_
+- **Task T-3.1.5:** Implement MITRE ATT&CK technique mapping subagent (`SRS-FR-012`, `MLAD Section 11.5`). _[Dependencies: T-3.1.3 | Blocker: None]_
 
 #### FEAT-3.2: Deterministic XAI Lineage Verification Pipeline
-* **Task T-3.2.1:** Develop `XAI-Lineage-Service` calculating SHAP feature attribution weights for AI claims (`SRS-FR-014`, `MLAD Section 16`). *[Dependencies: T-3.1.3 | Blocker: None]*
-* **Task T-3.2.2:** Implement raw log line validation engine verifying target `ocsf_event_id` tokens exist before publishing story (`SRS-FR-014`, `BR-001`, `ADR-0010`). *[Dependencies: T-3.2.1 | Blocker: None]*
-* **Task T-3.2.3:** Implement Uncertainty Escalation tag generator for incident stories with confidence $< 80\%$ (`SRS-FR-013`, `BR-005`). *[Dependencies: T-3.2.2 | Blocker: None]*
+
+- **Task T-3.2.1:** Develop `XAI-Lineage-Service` calculating SHAP feature attribution weights for AI claims (`SRS-FR-014`, `MLAD Section 16`). _[Dependencies: T-3.1.3 | Blocker: None]_
+- **Task T-3.2.2:** Implement raw log line validation engine verifying target `ocsf_event_id` tokens exist before publishing story (`SRS-FR-014`, `BR-001`, `ADR-0010`). _[Dependencies: T-3.2.1 | Blocker: None]_
+- **Task T-3.2.3:** Implement Uncertainty Escalation tag generator for incident stories with confidence $< 80\%$ (`SRS-FR-013`, `BR-005`). _[Dependencies: T-3.2.2 | Blocker: None]_
 
 ---
 
 ### EPIC-4: Policy Remediation & Action Orchestration Engine
-* **Parent References:** `SRS-FR-016` to `019`, `HLD Section 7`, `ADR-0011`, `ADR-0012`
+
+- **Parent References:** `SRS-FR-016` to `019`, `HLD Section 7`, `ADR-0011`, `ADR-0012`
 
 #### FEAT-4.1: Policy Guardrail & Criticality Validation
-* **Task T-4.1.1:** Develop `Policy-Guardrail-Service` storing asset criticality tags (`Critical`, `Standard`, `Non-Critical`) (`SRS-FR-019`, `HLD Section 7`). *[Dependencies: None | Blocker: None]*
-* **Task T-4.1.2:** Implement ABAC policy evaluator validating asset tags before authorizing Stage 2 automated containment (`SRS-FR-018`, `SRS-FR-019`, `BR-002`, `ADR-0012`). *[Dependencies: T-4.1.1 | Blocker: None]*
-* **Task T-4.1.3:** Implement Stage 1 Assistive mode enforcement converting critical asset actions to 1-click human approval (`SRS-FR-017`, `BR-002`). *[Dependencies: T-4.1.2 | Blocker: None]*
+
+- **Task T-4.1.1:** Develop `Policy-Guardrail-Service` storing asset criticality tags (`Critical`, `Standard`, `Non-Critical`) (`SRS-FR-019`, `HLD Section 7`). _[Dependencies: None | Blocker: None]_
+- **Task T-4.1.2:** Implement ABAC policy evaluator validating asset tags before authorizing Stage 2 automated containment (`SRS-FR-018`, `SRS-FR-019`, `BR-002`, `ADR-0012`). _[Dependencies: T-4.1.1 | Blocker: None]_
+- **Task T-4.1.3:** Implement Stage 1 Assistive mode enforcement converting critical asset actions to 1-click human approval (`SRS-FR-017`, `BR-002`). _[Dependencies: T-4.1.2 | Blocker: None]_
 
 #### FEAT-4.2: Action Connector Execution Pipeline
-* **Task T-4.2.1:** Develop `Action-Orchestrator-Service` for executing host isolation commands via CrowdStrike EDR API (`SRS-FR-016`, `SRS-FR-017`, `HLD Section 7`). *[Dependencies: T-4.1.3 | Blocker: None]*
-* **Task T-4.2.2:** Add Okta session revocation action connector (`SRS-FR-016`, `HLD Section 7`). *[Dependencies: T-4.2.1 | Blocker: None]*
-* **Task T-4.2.3:** Implement bi-directional ServiceNow and Jira ITSM ticket status synchronizer (`SRS-FR-016`, `ADR-0018`). *[Dependencies: T-4.2.2 | Blocker: None]*
+
+- **Task T-4.2.1:** Develop `Action-Orchestrator-Service` for executing host isolation commands via CrowdStrike EDR API (`SRS-FR-016`, `SRS-FR-017`, `HLD Section 7`). _[Dependencies: T-4.1.3 | Blocker: None]_
+- **Task T-4.2.2:** Add Okta session revocation action connector (`SRS-FR-016`, `HLD Section 7`). _[Dependencies: T-4.2.1 | Blocker: None]_
+- **Task T-4.2.3:** Implement bi-directional ServiceNow and Jira ITSM ticket status synchronizer (`SRS-FR-016`, `ADR-0018`). _[Dependencies: T-4.2.2 | Blocker: None]_
 
 ---
 
 ### EPIC-5: Analyst Workspace UI & Natural Language Copilot
-* **Parent References:** `SRS-FR-020`, `021`, `SRS-UI-001` to `004`, `HLD Section 5.2`
+
+- **Parent References:** `SRS-FR-020`, `021`, `SRS-UI-001` to `004`, `HLD Section 5.2`
 
 #### FEAT-5.1: Incident Workspace & Interactive Graph Canvas UI
-* **Task T-5.1.1:** Build Incident Story Workspace UI rendering story summaries, severity badges, and MITRE badges (`SRS-UI-001`). *[Dependencies: T-3.2.2 | Blocker: None]*
-* **Task T-5.1.2:** Develop interactive visual attack graph canvas rendering entity nodes and directional event edges (`SRS-UI-003`, `SCUCS UC-007`). *[Dependencies: T-5.1.1, T-2.1.2 | Blocker: None]*
-* **Task T-5.1.3:** Implement slide-out XAI Evidence Drawer displaying side-by-side raw log lines when clicking breadcrumb links (`SRS-FR-015`, `SRS-UI-002`). *[Dependencies: T-5.1.1, T-3.2.2 | Blocker: None]*
+
+- **Task T-5.1.1:** Build Incident Story Workspace UI rendering story summaries, severity badges, and MITRE badges (`SRS-UI-001`). _[Dependencies: T-3.2.2 | Blocker: None]_
+- **Task T-5.1.2:** Develop interactive visual attack graph canvas rendering entity nodes and directional event edges (`SRS-UI-003`, `SCUCS UC-007`). _[Dependencies: T-5.1.1, T-2.1.2 | Blocker: None]_
+- **Task T-5.1.3:** Implement slide-out XAI Evidence Drawer displaying side-by-side raw log lines when clicking breadcrumb links (`SRS-FR-015`, `SRS-UI-002`). _[Dependencies: T-5.1.1, T-3.2.2 | Blocker: None]_
 
 #### FEAT-5.2: Natural Language Copilot Conversation Service
-* **Task T-5.2.1:** Develop `Copilot-Conversation-Service` handling natural language query prompts over WebSockets (`SRS-FR-020`, `HLD Section 7`). *[Dependencies: T-2.1.2 | Blocker: None]*
-* **Task T-5.2.2:** Ground Copilot answers strictly in ingested log evidence, attaching visual evidence breadcrumbs (`SRS-FR-021`, `SRS-UI-004`). *[Dependencies: T-5.2.1, T-3.2.2 | Blocker: None]*
+
+- **Task T-5.2.1:** Develop `Copilot-Conversation-Service` handling natural language query prompts over WebSockets (`SRS-FR-020`, `HLD Section 7`). _[Dependencies: T-2.1.2 | Blocker: None]_
+- **Task T-5.2.2:** Ground Copilot answers strictly in ingested log evidence, attaching visual evidence breadcrumbs (`SRS-FR-021`, `SRS-UI-004`). _[Dependencies: T-5.2.1, T-3.2.2 | Blocker: None]_
 
 ---
 
 ### EPIC-6: Security, Compliance Audit & Executive Analytics
-* **Parent References:** `SRS-FR-022` to `024`, `HLD Section 11`, `ADR-0006`, `ADR-0011`, `ADR-0013`
+
+- **Parent References:** `SRS-FR-022` to `024`, `HLD Section 11`, `ADR-0006`, `ADR-0011`, `ADR-0013`
 
 #### FEAT-6.1: Zero-Trust Security & Multi-Tenant KMS Key Isolation
-* **Task T-6.1.1:** Configure mTLS 1.3 mutual certificate verification across internal microservice gRPC channels (`SRS-NFR-006`, `ADR-0011`). *[Dependencies: M0 | Blocker: None]*
-* **Task T-6.1.2:** Integrate cloud KMS Customer-Managed Key (CMK) envelope encryption for multi-tenant storage isolation (`SRS-NFR-007`, `ADR-0006`). *[Dependencies: T-6.1.1 | Blocker: None]*
+
+- **Task T-6.1.1:** Configure mTLS 1.3 mutual certificate verification across internal microservice gRPC channels (`SRS-NFR-006`, `ADR-0011`). _[Dependencies: M0 | Blocker: None]_
+- **Task T-6.1.2:** Integrate cloud KMS Customer-Managed Key (CMK) envelope encryption for multi-tenant storage isolation (`SRS-NFR-007`, `ADR-0006`). _[Dependencies: T-6.1.1 | Blocker: None]_
 
 #### FEAT-6.2: Immutable Audit Logging & Executive Analytics Dashboards
-* **Task T-6.2.1:** Develop `Audit-Governance-Service` recording immutable audit logs with cryptographic hash chaining (`SRS-FR-023`, `BR-003`, `ADR-0011`). *[Dependencies: T-4.2.1 | Blocker: None]*
-* **Task T-6.2.2:** Build compliance audit export engine generating SOC 2 and ISO 27001 audit packages (PDF/CSV) (`SRS-FR-024`, `SCUCS UC-012`). *[Dependencies: T-6.2.1 | Blocker: None]*
-* **Task T-6.2.3:** Develop `Executive-Analytics-Service` and UI dashboard rendering real-time MTTD, MTTR, false positive, and TCO metrics (`SRS-FR-022`, `SCUCS UC-011`). *[Dependencies: T-6.2.1 | Blocker: None]*
+
+- **Task T-6.2.1:** Develop `Audit-Governance-Service` recording immutable audit logs with cryptographic hash chaining (`SRS-FR-023`, `BR-003`, `ADR-0011`). _[Dependencies: T-4.2.1 | Blocker: None]_
+- **Task T-6.2.2:** Build compliance audit export engine generating SOC 2 and ISO 27001 audit packages (PDF/CSV) (`SRS-FR-024`, `SCUCS UC-012`). _[Dependencies: T-6.2.1 | Blocker: None]_
+- **Task T-6.2.3:** Develop `Executive-Analytics-Service` and UI dashboard rendering real-time MTTD, MTTR, false positive, and TCO metrics (`SRS-FR-022`, `SCUCS UC-011`). _[Dependencies: T-6.2.1 | Blocker: None]_
 
 ---
 
@@ -303,10 +322,10 @@ The 14-week engineering program is executed across seven two-week sprints:
 
 ## 11. Testing Strategy
 
-* **Unit Testing (80%+ Target):** Automated unit tests for OCSF parsers, graph edge linkers, SHAP score calculators, and policy guardrail checkers (`ADR-0019`).
-* **Contract Testing:** gRPC Proto contract validation tests preventing breaking API schema changes (`ADR-0018`).
-* **Synthetic Performance Testing:** Synthetic log stream load generator subjecting stream pipelines to 150,000 EPS to verify MTTD < 60s latency SLAs (`SRS-NFR-001`).
-* **Chaos Engineering:** Automated pod termination and network latency injection testing verifying self-healing stream resilience (`ADR-0019`).
+- **Unit Testing (80%+ Target):** Automated unit tests for OCSF parsers, graph edge linkers, SHAP score calculators, and policy guardrail checkers (`ADR-0019`).
+- **Contract Testing:** gRPC Proto contract validation tests preventing breaking API schema changes (`ADR-0018`).
+- **Synthetic Performance Testing:** Synthetic log stream load generator subjecting stream pipelines to 150,000 EPS to verify MTTD < 60s latency SLAs (`SRS-NFR-001`).
+- **Chaos Engineering:** Automated pod termination and network latency injection testing verifying self-healing stream resilience (`ADR-0019`).
 
 ---
 
@@ -340,6 +359,7 @@ The 14-week engineering program is executed across seven two-week sprints:
 ## 14. Definition of Done (DoD)
 
 A task or feature is considered **Done** only when:
+
 1. Source code is written, peer-reviewed, and merged into main branch behind a feature flag (`ADR-0017`).
 2. Unit test coverage meets or exceeds **80%** with zero failing regression tests.
 3. gRPC / OpenAPI contract compatibility checks pass without breaking changes (`ADR-0018`).
@@ -352,23 +372,24 @@ A task or feature is considered **Done** only when:
 ## 15. MVP Exit Criteria
 
 The SentinelAI MVP v1.0 release is approved for production deployment when:
-* **MTTD Latency:** End-to-end Mean Time to Detect verified **`< 60 seconds`** at 100,000 EPS load (`BO-1`).
-* **MTTR Latency:** Mean Time to Respond verified **`< 5 minutes`** for high-confidence threats (`BO-2`).
-* **Noise Suppression:** False-positive alert noise suppressed by **`> 80%`** vs baseline (`BO-3`).
-* **XAI Lineage:** **100%** of published incident stories display verified raw log evidence breadcrumbs (`BR-001`).
-* **System SLA:** Platform demonstrates **99.99% operational uptime** during pre-production staging tests (`SRS-NFR-AVAIL-01`).
-* **Security & Compliance:** Zero-Trust mTLS, KMS CMK isolation, and immutable audit logging signed off by Security Architecture (`ADR-0006`, `ADR-0011`).
+
+- **MTTD Latency:** End-to-end Mean Time to Detect verified **`< 60 seconds`** at 100,000 EPS load (`BO-1`).
+- **MTTR Latency:** Mean Time to Respond verified **`< 5 minutes`** for high-confidence threats (`BO-2`).
+- **Noise Suppression:** False-positive alert noise suppressed by **`> 80%`** vs baseline (`BO-3`).
+- **XAI Lineage:** **100%** of published incident stories display verified raw log evidence breadcrumbs (`BR-001`).
+- **System SLA:** Platform demonstrates **99.99% operational uptime** during pre-production staging tests (`SRS-NFR-AVAIL-01`).
+- **Security & Compliance:** Zero-Trust mTLS, KMS CMK isolation, and immutable audit logging signed off by Security Architecture (`ADR-0006`, `ADR-0011`).
 
 ---
 
 ## 16. Risk Register
 
-| Risk ID | Risk Description | Severity | Impacted Workstream | Mitigation Strategy |
-| :--- | :--- | :--- | :--- | :--- |
-| **IRK-001** | **Ingestion Stream Backpressure under Load** | High | Data Eng / Backend | Dynamic HPA pod auto-scaling based on streaming lag metrics (`ADR-0014`). |
-| **IRK-002** | **XAI Breadcrumb Validation Failure** | Critical | ML / Backend | Fallback to manual analyst triage tag if raw log line match fails (`BR-005`). |
-| **IRK-003** | **Action Connector API Rate Limiting** | High | Backend / Security | Exponential backoff retry logic and fallback ITSM ticket creation (`SRS-EH-002`). |
-| **IRK-004** | **Graph Memory Pressure during Scans** | Medium | Backend | Rolling time-window graph pruning and node offloading (`ADR-0008`). |
+| Risk ID     | Risk Description                             | Severity | Impacted Workstream | Mitigation Strategy                                                               |
+| :---------- | :------------------------------------------- | :------- | :------------------ | :-------------------------------------------------------------------------------- |
+| **IRK-001** | **Ingestion Stream Backpressure under Load** | High     | Data Eng / Backend  | Dynamic HPA pod auto-scaling based on streaming lag metrics (`ADR-0014`).         |
+| **IRK-002** | **XAI Breadcrumb Validation Failure**        | Critical | ML / Backend        | Fallback to manual analyst triage tag if raw log line match fails (`BR-005`).     |
+| **IRK-003** | **Action Connector API Rate Limiting**       | High     | Backend / Security  | Exponential backoff retry logic and fallback ITSM ticket creation (`SRS-EH-002`). |
+| **IRK-004** | **Graph Memory Pressure during Scans**       | Medium   | Backend             | Rolling time-window graph pruning and node offloading (`ADR-0008`).               |
 
 ---
 
@@ -411,4 +432,5 @@ This Engineering Implementation Roadmap constitutes the official operational pla
 ```
 
 ---
-*End of Engineering Implementation Roadmap – SentinelAI*
+
+_End of Engineering Implementation Roadmap – SentinelAI_

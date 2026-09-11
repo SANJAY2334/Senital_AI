@@ -1,5 +1,6 @@
 import { createNormalizerService } from '../src';
 import { OCSFClassUid, OCSFCategoryUid } from '@sentinelai/ocsf-types';
+import { OCSFCloudAuditEvent } from '../src/engine/mapper-registry';
 
 describe('OCSF Normalizer: AWS CloudTrail -> OCSF Cloud Audit Suite', () => {
   const { engine } = createNormalizerService();
@@ -27,13 +28,15 @@ describe('OCSF Normalizer: AWS CloudTrail -> OCSF Cloud Audit Suite', () => {
       provider: 'AWS_CLOUDTRAIL',
       rawPayload,
       correlationId: 'corr-aws-100',
-    }) as any;
+    }) as OCSFCloudAuditEvent;
 
     expect(ocsfEvent.category_uid).toBe(OCSFCategoryUid.APPLICATION_ACTIVITY);
     expect(ocsfEvent.class_uid).toBe(OCSFClassUid.CLOUD_AUDIT);
     expect(ocsfEvent.provider).toBe('AWS');
     expect(ocsfEvent.tenant_id).toBe('tenant-acme');
-    expect(ocsfEvent.ocsf_event_id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(ocsfEvent.ocsf_event_id).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    );
     expect(ocsfEvent.actor.user.name).toBe('secops-admin');
     expect(ocsfEvent.cloud.provider).toBe('AWS');
     expect(ocsfEvent.api.operation).toBe('RunInstances');

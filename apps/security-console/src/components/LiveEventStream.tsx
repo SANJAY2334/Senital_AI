@@ -11,15 +11,16 @@ export const LiveEventStream: React.FC<LiveEventStreamProps> = ({ events }) => {
   const [selectedProvider, setSelectedProvider] = useState<string>('ALL');
   const [selectedEvent, setSelectedEvent] = useState<UIProcessedEvent | null>(null);
 
-  const filteredEvents = selectedProvider === 'ALL'
-    ? events
-    : events.filter((e) => e.provider === selectedProvider);
+  const filteredEvents =
+    selectedProvider === 'ALL' ? events : events.filter((e) => e.provider === selectedProvider);
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col justify-between">
       <div className="p-4 border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <h2 className="text-sm font-semibold font-mono text-slate-200">LIVE NORMALIZED SECURITY EVENT STREAM</h2>
+          <h2 className="text-sm font-semibold font-mono text-slate-200">
+            LIVE NORMALIZED SECURITY EVENT STREAM
+          </h2>
           <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">
             {filteredEvents.length} events
           </span>
@@ -77,33 +78,46 @@ export const LiveEventStream: React.FC<LiveEventStreamProps> = ({ events }) => {
                 onClick={() => setSelectedEvent(evt)}
                 className="hover:bg-slate-800/40 cursor-pointer transition-colors"
               >
-                <td className="p-3 text-cyan-400 font-semibold truncate max-w-[140px]">{evt.eventId}</td>
+                <td className="p-3 text-cyan-400 font-semibold truncate max-w-[140px]">
+                  {evt.eventId}
+                </td>
                 <td className="p-3">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                    evt.provider === 'AWS_CLOUDTRAIL' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
-                    evt.provider === 'CROWDSTRIKE_EDR' ? 'bg-red-950 text-red-400 border border-red-800' :
-                    'bg-cyan-950 text-cyan-400 border border-cyan-800'
-                  }`}>
+                  <span
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      evt.provider === 'AWS_CLOUDTRAIL'
+                        ? 'bg-amber-950 text-amber-400 border border-amber-800'
+                        : evt.provider === 'CROWDSTRIKE_EDR'
+                          ? 'bg-red-950 text-red-400 border border-red-800'
+                          : 'bg-cyan-950 text-cyan-400 border border-cyan-800'
+                    }`}
+                  >
                     {evt.provider}
                   </span>
                 </td>
                 <td className="p-3 text-slate-300">{evt.tenantId}</td>
                 <td className="p-3 text-purple-300">{evt.ocsfClassName}</td>
                 <td className="p-3">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                    evt.severityLabel === 'CRITICAL' ? 'bg-red-950 text-red-400 border border-red-800' :
-                    evt.severityLabel === 'HIGH' ? 'bg-orange-950 text-orange-400 border border-orange-800' :
-                    'bg-slate-800 text-slate-300'
-                  }`}>
+                  <span
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      evt.severityLabel === 'CRITICAL'
+                        ? 'bg-red-950 text-red-400 border border-red-800'
+                        : evt.severityLabel === 'HIGH'
+                          ? 'bg-orange-950 text-orange-400 border border-orange-800'
+                          : 'bg-slate-800 text-slate-300'
+                    }`}
+                  >
                     {evt.severityLabel}
                   </span>
                 </td>
                 <td className="p-3 text-slate-400">{evt.timestampUtc.substring(11, 19)} UTC</td>
                 <td className="p-3">
-                  <span className={`px-2 py-0.5 rounded text-[10px] ${
-                    evt.processingStatus === 'NORMALIZED' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                    'bg-amber-950 text-amber-400 border border-amber-800'
-                  }`}>
+                  <span
+                    className={`px-2 py-0.5 rounded text-[10px] ${
+                      evt.processingStatus === 'NORMALIZED'
+                        ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                        : 'bg-amber-950 text-amber-400 border border-amber-800'
+                    }`}
+                  >
                     {evt.processingStatus}
                   </span>
                 </td>

@@ -1,17 +1,18 @@
 # SentinelAI: Machine Learning Architecture Document (MLAD)
+
 **AI System Design, Multi-Agent Orchestration & MLOps Specification**
 
 ---
 
-| Metadata Field | Value |
-| :--- | :--- |
-| **Document Version** | `1.0.0-APPROVED` |
-| **Document Classification** | Enterprise Technical Specification / AI Architecture Baseline |
-| **Target Audience** | Chief AI Architect, Principal ML Engineers, MLOps Engineers, Security Data Scientists, Lead Systems Architects |
-| **Author** | Chief AI Architect & Principal Machine Learning Engineer, SentinelAI |
-| **Parent Baselines** | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md)<br>• [High-Level Design (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md) |
-| **Status** | Approved AI Architecture Baseline |
-| **Effective Date** | August 2026 |
+| Metadata Field              | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Document Version**        | `1.0.0-APPROVED`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **Document Classification** | Enterprise Technical Specification / AI Architecture Baseline                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Target Audience**         | Chief AI Architect, Principal ML Engineers, MLOps Engineers, Security Data Scientists, Lead Systems Architects                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| **Author**                  | Chief AI Architect & Principal Machine Learning Engineer, SentinelAI                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Parent Baselines**        | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md)<br>• [High-Level Design (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/High_Level_Design.md) |
+| **Status**                  | Approved AI Architecture Baseline                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| **Effective Date**          | August 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 ---
 
@@ -22,10 +23,11 @@ The **Machine Learning Architecture Document (MLAD)** defines the complete artif
 SentinelAI deploys an ensemble of specialized machine learning models and multi-agent AI orchestrators to transform high-velocity streaming security telemetry into transparent, evidence-grounded threat intelligence. This document specifies the end-to-end ML pipeline, feature engineering frameworks, algorithm selection justifications, Explainable AI (XAI) raw log lineage pipelines, confidence scoring engines, model drift detection, analyst feedback learning loops, adversarial threat mitigations, and MLOps lifecycle governance.
 
 All machine learning designs strictly observe the governing architectural decisions:
-* **Multi-Agent Orchestration:** Decoupled specialized subagents coordinated by an AI Supervisor (`ADR-0009`).
-* **Explainable AI (XAI):** 100% deterministic raw log evidence lineage validation (`ADR-0010`, `BR-001`).
-* **Temporal Graph Analytics:** Property graph entity modeling and temporal attack stitching (`ADR-0008`).
-* **Zero-Trust & Privacy:** Cryptographic model memory isolation and zero customer log sharing (`ADR-0006`, `ADR-0011`).
+
+- **Multi-Agent Orchestration:** Decoupled specialized subagents coordinated by an AI Supervisor (`ADR-0009`).
+- **Explainable AI (XAI):** 100% deterministic raw log evidence lineage validation (`ADR-0010`, `BR-001`).
+- **Temporal Graph Analytics:** Property graph entity modeling and temporal attack stitching (`ADR-0008`).
+- **Zero-Trust & Privacy:** Cryptographic model memory isolation and zero customer log sharing (`ADR-0006`, `ADR-0011`).
 
 ---
 
@@ -167,10 +169,10 @@ SentinelAI trains and operates its ML models on five core enterprise dataset sou
 
 ## 7. Data Cleaning Strategy
 
-* **Schema Validation & Dead-Letter Routing:** Events missing core attributes (`class_uid`, `time`, `actor`) are routed to a dead-letter queue for parser inspection without interrupting stream processing (`VR-001`).
-* **Timestamp Standardization:** Converts all vendor timestamps to UTC ISO-8601 microsecond format (`I18N-001`).
-* **Categorical Normalization:** Standardizes user IDs, IP addresses (IPv4/IPv6 canonical representation), and host FQDNs.
-* **Missing Value Imputation:** Missing categorical fields are imputed with `UNKNOWN_ENTITY`; missing numerical features are assigned domain-safe median values.
+- **Schema Validation & Dead-Letter Routing:** Events missing core attributes (`class_uid`, `time`, `actor`) are routed to a dead-letter queue for parser inspection without interrupting stream processing (`VR-001`).
+- **Timestamp Standardization:** Converts all vendor timestamps to UTC ISO-8601 microsecond format (`I18N-001`).
+- **Categorical Normalization:** Standardizes user IDs, IP addresses (IPv4/IPv6 canonical representation), and host FQDNs.
+- **Missing Value Imputation:** Missing categorical fields are imputed with `UNKNOWN_ENTITY`; missing numerical features are assigned domain-safe median values.
 
 ---
 
@@ -263,28 +265,34 @@ The core ML architecture uses a **Multi-Agent Collaborative Ensemble Architectur
 ## 11. Algorithms Selection and Justification
 
 ### 11.1 Isolation Forest (Unsupervised Anomaly Detection)
-* **Role in Pipeline:** Evaluates raw entity behavioral feature vectors to identify novel or unusual anomalies without relying on pre-labeled attack signatures.
-* **Selection Justification:** Isolation Forest isolates anomalies by randomly partitioning feature space. It excels on high-dimensional tabular log data, operates with linear time complexity $O(n)$, and requires low memory overhead during real-time streaming inference.
+
+- **Role in Pipeline:** Evaluates raw entity behavioral feature vectors to identify novel or unusual anomalies without relying on pre-labeled attack signatures.
+- **Selection Justification:** Isolation Forest isolates anomalies by randomly partitioning feature space. It excels on high-dimensional tabular log data, operates with linear time complexity $O(n)$, and requires low memory overhead during real-time streaming inference.
 
 ### 11.2 XGBoost / Gradient Boosted Decision Trees (Supervised Threat Classification)
-* **Role in Pipeline:** Classifies validated anomaly clusters into threat severity tiers (`Critical`, `High`, `Medium`, `Low`).
-* **Selection Justification:** XGBoost provides state-of-the-art classification performance on tabular OCSF features, handles missing values natively, resists overfitting, and delivers sub-millisecond execution times.
+
+- **Role in Pipeline:** Classifies validated anomaly clusters into threat severity tiers (`Critical`, `High`, `Medium`, `Low`).
+- **Selection Justification:** XGBoost provides state-of-the-art classification performance on tabular OCSF features, handles missing values natively, resists overfitting, and delivers sub-millisecond execution times.
 
 ### 11.3 SHAP (SHapley Additive exPlanations)
-* **Role in Pipeline:** Calculates feature importance attribution weights for every threat classification prediction.
-* **Selection Justification:** Based on game-theoretic Shapley values, SHAP provides mathematically consistent local feature attribution, enabling the XAI Lineage Engine to identify which exact log fields drove the model's prediction.
+
+- **Role in Pipeline:** Calculates feature importance attribution weights for every threat classification prediction.
+- **Selection Justification:** Based on game-theoretic Shapley values, SHAP provides mathematically consistent local feature attribution, enabling the XAI Lineage Engine to identify which exact log fields drove the model's prediction.
 
 ### 11.4 Rule-Based Risk Engine & Asset Guardrails
-* **Role in Pipeline:** Enforces deterministic risk boundaries, asset criticality weightings ($W_{asset}$), and hard policy guardrails (`BR-002`, `SRS-FR-019`).
-* **Selection Justification:** Machine learning models must not have unconstrained authority over destructive remediation. A deterministic rule engine guarantees compliance boundaries regardless of model output.
+
+- **Role in Pipeline:** Enforces deterministic risk boundaries, asset criticality weightings ($W_{asset}$), and hard policy guardrails (`BR-002`, `SRS-FR-019`).
+- **Selection Justification:** Machine learning models must not have unconstrained authority over destructive remediation. A deterministic rule engine guarantees compliance boundaries regardless of model output.
 
 ### 11.5 MITRE ATT&CK Mapping Algorithm
-* **Role in Pipeline:** Maps observed graph event sequences to standard MITRE ATT&CK technique IDs (e.g., T1059.001 PowerShell, T1078 Valid Accounts).
-* **Selection Justification:** Combines cosine similarity vector matching across event descriptions with deterministic rule-based pattern templates to achieve high-precision technique mapping.
+
+- **Role in Pipeline:** Maps observed graph event sequences to standard MITRE ATT&CK technique IDs (e.g., T1059.001 PowerShell, T1078 Valid Accounts).
+- **Selection Justification:** Combines cosine similarity vector matching across event descriptions with deterministic rule-based pattern templates to achieve high-precision technique mapping.
 
 ### 11.6 Graph Correlation Algorithms (Louvain & PageRank)
-* **Role in Pipeline:** Performs community detection and node centrality scoring on temporal causal attack graphs (`ADR-0008`).
-* **Selection Justification:** Louvain community detection identifies dense clusters of interacting entities (attack stories); PageRank measures entity centrality to identify primary compromised assets.
+
+- **Role in Pipeline:** Performs community detection and node centrality scoring on temporal causal attack graphs (`ADR-0008`).
+- **Selection Justification:** Louvain community detection identifies dense clusters of interacting entities (attack stories); PageRank measures entity centrality to identify primary compromised assets.
 
 ---
 
@@ -311,9 +319,9 @@ The core ML architecture uses a **Multi-Agent Collaborative Ensemble Architectur
 
 ## 13. Validation Pipeline
 
-* **K-Fold Stratified Cross-Validation:** Validates models across 5 folds to ensure generalization across rare attack classes.
-* **Adversarial Red-Team Test Suite:** Evaluates model robustness against log injection, obfuscated PowerShell scripts, and living-off-the-land techniques prior to deployment (`R-003`).
-* **Historical Backtesting:** Evaluates retrained model checkpoints against 90 days of historical enterprise threat data to ensure zero regression in detection recall (`Recall > 98%`).
+- **K-Fold Stratified Cross-Validation:** Validates models across 5 folds to ensure generalization across rare attack classes.
+- **Adversarial Red-Team Test Suite:** Evaluates model robustness against log injection, obfuscated PowerShell scripts, and living-off-the-land techniques prior to deployment (`R-003`).
+- **Historical Backtesting:** Evaluates retrained model checkpoints against 90 days of historical enterprise threat data to ensure zero regression in detection recall (`Recall > 98%`).
 
 ---
 
@@ -406,9 +414,10 @@ The Incident Risk Score ($R_{incident}$) determines severity classification and 
 $$R_{incident} = W_{asset} \times S_{threat} \times C_{model}$$
 
 Where:
-* $W_{asset}$: Asset Criticality Weight (1.0 = Standard VM, 2.5 = Core Production Database).
-* $S_{threat}$: Threat Severity Score derived from XGBoost classification (1 to 10 scale).
-* $C_{model}$: Model Confidence Score (0.0 to 1.0).
+
+- $W_{asset}$: Asset Criticality Weight (1.0 = Standard VM, 2.5 = Core Production Database).
+- $S_{threat}$: Threat Severity Score derived from XGBoost classification (1 to 10 scale).
+- $C_{model}$: Model Confidence Score (0.0 to 1.0).
 
 ---
 
@@ -440,16 +449,17 @@ Where:
 ## 20. Model Drift Detection
 
 The system continuously monitors for Model Drift and Data Concept Drift:
-* **Feature Drift Monitoring:** Applies Kolmogorov-Smirnov (KS) tests and Population Stability Index (PSI) to input feature distributions every 24 hours.
-* **Concept Drift Alert:** If PSI $> 0.25$ or false positive rate increases by $> 5\%$ over baseline, the system triggers an automated drift alert and queues model retraining.
+
+- **Feature Drift Monitoring:** Applies Kolmogorov-Smirnov (KS) tests and Population Stability Index (PSI) to input feature distributions every 24 hours.
+- **Concept Drift Alert:** If PSI $> 0.25$ or false positive rate increases by $> 5\%$ over baseline, the system triggers an automated drift alert and queues model retraining.
 
 ---
 
 ## 21. Model Retraining Strategy
 
-* **Scheduled Retraining:** Retrains models weekly using the latest 90-day rolling dataset incorporating confirmed analyst labels.
-* **Event-Triggered Retraining:** Triggered automatically when drift detection metrics breach safety thresholds (PSI $> 0.25$).
-* **Canary Deployment Evaluation:** Retrained model checkpoints are deployed to canary inference pools and evaluated against live shadow traffic before promoting to primary production serving.
+- **Scheduled Retraining:** Retrains models weekly using the latest 90-day rolling dataset incorporating confirmed analyst labels.
+- **Event-Triggered Retraining:** Triggered automatically when drift detection metrics breach safety thresholds (PSI $> 0.25$).
+- **Canary Deployment Evaluation:** Retrained model checkpoints are deployed to canary inference pools and evaluated against live shadow traffic before promoting to primary production serving.
 
 ---
 
@@ -474,20 +484,20 @@ The system continuously monitors for Model Drift and Data Concept Drift:
 
 ## 23. Security of ML Models
 
-* **Model Artifact Encryption:** All trained model checkpoints are encrypted at rest using AES-256 with Customer-Managed Keys (`ADR-0006`, `ADR-0011`).
-* **Inference Memory Isolation:** Model serving microservices run in unprivileged containers with isolated memory spaces.
-* **Model Access Authorization:** Model inference endpoints enforce strict mTLS 1.3 and RBAC token authorization (`SRS-NFR-005`).
+- **Model Artifact Encryption:** All trained model checkpoints are encrypted at rest using AES-256 with Customer-Managed Keys (`ADR-0006`, `ADR-0011`).
+- **Inference Memory Isolation:** Model serving microservices run in unprivileged containers with isolated memory spaces.
+- **Model Access Authorization:** Model inference endpoints enforce strict mTLS 1.3 and RBAC token authorization (`SRS-NFR-005`).
 
 ---
 
 ## 24. Adversarial ML Threats and Mitigations
 
-| Threat ID | Adversarial Threat Description | Impact | Technical Mitigation Strategy |
-| :--- | :--- | :--- | :--- |
-| **AML-001** | **Telemetry Log Poisoning** (Injecting benign patterns to distort baselines) | High | Robust feature scaling, active anomaly filtering, and supervised analyst label verification. |
-| **AML-002** | **Adversarial Evasion / Obfuscation** (Polymorphic commands avoiding detection) | High | Multi-modal feature extraction (combining graph topology with command entropy). |
-| **AML-003** | **Prompt Injection** (Attacker inserting instructions into log fields) | Medium | Complete segregation of natural language prompts from telemetry data; strict JSON schema parsing. |
-| **AML-004** | **Model Extraction / Stealing** | Medium | Rate-limiting API queries and masking internal model raw probability vectors. |
+| Threat ID   | Adversarial Threat Description                                                  | Impact | Technical Mitigation Strategy                                                                     |
+| :---------- | :------------------------------------------------------------------------------ | :----- | :------------------------------------------------------------------------------------------------ |
+| **AML-001** | **Telemetry Log Poisoning** (Injecting benign patterns to distort baselines)    | High   | Robust feature scaling, active anomaly filtering, and supervised analyst label verification.      |
+| **AML-002** | **Adversarial Evasion / Obfuscation** (Polymorphic commands avoiding detection) | High   | Multi-modal feature extraction (combining graph topology with command entropy).                   |
+| **AML-003** | **Prompt Injection** (Attacker inserting instructions into log fields)          | Medium | Complete segregation of natural language prompts from telemetry data; strict JSON schema parsing. |
+| **AML-004** | **Model Extraction / Stealing**                                                 | Medium | Rate-limiting API queries and masking internal model raw probability vectors.                     |
 
 ---
 
@@ -508,9 +518,9 @@ The system continuously monitors for Model Drift and Data Concept Drift:
 
 ## 26. AI Governance
 
-* **Board-Level Responsible AI Governance:** Strictly enforces transparency, explainability, fairness, human oversight, and data privacy principles (`PVD Section 15.3`).
-* **Zero Public LLM Telemetry Leakage:** Customer security logs are **never** transmitted to external or shared foundation model APIs (`PVD Section 15.3`).
-* **Audit-Ready AI Lineage:** Maintains immutable records of all model versions, hyperparameter configurations, and inference outputs for compliance auditing (`UC-012`).
+- **Board-Level Responsible AI Governance:** Strictly enforces transparency, explainability, fairness, human oversight, and data privacy principles (`PVD Section 15.3`).
+- **Zero Public LLM Telemetry Leakage:** Customer security logs are **never** transmitted to external or shared foundation model APIs (`PVD Section 15.3`).
+- **Audit-Ready AI Lineage:** Maintains immutable records of all model versions, hyperparameter configurations, and inference outputs for compliance auditing (`UC-012`).
 
 ---
 
@@ -518,35 +528,35 @@ The system continuously monitors for Model Drift and Data Concept Drift:
 
 Tracing AI/ML Components to SRS Requirements, HLD Microservices, and Governing ADRs:
 
-| AI / ML Component | Mapped SRS Requirements | Mapped HLD Microservice | Governing ADRs |
-| :--- | :--- | :--- | :--- |
-| **Isolation Forest Subagent** | `SRS-FR-009`, `SRS-FR-010` | `Noise-Suppression-Agent` | `ADR-0009` |
-| **XGBoost Classifier** | `SRS-FR-009` | `Triage-Agent-Worker` | `ADR-0009` |
-| **SHAP Lineage Explainer** | `SRS-FR-014`, `SRS-FR-015` | `XAI-Lineage-Service` | `ADR-0010` |
-| **Rule-Based Risk Engine** | `SRS-FR-019` | `Policy-Guardrail-Service` | `ADR-0012`, `ADR-0017` |
-| **MITRE ATT&CK Mapper** | `SRS-FR-012` | `MITRE-Mapper-Agent` | `ADR-0009` |
-| **Graph Correlation Engine** | `SRS-FR-006` to `008` | `Causal-Graph-Service` | `ADR-0008` |
-| **AI Supervisor Coordinator**| `SRS-FR-009`, `SRS-FR-013` | `AI-Supervisor-Service` | `ADR-0009` |
-| **Model Serving Architecture**| `SRS-NFR-002` | `AI-Supervisor-Service` | `ADR-0002`, `ADR-0014` |
+| AI / ML Component              | Mapped SRS Requirements    | Mapped HLD Microservice    | Governing ADRs         |
+| :----------------------------- | :------------------------- | :------------------------- | :--------------------- |
+| **Isolation Forest Subagent**  | `SRS-FR-009`, `SRS-FR-010` | `Noise-Suppression-Agent`  | `ADR-0009`             |
+| **XGBoost Classifier**         | `SRS-FR-009`               | `Triage-Agent-Worker`      | `ADR-0009`             |
+| **SHAP Lineage Explainer**     | `SRS-FR-014`, `SRS-FR-015` | `XAI-Lineage-Service`      | `ADR-0010`             |
+| **Rule-Based Risk Engine**     | `SRS-FR-019`               | `Policy-Guardrail-Service` | `ADR-0012`, `ADR-0017` |
+| **MITRE ATT&CK Mapper**        | `SRS-FR-012`               | `MITRE-Mapper-Agent`       | `ADR-0009`             |
+| **Graph Correlation Engine**   | `SRS-FR-006` to `008`      | `Causal-Graph-Service`     | `ADR-0008`             |
+| **AI Supervisor Coordinator**  | `SRS-FR-009`, `SRS-FR-013` | `AI-Supervisor-Service`    | `ADR-0009`             |
+| **Model Serving Architecture** | `SRS-NFR-002`              | `AI-Supervisor-Service`    | `ADR-0002`, `ADR-0014` |
 
 ---
 
 ## 28. Future AI Enhancements
 
-* **Release v2.0:** Graph Neural Networks (GNNs) for direct deep learning on dynamic temporal attack graphs.
-* **Release v2.0:** Predictive Attack Path Simulation predicting lateral movement probabilities prior to exploitation.
-* **Release v3.0:** Autonomous AI Decoy Network orchestration deploying dynamic honeypots into attack paths.
-* **Release v4.0:** Post-Quantum Cryptographic Posture Monitoring AI.
+- **Release v2.0:** Graph Neural Networks (GNNs) for direct deep learning on dynamic temporal attack graphs.
+- **Release v2.0:** Predictive Attack Path Simulation predicting lateral movement probabilities prior to exploitation.
+- **Release v3.0:** Autonomous AI Decoy Network orchestration deploying dynamic honeypots into attack paths.
+- **Release v4.0:** Post-Quantum Cryptographic Posture Monitoring AI.
 
 ---
 
 ## 29. Risks
 
-| Risk ID | Risk Description | Severity | Mitigation Strategy |
-| :--- | :--- | :--- | :--- |
-| **MLR-001** | **Concept Drift in New Attack Vectors** | High | Automated drift detection (PSI > 0.25) triggering fast-track retraining pipelines. |
-| **MLR-002** | **High Inference Latency under Heavy Load** | High | Multi-agent parallel serving pools with automatic fallback to deterministic correlation rules. |
-| **MLR-003** | **Adversarial Log Obfuscation** | Medium | Graph topological feature extraction combining structural entity relations with text entropy. |
+| Risk ID     | Risk Description                            | Severity | Mitigation Strategy                                                                            |
+| :---------- | :------------------------------------------ | :------- | :--------------------------------------------------------------------------------------------- |
+| **MLR-001** | **Concept Drift in New Attack Vectors**     | High     | Automated drift detection (PSI > 0.25) triggering fast-track retraining pipelines.             |
+| **MLR-002** | **High Inference Latency under Heavy Load** | High     | Multi-agent parallel serving pools with automatic fallback to deterministic correlation rules. |
+| **MLR-003** | **Adversarial Log Obfuscation**             | Medium   | Graph topological feature extraction combining structural entity relations with text entropy.  |
 
 ---
 
@@ -568,4 +578,5 @@ This Machine Learning Architecture Document constitutes the official AI design b
 ```
 
 ---
-*End of Machine Learning Architecture Document – SentinelAI*
+
+_End of Machine Learning Architecture Document – SentinelAI_

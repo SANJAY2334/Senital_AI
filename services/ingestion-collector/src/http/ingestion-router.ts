@@ -14,7 +14,8 @@ export function createIngestionRouter(
     const startTime = Date.now();
     metrics.recordReceived();
 
-    const { eventId, tenantId, provider, timestampUtc, correlationId, rawPayload, metadata } = req.body;
+    const { eventId, tenantId, provider, timestampUtc, correlationId, rawPayload, metadata } =
+      req.body;
 
     // Zero-Trust Tenant & Schema Validation (ADR-0006, ADR-0011)
     if (!tenantId || typeof tenantId !== 'string') {

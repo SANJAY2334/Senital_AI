@@ -38,8 +38,24 @@ describe('T-1.5 E2E Integration Suite: Resilience, Outage Recovery & Expanded Fa
 
     // Normalizer is down/paused; ingestion accepts raw events into raw stream/buffer
     const pkgs = [
-      { eventId: 'norm-down-1', tenantId: 'tenant-norm-down', provider: 'AWS_CLOUDTRAIL' as const, timestampUtc: '', correlationId: '', rawPayload: '{}', metadata: {} },
-      { eventId: 'norm-down-2', tenantId: 'tenant-norm-down', provider: 'CROWDSTRIKE_EDR' as const, timestampUtc: '', correlationId: '', rawPayload: '{}', metadata: {} },
+      {
+        eventId: 'norm-down-1',
+        tenantId: 'tenant-norm-down',
+        provider: 'AWS_CLOUDTRAIL' as const,
+        timestampUtc: '',
+        correlationId: '',
+        rawPayload: '{}',
+        metadata: {},
+      },
+      {
+        eventId: 'norm-down-2',
+        tenantId: 'tenant-norm-down',
+        provider: 'CROWDSTRIKE_EDR' as const,
+        timestampUtc: '',
+        correlationId: '',
+        rawPayload: '{}',
+        metadata: {},
+      },
     ];
 
     for (const p of pkgs) {
@@ -74,17 +90,29 @@ describe('T-1.5 E2E Integration Suite: Resilience, Outage Recovery & Expanded Fa
     const normalizer = createNormalizerService();
 
     // Malformed JSON
-    const r1 = await normalizer.consumer.consumeRawPackage({ tenantId: 't', provider: 'AWS_CLOUDTRAIL', rawPayload: '{bad-json' });
+    const r1 = await normalizer.consumer.consumeRawPackage({
+      tenantId: 't',
+      provider: 'AWS_CLOUDTRAIL',
+      rawPayload: '{bad-json',
+    });
     expect(r1).toBeNull();
     expect(normalizer.metrics.getSnapshot().normalizationFailures).toBe(1);
 
     // Missing Tenant ID
-    const r2 = await normalizer.consumer.consumeRawPackage({ tenantId: '', provider: 'AWS_CLOUDTRAIL', rawPayload: '{}' });
+    const r2 = await normalizer.consumer.consumeRawPackage({
+      tenantId: '',
+      provider: 'AWS_CLOUDTRAIL',
+      rawPayload: '{}',
+    });
     expect(r2).toBeNull();
     expect(normalizer.metrics.getSnapshot().eventsRejected).toBe(1);
 
     // Unsupported Provider
-    const r3 = await normalizer.consumer.consumeRawPackage({ tenantId: 't', provider: 'UNKNOWN_VENDOR', rawPayload: '{}' });
+    const r3 = await normalizer.consumer.consumeRawPackage({
+      tenantId: 't',
+      provider: 'UNKNOWN_VENDOR',
+      rawPayload: '{}',
+    });
     expect(r3).toBeNull();
     expect(normalizer.metrics.getSnapshot().eventsRejected).toBe(2);
   });

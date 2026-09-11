@@ -6,7 +6,9 @@ interface ProviderDistributionProps {
   distribution: ProviderDistribution;
 }
 
-export const ProviderDistributionComponent: React.FC<ProviderDistributionProps> = ({ distribution }) => {
+export const ProviderDistributionComponent: React.FC<ProviderDistributionProps> = ({
+  distribution,
+}) => {
   return (
     <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-4">
       <h2 className="text-sm font-semibold font-mono text-slate-300 flex items-center justify-between">
@@ -22,10 +24,15 @@ export const ProviderDistributionComponent: React.FC<ProviderDistributionProps> 
               <Cloud className="w-3.5 h-3.5" />
               <span>AWS CloudTrail (OCSF 6001 Cloud Audit)</span>
             </span>
-            <span className="text-slate-300">{distribution.awsCount.toLocaleString()} ({distribution.awsPercent}%)</span>
+            <span className="text-slate-300">
+              {distribution.awsCount.toLocaleString()} ({distribution.awsPercent}%)
+            </span>
           </div>
           <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-            <div className="bg-amber-500 h-full transition-all duration-500" style={{ width: `${distribution.awsPercent}%` }} />
+            <div
+              className="bg-amber-500 h-full transition-all duration-500"
+              style={{ width: `${distribution.awsPercent}%` }}
+            />
           </div>
         </div>
 
@@ -36,10 +43,15 @@ export const ProviderDistributionComponent: React.FC<ProviderDistributionProps> 
               <ShieldAlert className="w-3.5 h-3.5" />
               <span>CrowdStrike EDR (OCSF 1007 Process Activity)</span>
             </span>
-            <span className="text-slate-300">{distribution.csCount.toLocaleString()} ({distribution.csPercent}%)</span>
+            <span className="text-slate-300">
+              {distribution.csCount.toLocaleString()} ({distribution.csPercent}%)
+            </span>
           </div>
           <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-            <div className="bg-red-500 h-full transition-all duration-500" style={{ width: `${distribution.csPercent}%` }} />
+            <div
+              className="bg-red-500 h-full transition-all duration-500"
+              style={{ width: `${distribution.csPercent}%` }}
+            />
           </div>
         </div>
 
@@ -50,10 +62,15 @@ export const ProviderDistributionComponent: React.FC<ProviderDistributionProps> 
               <KeyRound className="w-3.5 h-3.5" />
               <span>Okta IAM (OCSF 3001 Authentication)</span>
             </span>
-            <span className="text-slate-300">{distribution.oktaCount.toLocaleString()} ({distribution.oktaPercent}%)</span>
+            <span className="text-slate-300">
+              {distribution.oktaCount.toLocaleString()} ({distribution.oktaPercent}%)
+            </span>
           </div>
           <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-            <div className="bg-cyan-500 h-full transition-all duration-500" style={{ width: `${distribution.oktaPercent}%` }} />
+            <div
+              className="bg-cyan-500 h-full transition-all duration-500"
+              style={{ width: `${distribution.oktaPercent}%` }}
+            />
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export class KeyRotationManager implements IKeyRotationManager {
       keyId: `${currentKeyId}-rotated-v2`,
       version: newVersion,
       createdAt: new Date().toISOString(),
-      provider: this.provider.providerName as any,
+      provider: this.provider.providerName as SecretMetadata['provider'],
       tenantId,
     };
   }

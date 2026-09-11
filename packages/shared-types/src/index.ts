@@ -1,4 +1,4 @@
-import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
+export type { OCSFBaseEvent } from '@sentinelai/ocsf-types';
 
 export type IncidentSeverity = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 
@@ -45,7 +45,8 @@ export interface IncidentStory {
   mitreTechniques: string[];
   affectedEntityIds: string[];
   breadcrumbs: XAIBreadcrumb[];
-  status: 'SYNTHESIZED' | 'OPEN' | 'INVESTIGATING' | 'REMEDIATION_PENDING' | 'CONTAINED' | 'RESOLVED';
+  status:
+    'SYNTHESIZED' | 'OPEN' | 'INVESTIGATING' | 'REMEDIATION_PENDING' | 'CONTAINED' | 'RESOLVED';
   uncertaintyEscalation: boolean; // True if confidence < 80% (BR-005)
   createdAt: string;
 }

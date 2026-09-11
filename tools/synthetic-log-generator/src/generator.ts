@@ -1,7 +1,10 @@
 import { SyntheticGeneratorConfig, DEFAULT_GENERATOR_CONFIG } from './config';
 import { SeededRandom } from './utils/seed-random.util';
 import { MetricsCounter, GeneratorMetricsSnapshot } from './utils/metrics-counter.util';
-import { AwsCloudTrailFactory, SyntheticRawTelemetryPackage } from './factories/aws-cloudtrail.factory';
+import {
+  AwsCloudTrailFactory,
+  SyntheticRawTelemetryPackage,
+} from './factories/aws-cloudtrail.factory';
 import { CrowdStrikeEdrFactory } from './factories/crowdstrike-edr.factory';
 import { OktaIamFactory } from './factories/okta-iam.factory';
 

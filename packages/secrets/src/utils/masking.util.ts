@@ -5,7 +5,10 @@ export function maskSecret(secretValue?: string, visibleChars: number = 4): stri
   return `${prefix}***-MASKED`;
 }
 
-export function maskConfigObject<T extends Record<string, unknown>>(config: T, secretKeys: string[] = ['KMS_MASTER_KEY_ID', 'DATABASE_PASSWORD', 'KAFKA_CLIENT_SECRET']): T {
+export function maskConfigObject<T extends Record<string, unknown>>(
+  config: T,
+  secretKeys: string[] = ['KMS_MASTER_KEY_ID', 'DATABASE_PASSWORD', 'KAFKA_CLIENT_SECRET'],
+): T {
   const maskedObj = { ...config } as Record<string, unknown>;
   for (const key of Object.keys(maskedObj)) {
     if (secretKeys.includes(key) && typeof maskedObj[key] === 'string') {

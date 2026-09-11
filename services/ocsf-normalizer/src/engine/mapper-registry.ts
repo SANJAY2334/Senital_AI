@@ -1,4 +1,10 @@
-import { OCSFClassUid, OCSFCategoryUid, OCSFBaseEvent, OCSFProcessActivityEvent, OCSFAuthenticationEvent } from '@sentinelai/ocsf-types';
+import {
+  OCSFClassUid,
+  OCSFCategoryUid,
+  OCSFBaseEvent,
+  OCSFProcessActivityEvent,
+  OCSFAuthenticationEvent,
+} from '@sentinelai/ocsf-types';
 import { generateUUID } from '@sentinelai/utils';
 
 export interface OCSFCloudAuditEvent extends OCSFBaseEvent {
@@ -24,8 +30,15 @@ export interface OCSFCloudAuditEvent extends OCSFBaseEvent {
   };
 }
 
-export function mapAWSCloudTrailToOCSF(raw: any, tenantId: string, correlationId: string): OCSFCloudAuditEvent {
-  const eventTime = raw.eventTime ? new Date(raw.eventTime).toISOString() : new Date().toISOString();
+export function mapAWSCloudTrailToOCSF(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  raw: any,
+  tenantId: string,
+  correlationId: string,
+): OCSFCloudAuditEvent {
+  const eventTime = raw.eventTime
+    ? new Date(raw.eventTime).toISOString()
+    : new Date().toISOString();
   return {
     ocsf_event_id: generateUUID(),
     category_uid: OCSFCategoryUid.APPLICATION_ACTIVITY,
@@ -61,9 +74,16 @@ export function mapAWSCloudTrailToOCSF(raw: any, tenantId: string, correlationId
   };
 }
 
-export function mapCrowdStrikeEDRToOCSF(raw: any, tenantId: string, correlationId: string): OCSFProcessActivityEvent {
+export function mapCrowdStrikeEDRToOCSF(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  raw: any,
+  tenantId: string,
+  correlationId: string,
+): OCSFProcessActivityEvent {
   const evt = raw.event || raw;
-  const time = evt.ProcessStartTime ? new Date(evt.ProcessStartTime).toISOString() : new Date().toISOString();
+  const time = evt.ProcessStartTime
+    ? new Date(evt.ProcessStartTime).toISOString()
+    : new Date().toISOString();
   return {
     ocsf_event_id: generateUUID(),
     category_uid: OCSFCategoryUid.SYSTEM_ACTIVITY,
@@ -97,7 +117,12 @@ export function mapCrowdStrikeEDRToOCSF(raw: any, tenantId: string, correlationI
   };
 }
 
-export function mapOktaIAMToOCSF(raw: any, tenantId: string, correlationId: string): OCSFAuthenticationEvent {
+export function mapOktaIAMToOCSF(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  raw: any,
+  tenantId: string,
+  correlationId: string,
+): OCSFAuthenticationEvent {
   const time = raw.published ? new Date(raw.published).toISOString() : new Date().toISOString();
   const isSuccess = raw.outcome?.result === 'SUCCESS';
   return {

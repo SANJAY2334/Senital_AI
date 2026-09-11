@@ -1,4 +1,5 @@
 # contracts/
+
 Contains shared interface contracts and schema specifications (ADR-0003, ADR-0018).
 
 - `proto/`: Protocol Buffer gRPC service definitions for internal IPC.

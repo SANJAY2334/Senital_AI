@@ -1,7 +1,9 @@
 # services/
+
 Contains decoupled reactive microservice backends (HLD Section 7, ADR-0002).
 
 ## Microservices Breakdown
+
 - `ingestion-collector/`: Multi-cloud, EDR, and IAM streaming log receiver (SRS-FR-001..003, HLD 7).
 - `ocsf-normalizer/`: OCSF v1.1 schema translation & UUID assignment service (SRS-FR-004..005, HLD 7).
 - `causal-graph/`: In-memory dynamic temporal causal graph construction service (SRS-FR-006..007, HLD 7, ADR-0008).

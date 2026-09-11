@@ -1,6 +1,7 @@
 import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
 
-export type ViewTab = 'overview' | 'telemetry' | 'pipeline' | 'events' | 'health' | 'architecture' | 'ai-planned';
+export type ViewTab =
+  'overview' | 'telemetry' | 'pipeline' | 'events' | 'health' | 'architecture' | 'ai-planned';
 
 export interface UIProcessedEvent {
   eventId: string;

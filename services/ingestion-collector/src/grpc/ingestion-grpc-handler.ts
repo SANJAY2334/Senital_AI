@@ -40,9 +40,10 @@ export class IngestionGrpcHandler {
     const pkg: SyntheticRawTelemetryPackage = {
       eventId: request.eventId || crypto.randomUUID(),
       tenantId: request.tenantId,
-      provider: request.provider as any,
+      provider: request.provider as SyntheticRawTelemetryPackage['provider'],
       timestampUtc: request.timestampUtc || new Date().toISOString(),
-      correlationId: request.correlationId || `corr-grpc-${Math.random().toString(36).substring(2, 9)}`,
+      correlationId:
+        request.correlationId || `corr-grpc-${Math.random().toString(36).substring(2, 9)}`,
       rawPayload: request.rawPayload,
       metadata: request.metadata || {},
     };
@@ -58,13 +59,15 @@ export class IngestionGrpcHandler {
     };
   }
 
-  public async handleBatchIngest(requests: IngestGrpcRequest[]): Promise<{ totalReceived: number; totalAcknowledged: number }> {
+  public async handleBatchIngest(
+    requests: IngestGrpcRequest[],
+  ): Promise<{ totalReceived: number; totalAcknowledged: number }> {
     this.metrics.recordReceived(requests.length);
 
     const pkgs: SyntheticRawTelemetryPackage[] = requests.map((r) => ({
       eventId: r.eventId || crypto.randomUUID(),
       tenantId: r.tenantId,
-      provider: r.provider as any,
+      provider: r.provider as SyntheticRawTelemetryPackage['provider'],
       timestampUtc: r.timestampUtc || new Date().toISOString(),
       correlationId: r.correlationId || `corr-grpc-batch`,
       rawPayload: r.rawPayload,

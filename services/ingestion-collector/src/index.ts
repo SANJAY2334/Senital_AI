@@ -13,7 +13,9 @@ export * from './kafka/raw-telemetry-producer';
 export * from './http/ingestion-router';
 export * from './grpc/ingestion-grpc-handler';
 
-export function createIngestionServer(overrideConfig?: Partial<ReturnType<typeof loadIngestionConfig>>) {
+export function createIngestionServer(
+  overrideConfig?: Partial<ReturnType<typeof loadIngestionConfig>>,
+) {
   const config = loadIngestionConfig(overrideConfig);
   const metrics = new IngestionMetricsCollector();
   const ringBuffer = new StreamRingBuffer(config.bufferMaxCapacity, metrics);

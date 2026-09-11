@@ -1,5 +1,4 @@
 import { SyntheticTelemetryGenerator } from '@sentinelai/synthetic-log-generator';
-import { createIngestionServer } from '@sentinelai/ingestion-collector';
 import { createNormalizerService } from '@sentinelai/ocsf-normalizer';
 
 describe('T-1.5 E2E Integration Suite: Multi-Tenant Isolation Verification', () => {

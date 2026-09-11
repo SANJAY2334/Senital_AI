@@ -39,12 +39,12 @@ This package satisfies **`ADR-0006 (Multi-Tenant CMK Isolation)`** and **`ADR-00
 
 ## 3. Supported Providers
 
-| Provider Identifier | Provider Class | Target Environment | Key Features |
-| :--- | :--- | :--- | :--- |
-| `local-mock` | `LocalMockSecretProvider` | `local`, `testing` | In-memory AES-256-GCM encryption with default dev keys. |
-| `aws-kms` | `AwsKmsSecretProvider` | AWS Cloud VPC / EKS | AWS KMS `GenerateDataKey` & `Decrypt` envelope integration. |
-| `azure-keyvault` | `AzureKeyVaultSecretProvider` | Azure Cloud / AKS | Azure Key Vault envelope encryption integration. |
-| `gcp-kms` | `GcpKmsSecretProvider` | GCP / GKE | GCP Cloud KMS key ring & crypto key integration. |
+| Provider Identifier | Provider Class                | Target Environment  | Key Features                                                |
+| :------------------ | :---------------------------- | :------------------ | :---------------------------------------------------------- |
+| `local-mock`        | `LocalMockSecretProvider`     | `local`, `testing`  | In-memory AES-256-GCM encryption with default dev keys.     |
+| `aws-kms`           | `AwsKmsSecretProvider`        | AWS Cloud VPC / EKS | AWS KMS `GenerateDataKey` & `Decrypt` envelope integration. |
+| `azure-keyvault`    | `AzureKeyVaultSecretProvider` | Azure Cloud / AKS   | Azure Key Vault envelope encryption integration.            |
+| `gcp-kms`           | `GcpKmsSecretProvider`        | GCP / GKE           | GCP Cloud KMS key ring & crypto key integration.            |
 
 ---
 
@@ -58,7 +58,10 @@ const resolver = new SecretResolver(); // Reads process.env.KMS_PROVIDER
 const secretProvider = resolver.getProvider();
 
 // 2. Encrypt tenant-sensitive payload
-const envelope = await secretProvider.encryptSecret('sensitive-customer-log-data', 'tenant-acme-corp');
+const envelope = await secretProvider.encryptSecret(
+  'sensitive-customer-log-data',
+  'tenant-acme-corp',
+);
 console.log('Encrypted Key ID:', envelope.keyId);
 
 // 3. Decrypt tenant payload
@@ -75,6 +78,7 @@ console.log('Log Safe Key:', maskSecret(rawKey)); // "arn:***-MASKED"
 ## 5. Testing
 
 Run unit tests via Jest:
+
 ```bash
 npm run test --filter=@sentinelai/secrets
 ```

@@ -1,5 +1,5 @@
 import { createNormalizerService } from '../src';
-import { OCSFClassUid, OCSFCategoryUid } from '@sentinelai/ocsf-types';
+import { OCSFClassUid, OCSFCategoryUid, OCSFProcessActivityEvent } from '@sentinelai/ocsf-types';
 
 describe('OCSF Normalizer: CrowdStrike EDR -> OCSF Process Activity Suite', () => {
   const { engine } = createNormalizerService();
@@ -27,13 +27,15 @@ describe('OCSF Normalizer: CrowdStrike EDR -> OCSF Process Activity Suite', () =
       provider: 'CROWDSTRIKE_EDR',
       rawPayload,
       correlationId: 'corr-cs-200',
-    }) as any;
+    }) as OCSFProcessActivityEvent;
 
     expect(ocsfEvent.category_uid).toBe(OCSFCategoryUid.SYSTEM_ACTIVITY);
     expect(ocsfEvent.class_uid).toBe(OCSFClassUid.PROCESS_ACTIVITY);
     expect(ocsfEvent.provider).toBe('CrowdStrike');
     expect(ocsfEvent.tenant_id).toBe('tenant-beta');
-    expect(ocsfEvent.ocsf_event_id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    expect(ocsfEvent.ocsf_event_id).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+    );
     expect(ocsfEvent.process.name).toBe('powershell.exe');
     expect(ocsfEvent.process.pid).toBe(4096);
     expect(ocsfEvent.device.hostname).toBe('WORKSTATION-084');

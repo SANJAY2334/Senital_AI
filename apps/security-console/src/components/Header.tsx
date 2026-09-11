@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Activity, Radio, AlertCircle } from 'lucide-react';
+import { Shield, Radio, AlertCircle } from 'lucide-react';
 
 interface HeaderProps {
   isOutageActive: boolean;
@@ -14,12 +14,16 @@ export const Header: React.FC<HeaderProps> = ({ isOutageActive }) => {
         </div>
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-bold tracking-wider text-slate-100 font-mono">SENTINELAI</h1>
+            <h1 className="text-xl font-bold tracking-wider text-slate-100 font-mono">
+              SENTINELAI
+            </h1>
             <span className="bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs px-2 py-0.5 rounded font-mono font-medium">
               v1.0.0-DEMO
             </span>
           </div>
-          <p className="text-xs text-slate-400 font-medium">Security Operations Command & Control Console</p>
+          <p className="text-xs text-slate-400 font-medium">
+            Security Operations Command & Control Console
+          </p>
         </div>
       </div>
 

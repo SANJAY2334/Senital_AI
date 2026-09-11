@@ -1,17 +1,18 @@
 # SentinelAI: High-Level Design (HLD)
+
 **Enterprise Distributed System Architecture Specification**
 
 ---
 
-| Metadata Field | Value |
-| :--- | :--- |
-| **Document Version** | `1.0.0-APPROVED` |
-| **Document Classification** | Enterprise Technical Baseline / Architectural Design |
-| **Target Audience** | Executive Leadership, Principal Architects, Lead Software Engineers, DevOps Engineers, Security Architects |
-| **Author** | Chief Enterprise Architect & Principal Distributed Systems Architect, SentinelAI |
-| **Parent Baselines** | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [System Context & Use Case Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/analysis/System_Context_and_Use_Case_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md) |
-| **Status** | Approved System Architecture Baseline |
-| **Effective Date** | August 2026 |
+| Metadata Field              | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Document Version**        | `1.0.0-APPROVED`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Document Classification** | Enterprise Technical Baseline / Architectural Design                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **Target Audience**         | Executive Leadership, Principal Architects, Lead Software Engineers, DevOps Engineers, Security Architects                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **Author**                  | Chief Enterprise Architect & Principal Distributed Systems Architect, SentinelAI                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Parent Baselines**        | • [Product Vision Document (v1.1.0-BOARD-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/product/Product_Vision_Document.md)<br>• [Business Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/business/Business_Requirements_Specification.md)<br>• [System Context & Use Case Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/analysis/System_Context_and_Use_Case_Specification.md)<br>• [Software Requirements Specification (v1.0.0-APPROVED)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/requirements/Software_Requirements_Specification.md)<br>• [Architecture Decision Records (ADR-0001 to ADR-0020)](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/README.md) |
+| **Status**                  | Approved System Architecture Baseline                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| **Effective Date**          | August 2026                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 ---
 
@@ -42,28 +43,28 @@ The SentinelAI high-level architecture is engineered to satisfy six core perform
 
 The structural architecture strictly adheres to the 20 approved Architecture Decision Records:
 
-| Principle Category | Governing Architectural Principle | Mapped ADR Reference |
-| :--- | :--- | :--- |
-| **Governance** | Version-controlled MADR repository for all architectural decisions. | [ADR-0001](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0001-Repository-Structure-and-Decision-Process.md) |
-| **System Style** | Decoupled reactive microservices with non-blocking I/O and auto-scaling. | [ADR-0002](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0002-Architectural-Style.md) |
-| **Communication** | Hybrid model: gRPC over HTTP/2 for synchronous IPC + Event Bus for streaming. | [ADR-0003](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0003-Communication-Model.md) |
-| **Streaming** | Distributed partition commit-log streaming bus with replay capability. | [ADR-0004](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0004-Event-Driven-Architecture.md) |
-| **Domain Partitioning** | 6 explicit DDD Bounded Contexts with Anti-Corruption Layers. | [ADR-0005](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0005-Domain-Driven-Design-Boundaries.md) |
-| **Multi-Tenancy** | Hybrid cryptographic tenant isolation with CMK envelope encryption. | [ADR-0006](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0006-Multi-Tenant-Strategy.md) |
-| **Storage Substrate** | Polyglot persistence: Columnar Lakehouse + In-Memory Graph + RDBMS. | [ADR-0007](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0007-Data-Storage-Strategy.md) |
-| **Graph Modeling** | Property Graph model with temporal indexing linking entity nodes via event edges. | [ADR-0008](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0008-Graph-Data-Modeling-Strategy.md) |
-| **AI Orchestration** | Multi-agent collaborative ensemble coordinated by AI Supervisor Agent. | [ADR-0009](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0009-AI-Orchestration-Strategy.md) |
-| **AI Trust** | Deterministic XAI lineage pipeline enforcing raw log breadcrumb validation. | [ADR-0010](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0010-Explainable-AI-Architecture.md) |
-| **Security Baseline** | Zero-Trust System Architecture with mTLS 1.3 and least-privilege action scopes. | [ADR-0011](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0011-Security-Architecture-Principles.md) |
-| **Access Control** | Enterprise SSO (OIDC/SAML) + RBAC user roles + ABAC asset guardrails. | [ADR-0012](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0012-Authentication-and-Authorization-Strategy.md) |
-| **Observability** | OpenTelemetry standard emitting Prometheus metrics, traces, and correlation JSON. | [ADR-0013](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0013-Observability-and-Logging-Strategy.md) |
-| **Scalability** | Consumer-lag dynamic Horizontal Pod Auto-Scaling (HPA) with partition queues. | [ADR-0014](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0014-Scalability-Strategy.md) |
-| **Disaster Recovery** | Active-Passive Warm Standby multi-region failover (RTO < 1h, RPO < 5s). | [ADR-0015](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0015-Disaster-Recovery-Strategy.md) |
-| **Deployment** | Cloud-agnostic OCI containers orchestrated via Kubernetes and OpenTofu. | [ADR-0016](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0016-Cloud-Deployment-Philosophy.md) |
-| **Configuration** | Dynamic centralized key-value engine with real-time change subscription. | [ADR-0017](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0017-Configuration-Management.md) |
-| **API Versioning** | Semantic Versioning (`/api/v1/`) with 12-month deprecation grace periods. | [ADR-0018](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0018-API-Versioning-Philosophy.md) |
-| **Testing Standards** | Multi-layered testing pyramid + automated chaos engineering fault injection. | [ADR-0019](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0019-Testing-Philosophy.md) |
-| **Future Evolution** | Open plugin & event extension architecture for post-MVP roadmap horizons. | [ADR-0020](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0020-Future-Evolution-Strategy.md) |
+| Principle Category      | Governing Architectural Principle                                                 | Mapped ADR Reference                                                                                                                  |
+| :---------------------- | :-------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| **Governance**          | Version-controlled MADR repository for all architectural decisions.               | [ADR-0001](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0001-Repository-Structure-and-Decision-Process.md) |
+| **System Style**        | Decoupled reactive microservices with non-blocking I/O and auto-scaling.          | [ADR-0002](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0002-Architectural-Style.md)                       |
+| **Communication**       | Hybrid model: gRPC over HTTP/2 for synchronous IPC + Event Bus for streaming.     | [ADR-0003](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0003-Communication-Model.md)                       |
+| **Streaming**           | Distributed partition commit-log streaming bus with replay capability.            | [ADR-0004](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0004-Event-Driven-Architecture.md)                 |
+| **Domain Partitioning** | 6 explicit DDD Bounded Contexts with Anti-Corruption Layers.                      | [ADR-0005](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0005-Domain-Driven-Design-Boundaries.md)           |
+| **Multi-Tenancy**       | Hybrid cryptographic tenant isolation with CMK envelope encryption.               | [ADR-0006](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0006-Multi-Tenant-Strategy.md)                     |
+| **Storage Substrate**   | Polyglot persistence: Columnar Lakehouse + In-Memory Graph + RDBMS.               | [ADR-0007](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0007-Data-Storage-Strategy.md)                     |
+| **Graph Modeling**      | Property Graph model with temporal indexing linking entity nodes via event edges. | [ADR-0008](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0008-Graph-Data-Modeling-Strategy.md)              |
+| **AI Orchestration**    | Multi-agent collaborative ensemble coordinated by AI Supervisor Agent.            | [ADR-0009](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0009-AI-Orchestration-Strategy.md)                 |
+| **AI Trust**            | Deterministic XAI lineage pipeline enforcing raw log breadcrumb validation.       | [ADR-0010](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0010-Explainable-AI-Architecture.md)               |
+| **Security Baseline**   | Zero-Trust System Architecture with mTLS 1.3 and least-privilege action scopes.   | [ADR-0011](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0011-Security-Architecture-Principles.md)          |
+| **Access Control**      | Enterprise SSO (OIDC/SAML) + RBAC user roles + ABAC asset guardrails.             | [ADR-0012](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0012-Authentication-and-Authorization-Strategy.md) |
+| **Observability**       | OpenTelemetry standard emitting Prometheus metrics, traces, and correlation JSON. | [ADR-0013](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0013-Observability-and-Logging-Strategy.md)        |
+| **Scalability**         | Consumer-lag dynamic Horizontal Pod Auto-Scaling (HPA) with partition queues.     | [ADR-0014](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0014-Scalability-Strategy.md)                      |
+| **Disaster Recovery**   | Active-Passive Warm Standby multi-region failover (RTO < 1h, RPO < 5s).           | [ADR-0015](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0015-Disaster-Recovery-Strategy.md)                |
+| **Deployment**          | Cloud-agnostic OCI containers orchestrated via Kubernetes and OpenTofu.           | [ADR-0016](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0016-Cloud-Deployment-Philosophy.md)               |
+| **Configuration**       | Dynamic centralized key-value engine with real-time change subscription.          | [ADR-0017](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0017-Configuration-Management.md)                  |
+| **API Versioning**      | Semantic Versioning (`/api/v1/`) with 12-month deprecation grace periods.         | [ADR-0018](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0018-API-Versioning-Philosophy.md)                 |
+| **Testing Standards**   | Multi-layered testing pyramid + automated chaos engineering fault injection.      | [ADR-0019](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0019-Testing-Philosophy.md)                        |
+| **Future Evolution**    | Open plugin & event extension architecture for post-MVP roadmap horizons.         | [ADR-0020](file:///c:/Users/Sanjay%20R/Desktop/SenitalAI/docs/architecture/adr/ADR-0020-Future-Evolution-Strategy.md)                 |
 
 ---
 
@@ -249,6 +250,7 @@ The system domain is structured into six bounded contexts with explicit context 
 ```
 
 ### Context Relationship Specifications
+
 1. **Telemetry & Schematization -> Temporal Causal Graph:** Upstream/Downstream relationship mediated by an **Anti-Corruption Layer (ACL)** that transforms raw vendor logs into immutable OCSF Domain Events.
 2. **Temporal Causal Graph -> AI Threat Triage:** **Shared Kernel** relationship sharing temporal graph aggregates (`EntityNode`, `EventEdge`, `AttackCluster`).
 3. **AI Threat Triage -> XAI Context:** Upstream publisher providing assertion context to the XAI Lineage Engine.
@@ -261,22 +263,22 @@ The system domain is structured into six bounded contexts with explicit context 
 
 The platform microservices are decomposed across the six DDD Bounded Contexts:
 
-| Microservice Identifier | Bounded Context Ownership | Core Service Responsibilities | Communication Protocols |
-| :--- | :--- | :--- | :--- |
-| **Ingestion-Collector-Service** | Telemetry & Schematization | Ingests multi-cloud audit logs, EDR streams, and IAM events. | HTTP/2 Stream, Webhook |
-| **OCSF-Normalizer-Service** | Telemetry & Schematization | Transforms vendor logs to OCSF v1.1 events; assigns UUIDs. | Async Streaming Event Bus |
-| **Causal-Graph-Service** | Temporal Causal Graph | Constructs in-memory property graph; updates temporal nodes/edges. | gRPC / Event Bus |
-| **Story-Aggregator-Service** | Temporal Causal Graph | Aggregates related graph clusters into unified Incident Stories. | Async Streaming Event Bus |
-| **AI-Supervisor-Service** | AI Threat Triage | Coordinates multi-agent triage ensemble; evaluates overall confidence. | gRPC Internal IPC |
-| **Triage-Agent-Worker** | AI Threat Triage | Evaluates threat graph severity; calculates threat risk scores. | gRPC Internal IPC |
-| **Noise-Suppression-Agent** | AI Threat Triage | Compares anomalies to behavioral baselines; auto-suppresses noise. | gRPC Internal IPC |
-| **MITRE-Mapper-Agent** | AI Threat Triage | Maps graph event behaviors to MITRE ATT&CK technique IDs. | gRPC Internal IPC |
-| **XAI-Lineage-Service** | Explainable AI (XAI) | Generates 1-click raw log breadcrumb links; validates claims. | gRPC / REST Read API |
-| **Policy-Guardrail-Service**| Policy & Remediation | Validates asset criticality tags; enforces Stage 1 HITL & Stage 2 auto. | gRPC Synchronous IPC |
-| **Action-Orchestrator-Service**| Policy & Remediation | Dispatches API containment commands to external EDR/Okta connectors. | gRPC / Outbound REST |
-| **Copilot-Conversation-Service**| Explainable AI / Workspace | Processes NL queries; returns evidence-grounded answers (<3s). | WebSockets / gRPC |
-| **Audit-Governance-Service**| Audit & Governance | Logs immutable audit records; generates SOC 2 compliance packages. | Async Streaming Event Bus |
-| **Executive-Analytics-Service**| Audit & Governance | Renders real-time MTTD, MTTR, false positive, and TCO dashboards. | REST Read API |
+| Microservice Identifier          | Bounded Context Ownership  | Core Service Responsibilities                                           | Communication Protocols   |
+| :------------------------------- | :------------------------- | :---------------------------------------------------------------------- | :------------------------ |
+| **Ingestion-Collector-Service**  | Telemetry & Schematization | Ingests multi-cloud audit logs, EDR streams, and IAM events.            | HTTP/2 Stream, Webhook    |
+| **OCSF-Normalizer-Service**      | Telemetry & Schematization | Transforms vendor logs to OCSF v1.1 events; assigns UUIDs.              | Async Streaming Event Bus |
+| **Causal-Graph-Service**         | Temporal Causal Graph      | Constructs in-memory property graph; updates temporal nodes/edges.      | gRPC / Event Bus          |
+| **Story-Aggregator-Service**     | Temporal Causal Graph      | Aggregates related graph clusters into unified Incident Stories.        | Async Streaming Event Bus |
+| **AI-Supervisor-Service**        | AI Threat Triage           | Coordinates multi-agent triage ensemble; evaluates overall confidence.  | gRPC Internal IPC         |
+| **Triage-Agent-Worker**          | AI Threat Triage           | Evaluates threat graph severity; calculates threat risk scores.         | gRPC Internal IPC         |
+| **Noise-Suppression-Agent**      | AI Threat Triage           | Compares anomalies to behavioral baselines; auto-suppresses noise.      | gRPC Internal IPC         |
+| **MITRE-Mapper-Agent**           | AI Threat Triage           | Maps graph event behaviors to MITRE ATT&CK technique IDs.               | gRPC Internal IPC         |
+| **XAI-Lineage-Service**          | Explainable AI (XAI)       | Generates 1-click raw log breadcrumb links; validates claims.           | gRPC / REST Read API      |
+| **Policy-Guardrail-Service**     | Policy & Remediation       | Validates asset criticality tags; enforces Stage 1 HITL & Stage 2 auto. | gRPC Synchronous IPC      |
+| **Action-Orchestrator-Service**  | Policy & Remediation       | Dispatches API containment commands to external EDR/Okta connectors.    | gRPC / Outbound REST      |
+| **Copilot-Conversation-Service** | Explainable AI / Workspace | Processes NL queries; returns evidence-grounded answers (<3s).          | WebSockets / gRPC         |
+| **Audit-Governance-Service**     | Audit & Governance         | Logs immutable audit records; generates SOC 2 compliance packages.      | Async Streaming Event Bus |
+| **Executive-Analytics-Service**  | Audit & Governance         | Renders real-time MTTD, MTTR, false positive, and TCO dashboards.       | REST Read API             |
 
 ---
 
@@ -572,12 +574,12 @@ SentinelAI enforces a **Warm Standby (Active-Passive) Multi-Region Disaster Reco
 
 ## 19. Risk Analysis
 
-| Risk ID | Architectural Risk Description | Severity | Impact | Architectural Mitigation Strategy |
-| :--- | :--- | :--- | :--- | :--- |
-| **AR-001** | **Ingestion Stream Backpressure Spike** | High | High | Distributed log commit partitioning with HPA dynamic scaling based on consumer lag (`ADR-0014`). |
-| **AR-002** | **KMS Service Interruption** | Critical | High | Local short-lived cryptographic key caching with strict TTL safety policies (`ADR-0006`). |
-| **AR-003** | **Graph Memory Exhaustion** | High | Medium | Automated rolling time-window graph pruning and node offloading to high-speed storage (`ADR-0008`). |
-| **AR-004** | **AI Inference Latency Spike** | Medium | Medium | Multi-agent parallel execution fallback to deterministic correlation rules if > 5s (`ADR-0009`). |
+| Risk ID    | Architectural Risk Description          | Severity | Impact | Architectural Mitigation Strategy                                                                   |
+| :--------- | :-------------------------------------- | :------- | :----- | :-------------------------------------------------------------------------------------------------- |
+| **AR-001** | **Ingestion Stream Backpressure Spike** | High     | High   | Distributed log commit partitioning with HPA dynamic scaling based on consumer lag (`ADR-0014`).    |
+| **AR-002** | **KMS Service Interruption**            | Critical | High   | Local short-lived cryptographic key caching with strict TTL safety policies (`ADR-0006`).           |
+| **AR-003** | **Graph Memory Exhaustion**             | High     | Medium | Automated rolling time-window graph pruning and node offloading to high-speed storage (`ADR-0008`). |
+| **AR-004** | **AI Inference Latency Spike**          | Medium   | Medium | Multi-agent parallel execution fallback to deterministic correlation rules if > 5s (`ADR-0009`).    |
 
 ---
 
@@ -585,18 +587,18 @@ SentinelAI enforces a **Warm Standby (Active-Passive) Multi-Region Disaster Reco
 
 Tracing Architecture Components to SRS Requirements, SCUCS Use Cases, BRS Objectives, and ADRs:
 
-| Architectural Component | Mapped SRS Requirements | Mapped SCUCS Use Cases | Mapped BRS Objectives | Governing ADRs |
-| :--- | :--- | :--- | :--- | :--- |
-| **Ingestion-Collector-Service** | `SRS-FR-001` to `003` | `UC-001` | `BO-1`, `BO-4` | `ADR-0004`, `ADR-0016` |
-| **OCSF-Normalizer-Service** | `SRS-FR-004`, `005` | `UC-001` | `BO-4` | `ADR-0005`, `ADR-0018` |
-| **Causal-Graph-Service** | `SRS-FR-006` to `008` | `UC-002`, `UC-007` | `BO-1` | `ADR-0008` |
-| **AI-Supervisor-Service** | `SRS-FR-009` to `013` | `UC-003`, `UC-004` | `BO-1`, `BO-3` | `ADR-0009` |
-| **XAI-Lineage-Service** | `SRS-FR-014`, `015` | `UC-005` | `BO-5` | `ADR-0010` |
-| **Policy-Guardrail-Service**| `SRS-FR-019` | `UC-009`, `UC-010` | `BO-2` | `ADR-0012`, `ADR-0017` |
-| **Action-Orchestrator-Service**| `SRS-FR-016` to `018` | `UC-008`, `UC-009` | `BO-2` | `ADR-0003`, `ADR-0011` |
-| **Copilot-Conversation-Service**| `SRS-FR-020`, `021` | `UC-006` | `BO-5` | `ADR-0003` |
-| **Audit-Governance-Service**| `SRS-FR-023`, `024` | `UC-012` | `BO-6` | `ADR-0011`, `ADR-0012` |
-| **Executive-Analytics-Service**| `SRS-FR-022` | `UC-011` | `BO-1`, `BO-2`, `BO-4` | `ADR-0013` |
+| Architectural Component          | Mapped SRS Requirements | Mapped SCUCS Use Cases | Mapped BRS Objectives  | Governing ADRs         |
+| :------------------------------- | :---------------------- | :--------------------- | :--------------------- | :--------------------- |
+| **Ingestion-Collector-Service**  | `SRS-FR-001` to `003`   | `UC-001`               | `BO-1`, `BO-4`         | `ADR-0004`, `ADR-0016` |
+| **OCSF-Normalizer-Service**      | `SRS-FR-004`, `005`     | `UC-001`               | `BO-4`                 | `ADR-0005`, `ADR-0018` |
+| **Causal-Graph-Service**         | `SRS-FR-006` to `008`   | `UC-002`, `UC-007`     | `BO-1`                 | `ADR-0008`             |
+| **AI-Supervisor-Service**        | `SRS-FR-009` to `013`   | `UC-003`, `UC-004`     | `BO-1`, `BO-3`         | `ADR-0009`             |
+| **XAI-Lineage-Service**          | `SRS-FR-014`, `015`     | `UC-005`               | `BO-5`                 | `ADR-0010`             |
+| **Policy-Guardrail-Service**     | `SRS-FR-019`            | `UC-009`, `UC-010`     | `BO-2`                 | `ADR-0012`, `ADR-0017` |
+| **Action-Orchestrator-Service**  | `SRS-FR-016` to `018`   | `UC-008`, `UC-009`     | `BO-2`                 | `ADR-0003`, `ADR-0011` |
+| **Copilot-Conversation-Service** | `SRS-FR-020`, `021`     | `UC-006`               | `BO-5`                 | `ADR-0003`             |
+| **Audit-Governance-Service**     | `SRS-FR-023`, `024`     | `UC-012`               | `BO-6`                 | `ADR-0011`, `ADR-0012` |
+| **Executive-Analytics-Service**  | `SRS-FR-022`            | `UC-011`               | `BO-1`, `BO-2`, `BO-4` | `ADR-0013`             |
 
 ---
 
@@ -618,4 +620,5 @@ This High-Level Design specification constitutes the official enterprise archite
 ```
 
 ---
-*End of High-Level Design – SentinelAI*
+
+_End of High-Level Design – SentinelAI_

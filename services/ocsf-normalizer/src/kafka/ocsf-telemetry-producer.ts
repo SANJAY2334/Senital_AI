@@ -18,6 +18,10 @@ export class MockOCSFTelemetryProducer implements IOCSFTelemetryProducer {
     this.metrics = metrics;
   }
 
+  public getTargetTopic(): string {
+    return this.targetTopic;
+  }
+
   public setOutageSimulation(outage: boolean): void {
     this.isSimulatingOutage = outage;
   }

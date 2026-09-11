@@ -1,12 +1,12 @@
 import { SeededRandom } from '../utils/seed-random.util';
 
 export interface SyntheticRawTelemetryPackage {
-  eventId: string;          // 128-bit UUID (SRS-FR-005)
-  tenantId: string;         // Tenant ID (ADR-0006)
+  eventId: string; // 128-bit UUID (SRS-FR-005)
+  tenantId: string; // Tenant ID (ADR-0006)
   provider: 'AWS_CLOUDTRAIL' | 'CROWDSTRIKE_EDR' | 'OKTA_IAM';
-  timestampUtc: string;     // ISO-8601 UTC
-  correlationId: string;    // Tracing correlation ID
-  rawPayload: string;       // JSON string raw payload
+  timestampUtc: string; // ISO-8601 UTC
+  correlationId: string; // Tracing correlation ID
+  rawPayload: string; // JSON string raw payload
   metadata: Record<string, string>;
 }
 
@@ -22,7 +22,13 @@ export class AwsCloudTrailFactory {
     const correlationId = `corr-aws-${this.prng.nextInt(100000, 999999)}`;
     const timestampUtc = new Date().toISOString();
 
-    const awsOperations = ['RunInstances', 'StopInstances', 'AttachVolume', 'CreateUser', 'PutBucketPolicy'];
+    const awsOperations = [
+      'RunInstances',
+      'StopInstances',
+      'AttachVolume',
+      'CreateUser',
+      'PutBucketPolicy',
+    ];
     const selectedOp = this.prng.pickOne(awsOperations);
 
     const rawObject = {

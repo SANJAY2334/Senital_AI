@@ -1,5 +1,4 @@
 import { SyntheticTelemetryGenerator } from './generator';
-import { SyntheticGeneratorConfig } from './config';
 
 export * from './config';
 export * from './generator';

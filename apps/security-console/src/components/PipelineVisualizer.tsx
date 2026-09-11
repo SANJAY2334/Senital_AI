@@ -6,7 +6,10 @@ interface PipelineVisualizerProps {
   ringBufferDepth: number;
 }
 
-export const PipelineVisualizer: React.FC<PipelineVisualizerProps> = ({ isOutageActive, ringBufferDepth }) => {
+export const PipelineVisualizer: React.FC<PipelineVisualizerProps> = ({
+  isOutageActive,
+  ringBufferDepth,
+}) => {
   return (
     <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-4">
       <h2 className="text-sm font-semibold font-mono text-slate-300 flex items-center justify-between">
@@ -42,12 +45,18 @@ export const PipelineVisualizer: React.FC<PipelineVisualizerProps> = ({ isOutage
         </div>
 
         {/* Step 3: Kafka Raw Topic */}
-        <div className={`bg-slate-950 border ${isOutageActive ? 'border-red-600 bg-red-950/30' : 'border-slate-800'} p-3 rounded-lg space-y-2`}>
+        <div
+          className={`bg-slate-950 border ${isOutageActive ? 'border-red-600 bg-red-950/30' : 'border-slate-800'} p-3 rounded-lg space-y-2`}
+        >
           <div className="flex items-center justify-between">
-            <span className={`text-[10px] ${isOutageActive ? 'text-red-400' : 'text-slate-500'} font-bold uppercase`}>
+            <span
+              className={`text-[10px] ${isOutageActive ? 'text-red-400' : 'text-slate-500'} font-bold uppercase`}
+            >
               Kafka Stream
             </span>
-            <Layers className={`w-3.5 h-3.5 ${isOutageActive ? 'text-red-400' : 'text-slate-400'}`} />
+            <Layers
+              className={`w-3.5 h-3.5 ${isOutageActive ? 'text-red-400' : 'text-slate-400'}`}
+            />
           </div>
           <div className="text-slate-200 font-bold">telemetry.raw.v1</div>
           {isOutageActive ? (

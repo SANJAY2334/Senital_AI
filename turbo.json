@@ -3,7 +3,11 @@
   "globalDependencies": [".env", "tsconfig.json"],
   "pipeline": {
     "codegen": {
-      "inputs": ["contracts/proto/**/*.proto", "contracts/ocsf/**/*.json", "contracts/openapi/**/*.yaml"],
+      "inputs": [
+        "contracts/proto/**/*.proto",
+        "contracts/ocsf/**/*.json",
+        "contracts/openapi/**/*.yaml"
+      ],
       "outputs": ["contracts/proto/generated/**", "packages/ocsf-types/src/generated/**"]
     },
     "build": {

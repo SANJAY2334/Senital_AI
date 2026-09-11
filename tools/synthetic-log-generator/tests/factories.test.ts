@@ -14,7 +14,9 @@ describe('Synthetic Log Generator Provider Payload Factories', () => {
 
       expect(payload.provider).toBe('AWS_CLOUDTRAIL');
       expect(payload.tenantId).toBe('tenant-acme-corp');
-      expect(payload.eventId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i); // Valid 128-bit RFC 4122 UUID v4
+      expect(payload.eventId).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      ); // Valid 128-bit RFC 4122 UUID v4
       expect(new Date(payload.timestampUtc).getTime()).not.toBeNaN(); // Valid ISO-8601 UTC timestamp
       expect(payload.correlationId).toContain('corr-aws-');
 
@@ -33,7 +35,9 @@ describe('Synthetic Log Generator Provider Payload Factories', () => {
 
       expect(payload.provider).toBe('CROWDSTRIKE_EDR');
       expect(payload.tenantId).toBe('tenant-beta');
-      expect(payload.eventId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+      expect(payload.eventId).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      );
       expect(new Date(payload.timestampUtc).getTime()).not.toBeNaN();
 
       const parsedRaw = JSON.parse(payload.rawPayload);
@@ -51,7 +55,9 @@ describe('Synthetic Log Generator Provider Payload Factories', () => {
 
       expect(payload.provider).toBe('OKTA_IAM');
       expect(payload.tenantId).toBe('tenant-gamma');
-      expect(payload.eventId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+      expect(payload.eventId).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      );
 
       const parsedRaw = JSON.parse(payload.rawPayload);
       expect(parsedRaw.eventType).toBe('user.authentication.auth_via_mfa');

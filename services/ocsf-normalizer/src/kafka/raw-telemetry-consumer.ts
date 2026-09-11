@@ -5,7 +5,9 @@ import { IOCSFTelemetryProducer } from './ocsf-telemetry-producer';
 
 export interface IRawTelemetryConsumer {
   consumeRawPackage(pkg: RawTelemetryPackageInput): Promise<OCSFBaseEvent | null>;
-  consumeBatch(pkgs: RawTelemetryPackageInput[]): Promise<{ processed: number; normalized: number; failed: number }>;
+  consumeBatch(
+    pkgs: RawTelemetryPackageInput[],
+  ): Promise<{ processed: number; normalized: number; failed: number }>;
 }
 
 export class MockRawTelemetryConsumer implements IRawTelemetryConsumer {
@@ -23,6 +25,10 @@ export class MockRawTelemetryConsumer implements IRawTelemetryConsumer {
     this.metrics = metrics;
   }
 
+  public getMetrics(): NormalizerMetricsCollector {
+    return this.metrics;
+  }
+
   async consumeRawPackage(pkg: RawTelemetryPackageInput): Promise<OCSFBaseEvent | null> {
     try {
       const ocsfEvent = this.engine.normalizeRawTelemetry(pkg);
@@ -34,7 +40,9 @@ export class MockRawTelemetryConsumer implements IRawTelemetryConsumer {
     }
   }
 
-  async consumeBatch(pkgs: RawTelemetryPackageInput[]): Promise<{ processed: number; normalized: number; failed: number }> {
+  async consumeBatch(
+    pkgs: RawTelemetryPackageInput[],
+  ): Promise<{ processed: number; normalized: number; failed: number }> {
     let normalized = 0;
     let failed = 0;
 

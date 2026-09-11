@@ -13,10 +13,14 @@ export class AwsKmsSecretProvider implements ISecretProvider {
     this.config = config;
   }
 
-  async encryptSecret(plaintext: string | Buffer, tenantId?: string): Promise<EncryptedSecretPayload> {
+  async encryptSecret(
+    plaintext: string | Buffer,
+    tenantId?: string,
+  ): Promise<EncryptedSecretPayload> {
     const effectiveTenant = tenantId || 'tenant-default';
-    const payloadBuffer = typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
-    
+    const payloadBuffer =
+      typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
+
     // Abstracted AWS KMS Envelope Encryption Interface (No heavy AWS SDK logic)
     // Production runtime connects to KMS GenerateDataKey API via AWS SDK wrapper
     return {

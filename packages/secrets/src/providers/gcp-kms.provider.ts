@@ -15,9 +15,13 @@ export class GcpKmsSecretProvider implements ISecretProvider {
     this.config = config;
   }
 
-  async encryptSecret(plaintext: string | Buffer, tenantId?: string): Promise<EncryptedSecretPayload> {
+  async encryptSecret(
+    plaintext: string | Buffer,
+    tenantId?: string,
+  ): Promise<EncryptedSecretPayload> {
     const effectiveTenant = tenantId || 'tenant-default';
-    const payloadBuffer = typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
+    const payloadBuffer =
+      typeof plaintext === 'string' ? Buffer.from(plaintext, 'utf-8') : plaintext;
 
     const resourceName = `projects/${this.config.projectId}/locations/${this.config.locationId}/keyRings/${this.config.keyRingId}/cryptoKeys/${this.config.cryptoKeyId}`;
     return {

@@ -12,10 +12,12 @@ export const NormalizerConfigSchema = z.object({
 export type NormalizerConfig = z.infer<typeof NormalizerConfigSchema>;
 
 export function loadNormalizerConfig(override?: Partial<NormalizerConfig>): NormalizerConfig {
-  const envBrokers = process.env.KAFKA_BROKERS ? process.env.KAFKA_BROKERS.split(',') : ['localhost:9092'];
+  const envBrokers = process.env.KAFKA_BROKERS
+    ? process.env.KAFKA_BROKERS.split(',')
+    : ['localhost:9092'];
   const rawConfig = {
     serviceName: process.env.SERVICE_NAME || 'ocsf-normalizer',
-    env: (process.env.NODE_ENV as any) || 'development',
+    env: (process.env.NODE_ENV as NormalizerConfig['env']) || 'development',
     kafkaBrokers: envBrokers,
     kafkaTopicRaw: process.env.KAFKA_TOPIC_RAW || 'telemetry.raw.v1',
     kafkaTopicOcsf: process.env.KAFKA_TOPIC_OCSF || 'telemetry.ocsf.v1',

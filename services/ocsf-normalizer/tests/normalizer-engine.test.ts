@@ -53,8 +53,16 @@ describe('OCSF Normalizer Engine Error Handling & Tenant Isolation Suite', () =>
       event: { ProcessStartTime: new Date().toISOString(), ImageFileName: 'cmd.exe' },
     });
 
-    const evt1 = engine.normalizeRawTelemetry({ tenantId: 'tenant-100', provider: 'CROWDSTRIKE_EDR', rawPayload });
-    const evt2 = engine.normalizeRawTelemetry({ tenantId: 'tenant-200', provider: 'CROWDSTRIKE_EDR', rawPayload });
+    const evt1 = engine.normalizeRawTelemetry({
+      tenantId: 'tenant-100',
+      provider: 'CROWDSTRIKE_EDR',
+      rawPayload,
+    });
+    const evt2 = engine.normalizeRawTelemetry({
+      tenantId: 'tenant-200',
+      provider: 'CROWDSTRIKE_EDR',
+      rawPayload,
+    });
 
     expect(evt1.tenant_id).toBe('tenant-100');
     expect(evt2.tenant_id).toBe('tenant-200');

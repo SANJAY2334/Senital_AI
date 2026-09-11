@@ -5,7 +5,10 @@ import { createNormalizerService } from '@sentinelai/ocsf-normalizer';
 describe('T-1.5 E2E Integration Suite: Pipeline Event Flow & Accounting', () => {
   it('should process synthetic multi-cloud telemetry events end-to-end with 100% accounting and zero data loss', async () => {
     // 1. Initialize End-to-End Component Pipeline (T-1.2 -> T-1.3 -> T-1.4)
-    const generator = new SyntheticTelemetryGenerator({ seed: 1337, tenantId: 'tenant-e2e-acme' });
+    const generator = new SyntheticTelemetryGenerator({
+      seed: 1337,
+      tenantId: 'tenant-e2e-acme',
+    });
     const ingestion = createIngestionServer();
     const normalizer = createNormalizerService();
 
@@ -13,7 +16,7 @@ describe('T-1.5 E2E Integration Suite: Pipeline Event Flow & Accounting', () => 
     const syntheticBatch = generator.generateBatch(targetEventCount);
 
     // Event Accounting Counters
-    let generatedCount = syntheticBatch.length;
+    const generatedCount = syntheticBatch.length;
     let submittedCount = 0;
     let acceptedCount = 0;
     let normalizedCount = 0;

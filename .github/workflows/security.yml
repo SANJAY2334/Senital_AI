@@ -2,9 +2,9 @@ name: SentinelAI Security & Vulnerability Scanning
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
   schedule:
     - cron: '0 2 * * *' # Nightly security scan at 02:00 UTC
 

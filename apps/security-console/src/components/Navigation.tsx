@@ -15,7 +15,12 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab 
     { id: 'events', label: 'Events', icon: <ListFilter className="w-4 h-4" /> },
     { id: 'health', label: 'System Health', icon: <Activity className="w-4 h-4" /> },
     { id: 'architecture', label: 'Architecture', icon: <Network className="w-4 h-4" /> },
-    { id: 'ai-planned', label: 'AI Capabilities', icon: <Sparkles className="w-4 h-4" />, isPlanned: true },
+    {
+      id: 'ai-planned',
+      label: 'AI Capabilities',
+      icon: <Sparkles className="w-4 h-4" />,
+      isPlanned: true,
+    },
   ];
 
   return (

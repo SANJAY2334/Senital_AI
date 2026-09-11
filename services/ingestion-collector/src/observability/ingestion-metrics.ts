@@ -48,9 +48,10 @@ export class IngestionMetricsCollector {
   }
 
   public getSnapshot(): IngestionMetricsSnapshot {
-    const avgLatencyMs = this.latencySampleCount > 0 
-      ? parseFloat((this.totalLatencyMs / this.latencySampleCount).toFixed(2)) 
-      : 0;
+    const avgLatencyMs =
+      this.latencySampleCount > 0
+        ? parseFloat((this.totalLatencyMs / this.latencySampleCount).toFixed(2))
+        : 0;
 
     return {
       receivedEvents: this.received,

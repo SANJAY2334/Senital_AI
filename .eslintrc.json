@@ -19,12 +19,5 @@
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "prettier/prettier": "error"
   },
-  "ignorePatterns": [
-    "dist",
-    "build",
-    ".next",
-    "node_modules",
-    "coverage",
-    "**/generated/**"
-  ]
+  "ignorePatterns": ["dist", "build", ".next", "node_modules", "coverage", "**/generated/**"]
 }

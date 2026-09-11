@@ -18,8 +18,12 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
           <div className="flex items-center space-x-3">
             <ShieldCheck className="w-6 h-6 text-cyan-400" />
             <div>
-              <h2 className="text-base font-bold font-mono text-slate-100">EVENT INSPECTION DRAWER</h2>
-              <p className="text-xs text-slate-400 font-mono">OCSF v1.1.0 Normalized Event Record</p>
+              <h2 className="text-base font-bold font-mono text-slate-100">
+                EVENT INSPECTION DRAWER
+              </h2>
+              <p className="text-xs text-slate-400 font-mono">
+                OCSF v1.1.0 Normalized Event Record
+              </p>
             </div>
           </div>
           <button
@@ -33,7 +37,9 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
         {/* Metadata Summary Grid */}
         <div className="grid grid-cols-2 gap-3 text-xs font-mono">
           <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg">
-            <span className="text-slate-500 block text-[10px] uppercase">OCSF Event ID (128-bit UUID)</span>
+            <span className="text-slate-500 block text-[10px] uppercase">
+              OCSF Event ID (128-bit UUID)
+            </span>
             <span className="text-cyan-400 font-semibold truncate block">{event.eventId}</span>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg">
@@ -49,7 +55,9 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
             <span className="text-purple-400 font-semibold">{event.ocsfClassName}</span>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg">
-            <span className="text-slate-500 block text-[10px] uppercase">ISO-8601 UTC Timestamp</span>
+            <span className="text-slate-500 block text-[10px] uppercase">
+              ISO-8601 UTC Timestamp
+            </span>
             <span className="text-slate-200">{event.timestampUtc}</span>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg">

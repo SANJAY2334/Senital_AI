@@ -4,7 +4,9 @@ import { StreamRingBuffer } from '../buffer/stream-ring-buffer';
 
 export interface IRawTelemetryProducer {
   publishRawTelemetry(event: SyntheticRawTelemetryPackage): Promise<boolean>;
-  publishBatch(events: SyntheticRawTelemetryPackage[]): Promise<{ published: number; failed: number }>;
+  publishBatch(
+    events: SyntheticRawTelemetryPackage[],
+  ): Promise<{ published: number; failed: number }>;
   flushRingBuffer(): Promise<number>;
   healthCheck(): Promise<boolean>;
 }
@@ -15,10 +17,18 @@ export class MockRawTelemetryProducer implements IRawTelemetryProducer {
   private metrics: IngestionMetricsCollector;
   private isSimulatingOutage: boolean = false;
 
-  constructor(targetTopic: string, ringBuffer: StreamRingBuffer, metrics: IngestionMetricsCollector) {
+  constructor(
+    targetTopic: string,
+    ringBuffer: StreamRingBuffer,
+    metrics: IngestionMetricsCollector,
+  ) {
     this.targetTopic = targetTopic;
     this.ringBuffer = ringBuffer;
     this.metrics = metrics;
+  }
+
+  public getTargetTopic(): string {
+    return this.targetTopic;
   }
 
   public setOutageSimulation(outage: boolean): void {
@@ -37,7 +47,9 @@ export class MockRawTelemetryProducer implements IRawTelemetryProducer {
     return true;
   }
 
-  async publishBatch(events: SyntheticRawTelemetryPackage[]): Promise<{ published: number; failed: number }> {
+  async publishBatch(
+    events: SyntheticRawTelemetryPackage[],
+  ): Promise<{ published: number; failed: number }> {
     if (this.isSimulatingOutage) {
       this.metrics.recordKafkaFailure(events.length);
       this.ringBuffer.pushBatch(events);

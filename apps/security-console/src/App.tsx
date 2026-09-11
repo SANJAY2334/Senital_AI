@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ViewTab, UIProcessedEvent, ExecutiveMetrics, ProviderDistribution, SystemHealthState } from './types/demo.types';
+import {
+  ViewTab,
+  UIProcessedEvent,
+  ExecutiveMetrics,
+  ProviderDistribution,
+  SystemHealthState,
+} from './types/demo.types';
 import { globalDemoAdapter } from './adapters/demo-pipeline.adapter';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -16,7 +22,9 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ViewTab>('overview');
   const [events, setEvents] = useState<UIProcessedEvent[]>([]);
   const [metrics, setMetrics] = useState<ExecutiveMetrics>(globalDemoAdapter.getExecutiveMetrics());
-  const [distribution, setDistribution] = useState<ProviderDistribution>(globalDemoAdapter.getProviderDistribution());
+  const [distribution, setDistribution] = useState<ProviderDistribution>(
+    globalDemoAdapter.getProviderDistribution(),
+  );
   const [health, setHealth] = useState<SystemHealthState>(globalDemoAdapter.getSystemHealth());
 
   // Initial seed generation (50 events)
@@ -68,7 +76,10 @@ export const App: React.FC = () => {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               <ExecutiveMetricsComponent metrics={metrics} />
-              <PipelineVisualizer isOutageActive={health.isOutageSimulated} ringBufferDepth={health.ringBufferDepth} />
+              <PipelineVisualizer
+                isOutageActive={health.isOutageSimulated}
+                ringBufferDepth={health.ringBufferDepth}
+              />
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                   <LiveEventStream events={events} />
@@ -91,7 +102,10 @@ export const App: React.FC = () => {
 
           {activeTab === 'pipeline' && (
             <div className="space-y-6">
-              <PipelineVisualizer isOutageActive={health.isOutageSimulated} ringBufferDepth={health.ringBufferDepth} />
+              <PipelineVisualizer
+                isOutageActive={health.isOutageSimulated}
+                ringBufferDepth={health.ringBufferDepth}
+              />
               <SystemHealthComponent health={health} />
               <LiveEventStream events={events} />
             </div>

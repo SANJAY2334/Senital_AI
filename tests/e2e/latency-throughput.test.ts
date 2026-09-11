@@ -25,7 +25,9 @@ describe('T-1.5 E2E Integration Suite: Latency & Multi-Level Load Benchmarks', (
 
     const minMs = latenciesMs[0];
     const maxMs = latenciesMs[latenciesMs.length - 1];
-    const avgMs = parseFloat((latenciesMs.reduce((sum, v) => sum + v, 0) / latenciesMs.length).toFixed(2));
+    const avgMs = parseFloat(
+      (latenciesMs.reduce((sum, v) => sum + v, 0) / latenciesMs.length).toFixed(2),
+    );
     const p50Ms = latenciesMs[Math.floor(latenciesMs.length * 0.5)];
     const p95Ms = latenciesMs[Math.floor(latenciesMs.length * 0.95)];
     const p99Ms = latenciesMs[Math.floor(latenciesMs.length * 0.99)];
@@ -83,25 +85,33 @@ describe('T-1.5 E2E Integration Suite: Latency & Multi-Level Load Benchmarks', (
 
   it('should evaluate controlled load level at 10,000 EPS target profile', async () => {
     const res = await runLoadLevel(10000);
-    console.log(`[LOAD LEVEL 10K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`);
+    console.log(
+      `[LOAD LEVEL 10K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`,
+    );
     expect(res.eventsNormalized).toBe(10000);
   });
 
   it('should evaluate controlled load level at 25,000 EPS target profile', async () => {
     const res = await runLoadLevel(25000);
-    console.log(`[LOAD LEVEL 25K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`);
+    console.log(
+      `[LOAD LEVEL 25K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`,
+    );
     expect(res.eventsNormalized).toBe(25000);
   });
 
   it('should evaluate controlled load level at 50,000 EPS target profile', async () => {
     const res = await runLoadLevel(50000);
-    console.log(`[LOAD LEVEL 50K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`);
+    console.log(
+      `[LOAD LEVEL 50K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`,
+    );
     expect(res.eventsNormalized).toBe(50000);
   });
 
   it('should evaluate controlled load level at 100,000 EPS target profile', async () => {
     const res = await runLoadLevel(100000);
-    console.log(`[LOAD LEVEL 100K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`);
+    console.log(
+      `[LOAD LEVEL 100K] Achieved Test-Harness E2E Throughput: ${res.achievedEPS.toLocaleString()} EPS (Elapsed: ${res.elapsedSeconds}s)`,
+    );
     expect(res.eventsNormalized).toBe(100000);
   });
 });

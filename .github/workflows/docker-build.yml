@@ -2,8 +2,8 @@ name: SentinelAI Docker Build & OCI Container Registry Publishing
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*.*.*' ]
+    branches: [main]
+    tags: ['v*.*.*']
 
 jobs:
   # =========================================================================
@@ -30,6 +30,10 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
 
+      - name: Derive Lowercase Repository Reference
+        run: |
+          echo "IMAGE_REPO=ghcr.io/${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -48,13 +52,13 @@ jobs:
           build-args: |
             SERVICE_NAME=${{ matrix.service }}
           push: false
-          tags: ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
+          tags: ${{ env.IMAGE_REPO }}/${{ matrix.service }}:${{ github.sha }}
           load: true
 
       - name: Run Trivy Container Image Vulnerability Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
+          image-ref: ${{ env.IMAGE_REPO }}/${{ matrix.service }}:${{ github.sha }}
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -63,4 +67,4 @@ jobs:
       - name: Push Container Image to Registry (Main Only)
         if: github.ref == 'refs/heads/main'
         run: |
-          docker push ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
+          docker push ${{ env.IMAGE_REPO }}/${{ matrix.service }}:${{ github.sha }}
