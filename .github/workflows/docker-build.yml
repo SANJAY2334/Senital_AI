@@ -69,7 +69,9 @@ jobs:
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
+          vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          trivy-db-repository: 'public.ecr.aws/aquasecurity/trivy-db:2'
 
       - name: Push Container Image to Registry (Main Only)
         if: github.ref == 'refs/heads/main'
