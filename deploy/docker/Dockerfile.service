@@ -26,6 +26,7 @@ RUN corepack enable && corepack prepare pnpm@8.15.4 --activate && npm install -g
 
 ARG SERVICE_NAME
 
+COPY --from=builder /app/pnpm-workspace.yaml* ./
 COPY --from=builder /app/out/json/ ./
 COPY --from=builder /app/out/pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile
