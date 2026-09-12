@@ -5,6 +5,10 @@ on:
     branches: [main]
     tags: ['v*.*.*']
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # =========================================================================
   # JOB 1: DOCKER IMAGE BUILD, VULNERABILITY SCAN & REGISTRY PUBLISHING
@@ -29,6 +33,8 @@ jobs:
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
 
       - name: Derive Lowercase Repository Reference
         run: |
