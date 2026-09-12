@@ -40,8 +40,9 @@ WORKDIR /app
 
 ARG SERVICE_NAME
 
-# Security Hardening: Create non-root user (ADR-0011)
-RUN addgroup --system --gid 1001 nodejs && \
+# Security Hardening: Upgrade OS packages (ADR-0011) & Create non-root user
+RUN apk upgrade --no-cache && \
+    addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 sentinelai
 
 COPY --from=installer /app/packages ./packages
