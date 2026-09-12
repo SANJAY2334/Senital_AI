@@ -2,7 +2,7 @@
 # Complies with ADR-0016 (Cloud-Agnostic Containers) and ADR-0011 (Zero-Trust Security)
 
 # Stage 1: Build & Prune Dependencies
-FROM node:20-alpine AS builder
+FROM node:20-alpine3.20 AS builder
 WORKDIR /app
 RUN npm install -g pnpm@8.15.4 turbo@1.12.4
 
@@ -20,7 +20,7 @@ ARG SERVICE_NAME
 RUN turbo prune @sentinelai/${SERVICE_NAME} --docker
 
 # Stage 2: Install dependencies & compile TypeScript
-FROM node:20-alpine AS installer
+FROM node:20-alpine3.20 AS installer
 WORKDIR /app
 RUN npm install -g pnpm@8.15.4 turbo@1.12.4
 
@@ -36,7 +36,7 @@ COPY --from=builder /app/out/full/ ./
 RUN turbo run build --filter=@sentinelai/${SERVICE_NAME}...
 
 # Stage 3: Minimal Production Runtime
-FROM node:20-alpine AS runner
+FROM node:20-alpine3.20 AS runner
 WORKDIR /app
 
 ARG SERVICE_NAME
