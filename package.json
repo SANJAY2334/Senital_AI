@@ -5,6 +5,7 @@
   "description": "SentinelAI - AI-Powered Cybersecurity Threat Detection & Incident Response Platform",
   "author": "SentinelAI Enterprise Architecture Team",
   "license": "UNLICENSED",
+  "packageManager": "pnpm@8.15.4",
   "scripts": {
     "codegen": "turbo run codegen --filter=\\!//",
     "build": "turbo run build --filter=\\!//",

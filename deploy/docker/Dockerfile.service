@@ -4,7 +4,7 @@
 # Stage 1: Build & Prune Dependencies
 FROM node:20-alpine AS builder
 WORKDIR /app
-RUN npm install -g pnpm turbo
+RUN corepack enable && corepack prepare pnpm@8.15.4 --activate && npm install -g turbo
 
 # Copy monorepo configuration files
 COPY package.json turbo.json pnpm-workspace.yaml* ./
@@ -15,19 +15,19 @@ COPY contracts/ ./contracts/
 
 # Prune monorepo for target microservice
 ARG SERVICE_NAME
-RUN turbo prune ${SERVICE_NAME} --docker
+RUN turbo prune ${SERVICE_NAME} --docker || turbo prune @sentinelai/${SERVICE_NAME} --docker
 
 # Stage 2: Install dependencies & compile TypeScript
 FROM node:20-alpine AS installer
 WORKDIR /app
-RUN npm install -g pnpm
+RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
 
 COPY --from=builder /app/out/json/ ./
 COPY --from=builder /app/out/pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile
 
 COPY --from=builder /app/out/full/ ./
-RUN pnpm run build --filter=${SERVICE_NAME}...
+RUN pnpm run build --filter=${SERVICE_NAME}... || pnpm run build --filter=@sentinelai/${SERVICE_NAME}...
 
 # Stage 3: Minimal Production Runtime
 FROM node:20-alpine AS runner

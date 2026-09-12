@@ -1,0 +1,22 @@
+{
+  "name": "@sentinelai/audit-governance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Audit & Governance Microservice for SentinelAI",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@sentinelai/config": "workspace:*",
+    "@sentinelai/logger": "workspace:*",
+    "@sentinelai/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@sentinelai/tsconfig": "workspace:*",
+    "@types/node": "^20.19.43",
+    "typescript": "^5.3.3"
+  }
+}
