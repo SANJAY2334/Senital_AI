@@ -27,7 +27,7 @@ export function createIngestionServer(
   app.use('/api/v1/ingest', createIngestionRouter(producer, metrics));
 
   return {
-    app,
+    app: app as express.Express,
     config,
     metrics,
     ringBuffer,

@@ -1,7 +1,6 @@
 import {
   SyntheticTelemetryGenerator,
   SyntheticRawTelemetryPackage,
-  TelemetryProvider,
 } from '@sentinelai/synthetic-log-generator';
 import { OCSFNormalizerEngine, NormalizerMetricsCollector } from '@sentinelai/ocsf-normalizer';
 import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
@@ -11,6 +10,8 @@ import {
   ProviderDistribution,
   SystemHealthState,
 } from '../types/demo.types';
+
+export type TelemetryProvider = 'AWS_CLOUDTRAIL' | 'CROWDSTRIKE_EDR' | 'OKTA_IAM';
 
 export class DemoPipelineAdapter {
   private generator: SyntheticTelemetryGenerator;

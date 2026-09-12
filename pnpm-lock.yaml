@@ -56,6 +56,9 @@ importers:
 
   apps/security-console:
     dependencies:
+      '@sentinelai/ocsf-normalizer':
+        specifier: workspace:*
+        version: link:../../services/ocsf-normalizer
       '@sentinelai/ocsf-types':
         specifier: workspace:*
         version: link:../../packages/ocsf-types
@@ -424,6 +427,9 @@ importers:
       '@sentinelai/security':
         specifier: workspace:*
         version: link:../../packages/security
+      '@sentinelai/synthetic-log-generator':
+        specifier: workspace:*
+        version: link:../../tools/synthetic-log-generator
       '@sentinelai/telemetry':
         specifier: workspace:*
         version: link:../../packages/telemetry

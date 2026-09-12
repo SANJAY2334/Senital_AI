@@ -4,6 +4,7 @@
   "private": true,
   "description": "High-Throughput Synthetic Streaming Telemetry Generator for SentinelAI",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
     "generate-logs": "./dist/index.js"
   },

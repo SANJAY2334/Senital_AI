@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@sentinelai/ocsf-normalizer": "workspace:*",
     "@sentinelai/ocsf-types": "workspace:*",
     "@sentinelai/shared-types": "workspace:*",
     "@sentinelai/synthetic-log-generator": "workspace:*",

@@ -15,6 +15,7 @@
     "@sentinelai/errors": "workspace:*",
     "@sentinelai/logger": "workspace:*",
     "@sentinelai/security": "workspace:*",
+    "@sentinelai/synthetic-log-generator": "workspace:*",
     "@sentinelai/telemetry": "workspace:*",
     "@sentinelai/utils": "workspace:*",
     "@sentinelai/validation": "workspace:*",

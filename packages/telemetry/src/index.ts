@@ -12,13 +12,17 @@ export interface ITelemetryService {
 }
 
 export class SentinelTelemetryService implements ITelemetryService {
-  private serviceName: string;
+  protected serviceName: string;
 
   constructor(serviceName: string) {
     this.serviceName = serviceName;
   }
 
-  startSpan(name: string, parentSpanId?: string): TraceSpanContext {
+  getServiceName(): string {
+    return this.serviceName;
+  }
+
+  startSpan(_name: string, parentSpanId?: string): TraceSpanContext {
     const traceId =
       Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     const spanId = Math.random().toString(36).substring(2, 10);
