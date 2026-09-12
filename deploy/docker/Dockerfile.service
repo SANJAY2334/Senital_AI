@@ -4,7 +4,7 @@
 # Stage 1: Build & Prune Dependencies
 FROM node:20-alpine AS builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@8.15.4 --activate && npm install -g pnpm@8.15.4 turbo@1.12.4
+RUN npm install -g pnpm@8.15.4 turbo@1.12.4
 
 # Copy monorepo configuration files
 COPY package.json turbo.json pnpm-workspace.yaml* ./
@@ -22,7 +22,7 @@ RUN turbo prune @sentinelai/${SERVICE_NAME} --docker
 # Stage 2: Install dependencies & compile TypeScript
 FROM node:20-alpine AS installer
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@8.15.4 --activate && npm install -g pnpm@8.15.4 turbo@1.12.4
+RUN npm install -g pnpm@8.15.4 turbo@1.12.4
 
 ARG SERVICE_NAME
 
