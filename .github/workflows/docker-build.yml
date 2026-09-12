@@ -63,7 +63,7 @@ jobs:
           load: true
 
       - name: Run Trivy Container Image Vulnerability Scan
-        uses: aquasecurity/trivy-action@v0.30.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_REPO }}/${{ matrix.service }}:${{ github.sha }}
           format: 'table'
