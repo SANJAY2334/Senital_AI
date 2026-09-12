@@ -60,7 +60,8 @@ jobs:
             SERVICE_NAME=${{ matrix.service }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.IMAGE_REPO }}/${{ matrix.service }}:${{ github.sha }}
-          load: true
+          load: false
+          provenance: false
 
       - name: Run Trivy Container Image Vulnerability Scan
         uses: aquasecurity/trivy-action@v0.36.0
