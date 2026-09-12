@@ -12,6 +12,8 @@ COPY apps/ ./apps/
 COPY services/ ./services/
 COPY packages/ ./packages/
 COPY contracts/ ./contracts/
+COPY ml/ ./ml/
+COPY tools/ ./tools/
 
 # Prune monorepo for target microservice
 ARG SERVICE_NAME
