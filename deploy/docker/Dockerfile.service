@@ -27,6 +27,7 @@ RUN npm install -g pnpm@8.15.4 turbo@1.12.4
 ARG SERVICE_NAME
 
 COPY --from=builder /app/pnpm-workspace.yaml* ./
+COPY --from=builder /app/tsconfig.json* ./
 COPY --from=builder /app/out/json/ ./
 COPY --from=builder /app/out/pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile
