@@ -7,7 +7,7 @@ import {
   TimelineDataPoint,
   ProviderDistribution,
 } from '../../types/demo.types';
-import { Layers, Zap, ShieldAlert, Clock, ChevronRight, Eye } from 'lucide-react';
+import { Layers, Zap, ShieldAlert, Clock, ChevronRight } from 'lucide-react';
 import { KpiCard } from '../ui/KpiCard';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { ActivityTimelineChart } from '../charts/ActivityTimelineChart';
@@ -45,16 +45,28 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const mediumCount = alerts.filter((a) => a.severityLabel === 'MEDIUM').length;
   const lowCount = alerts.filter((a) => a.severityLabel === 'LOW').length;
 
-  const recentAlerts = alerts.slice(0, 6);
+  const recentAlerts = alerts.slice(0, 5);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-1 border-b border-[#1C1C21]">
+        <div>
+          <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">
+            Security operations
+          </h1>
+          <p className="text-xs text-[#9898A0] mt-0.5">
+            Real-time multi-cloud telemetry and threat detection
+          </p>
+        </div>
+      </div>
+
       {/* 1. Primary Operational KPIs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <KpiCard
-          label="Events Ingested"
+          label="Events ingested"
           value={metrics.eventsReceived.toLocaleString()}
-          unit="events"
+          unit="total"
           icon={<Layers className="w-4 h-4" />}
           trendText="+12.4% vs 5m avg"
           trendDirection="up"
@@ -62,50 +74,48 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         />
 
         <KpiCard
-          label="Normalizer Throughput"
+          label="Normalizer throughput"
           value={metrics.currentThroughputEPS.toLocaleString()}
           unit="EPS"
           icon={<Zap className="w-4 h-4" />}
-          trendText="Peak capacity: 100K"
+          trendText="Target: 50K EPS"
           trendDirection="neutral"
           statusText={health.isOutageSimulated ? 'OUTAGE' : 'ONLINE'}
         />
 
         <KpiCard
-          label="Correlated Alerts"
+          label="Correlated alerts"
           value={alerts.length.toLocaleString()}
           unit="active"
-          icon={<ShieldAlert className="w-4 h-4 text-red-400" />}
-          trendText={`${criticalCount} Critical, ${highCount} High`}
+          icon={<ShieldAlert className="w-4 h-4 text-rose-400" />}
+          trendText={`${criticalCount} critical, ${highCount} high`}
           trendDirection={criticalCount > 0 ? 'down' : 'neutral'}
           statusText={criticalCount > 0 ? 'CRITICAL' : 'TRIAGED'}
         />
 
         <KpiCard
-          label="Pipeline Latency"
+          label="Pipeline latency"
           value={`${metrics.pipelineLatencyMs}`}
           unit="ms"
           icon={<Clock className="w-4 h-4" />}
-          trendText="Target: < 5.0 ms"
+          trendText="Target < 5.0 ms"
           trendDirection="up"
-          statusText="OPTIMAL"
+          statusText="HEALTHY"
         />
       </div>
 
       {/* 2. Charts Row: Activity Timeline + Severity Distribution */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Activity Timeline (7 cols) */}
         <Card className="lg:col-span-7">
           <CardHeader>
             <div>
-              <CardTitle>Telemetry Activity & Alert Volume</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Real-time 60-minute window throughput (Events vs Correlated Alerts)
-              </span>
+              <CardTitle>Telemetry activity</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">
+                Ingested events vs correlated alerts over rolling 60-minute window
+              </p>
             </div>
-            <span className="text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-800 px-2 py-0.5 rounded">
-              5m Intervals
-            </span>
+            <span className="text-[11px] text-[#62626B]">5m intervals</span>
           </CardHeader>
           <CardContent>
             <ActivityTimelineChart data={timelineData} height={190} />
@@ -116,10 +126,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <Card className="lg:col-span-5">
           <CardHeader>
             <div>
-              <CardTitle>Alert Severity Distribution</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Active security triage classification
-              </span>
+              <CardTitle>Alert classification</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">Active alerts categorized by severity</p>
             </div>
           </CardHeader>
           <CardContent>
@@ -136,60 +144,58 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* 3. Operational Surface: Recent Critical Alerts & Provider Distribution */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Recent Critical Alerts (7 cols) */}
         <Card className="lg:col-span-7">
           <CardHeader>
-            <div className="flex items-center space-x-2">
-              <ShieldAlert className="w-4 h-4 text-red-400" />
-              <CardTitle>Recent Critical & High Severity Alerts</CardTitle>
+            <div>
+              <CardTitle>Recent alerts</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">
+                Highest severity detections awaiting investigation
+              </p>
             </div>
             <Button variant="ghost" size="xs" onClick={onNavigateToAlerts}>
-              <span>View All Alerts</span>
+              <span>All alerts</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
             </Button>
           </CardHeader>
           <div className="overflow-x-auto">
             {recentAlerts.length === 0 ? (
-              <div className="p-8 text-center text-xs font-mono text-slate-500">
+              <div className="p-8 text-center text-xs text-[#62626B]">
                 No active critical alerts detected in current telemetry window.
               </div>
             ) : (
-              <table className="w-full text-left text-xs font-mono">
-                <thead className="bg-[#090E1A] text-slate-400 border-b border-[#1E293B]">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-[#0E0E11] text-[#62626B] border-b border-[#1C1C21]">
                   <tr>
-                    <th className="p-3">Severity</th>
-                    <th className="p-3">Alert Title</th>
-                    <th className="p-3">Affected Target</th>
-                    <th className="p-3">Time</th>
-                    <th className="p-3">Status</th>
-                    <th className="p-3 text-right">Inspect</th>
+                    <th className="px-4 py-2.5 font-medium">Severity</th>
+                    <th className="px-4 py-2.5 font-medium">Title</th>
+                    <th className="px-4 py-2.5 font-medium">Target</th>
+                    <th className="px-4 py-2.5 font-medium">Time</th>
+                    <th className="px-4 py-2.5 font-medium">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1E293B]/70">
+                <tbody className="divide-y divide-[#1C1C21]">
                   {recentAlerts.map((alt) => (
                     <tr
                       key={alt.alertId}
                       onClick={() => setSelectedAlert(alt)}
-                      className="hover:bg-[#1B2640]/40 cursor-pointer transition-colors"
+                      className="hover:bg-[#18181C] cursor-pointer transition-colors"
                     >
-                      <td className="p-3">
+                      <td className="px-4 py-3">
                         <SeverityBadge severity={alt.severityLabel} />
                       </td>
-                      <td className="p-3 font-semibold text-slate-200 truncate max-w-[200px]">
+                      <td className="px-4 py-3 font-medium text-[#EDEDEF] truncate max-w-[200px]">
                         {alt.title}
                       </td>
-                      <td className="p-3 text-slate-400 truncate max-w-[130px]">
+                      <td className="px-4 py-3 text-[#9898A0] font-mono text-[11px] truncate max-w-[130px]">
                         {alt.affectedEntity.identifier}
                       </td>
-                      <td className="p-3 text-slate-500">{alt.detectedAt.substring(11, 19)} UTC</td>
-                      <td className="p-3">
-                        <StatusBadge status={alt.status} />
+                      <td className="px-4 py-3 text-[#62626B] font-mono text-[11px]">
+                        {alt.detectedAt.substring(11, 19)} UTC
                       </td>
-                      <td className="p-3 text-right">
-                        <button className="text-slate-400 hover:text-cyan-400 inline-flex items-center space-x-1">
-                          <Eye className="w-3.5 h-3.5" />
-                        </button>
+                      <td className="px-4 py-3">
+                        <StatusBadge status={alt.status} />
                       </td>
                     </tr>
                   ))}
@@ -203,22 +209,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <Card className="lg:col-span-5">
           <CardHeader>
             <div>
-              <CardTitle>Multi-Cloud Telemetry Distribution</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Ingress volume partitioned by vendor stream
-              </span>
+              <CardTitle>Telemetry sources</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">Ingress distribution by cloud vendor</p>
             </div>
             <Button variant="ghost" size="xs" onClick={onNavigateToEvents}>
-              <span>Inspect Logs</span>
+              <span>Logs</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
             </Button>
           </CardHeader>
           <CardContent>
             <ProviderBarChart distribution={distribution} />
 
-            <div className="mt-5 pt-4 border-t border-[#1E293B] flex items-center justify-between text-xs font-mono">
-              <span className="text-slate-400">Total Pipeline Events:</span>
-              <span className="text-cyan-400 font-bold font-mono">
+            <div className="mt-5 pt-3.5 border-t border-[#1C1C21] flex items-center justify-between text-xs">
+              <span className="text-[#9898A0]">Total events processed</span>
+              <span className="text-[#EDEDEF] font-semibold tabular-nums">
                 {metrics.eventsReceived.toLocaleString()}
               </span>
             </div>

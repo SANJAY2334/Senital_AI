@@ -4,66 +4,60 @@
 
 @layer base {
   :root {
-    --soc-bg: #080c14;
-    --soc-surface: #0d1424;
-    --soc-surface-elevated: #131b2e;
-    --soc-surface-hover: #1b2640;
-    --soc-surface-inset: #090e1a;
-    --soc-border: #1e293b;
-    --soc-border-subtle: #162032;
-    --soc-border-focus: #06b6d4;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --soc-bg: #0A0A0C;
+    --soc-surface: #121215;
+    --soc-surface-elevated: #18181C;
+    --soc-surface-hover: #1C1C22;
+    --soc-surface-inset: #141418;
+    --soc-border: #222227;
+    --soc-border-subtle: #1B1B20;
+    --soc-border-focus: #38BDF8;
+    --text-primary: #EDEDEF;
+    --text-secondary: #9898A0;
+    --text-muted: #62626B;
   }
 
   body {
-    font-family:
-      'Inter',
-      system-ui,
-      -apple-system,
-      sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--soc-bg);
     color: var(--text-primary);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom high-density scrollbars */
+  /* Quiet, restrained scrollbars */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #080c14;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 3px;
+    background: #26262D;
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #3A3A44;
   }
 }
 
-.font-mono {
-  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
-}
-
-/* Card and container utilities */
+/* Restrained container styles */
 .soc-card {
-  background-color: #0d1424;
-  border: 1px solid #1e293b;
+  background-color: #121215;
+  border: 1px solid #222227;
   border-radius: 0.5rem;
 }
 
 .soc-card-elevated {
-  background-color: #131b2e;
-  border: 1px solid #1e293b;
+  background-color: #18181C;
+  border: 1px solid #26262E;
   border-radius: 0.5rem;
 }
 
 /* Focus and interactive utilities */
 .soc-focus-ring:focus-visible {
-  outline: 2px solid #06b6d4;
+  outline: 2px solid #38BDF8;
   outline-offset: 1px;
 }

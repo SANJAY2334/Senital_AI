@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UIProcessedEvent } from '../../types/demo.types';
-import { X, Copy, Check, ShieldCheck, FileText, Code2, Info } from 'lucide-react';
+import { X, Copy, Check, ShieldCheck, FileText, Info } from 'lucide-react';
 import { SeverityBadge, StatusBadge } from '../ui/Badge';
 import { Tabs } from '../ui/Tabs';
 import { Button } from '../ui/Button';
@@ -24,8 +24,8 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: <Info className="w-3.5 h-3.5" /> },
-    { id: 'ocsf', label: 'OCSF Normalized', icon: <ShieldCheck className="w-3.5 h-3.5" /> },
-    { id: 'raw', label: 'Raw Evidence', icon: <FileText className="w-3.5 h-3.5" /> },
+    { id: 'ocsf', label: 'Normalized OCSF', icon: <ShieldCheck className="w-3.5 h-3.5" /> },
+    { id: 'raw', label: 'Raw evidence', icon: <FileText className="w-3.5 h-3.5" /> },
   ];
 
   const rawFormatted = (() => {
@@ -47,49 +47,42 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-2xl bg-[#0D1424] border-l border-[#1E293B] shadow-2xl flex flex-col justify-between">
-          {/* Topbar */}
-          <div className="p-4 border-b border-[#1E293B] flex items-center justify-between bg-[#090E1A]">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-lg bg-cyan-950 border border-cyan-800 text-cyan-400">
-                <Code2 className="w-4 h-4" />
+        <div className="w-screen max-w-xl bg-[#121215] border-l border-[#222227] shadow-2xl flex flex-col justify-between">
+          {/* Header */}
+          <div className="p-4 sm:p-5 border-b border-[#1C1C21] flex items-start justify-between bg-[#0E0E11] gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <span className="text-xs text-[#62626B]">Event record</span>
+                <SeverityBadge severity={event.severityLabel} />
               </div>
-              <div>
-                <h3 className="text-xs font-bold font-mono text-slate-100 uppercase tracking-wider">
-                  EVENT RECORD INSPECTOR
-                </h3>
-                <div className="flex items-center space-x-2 mt-0.5">
-                  <span className="text-[11px] font-mono text-cyan-400 truncate max-w-[220px]">
-                    {event.eventId}
-                  </span>
-                  <button
-                    onClick={() => copyToClipboard(event.eventId, 'id')}
-                    className="text-slate-400 hover:text-slate-200"
-                    title="Copy Event ID"
-                  >
-                    {copiedField === 'id' ? (
-                      <Check className="w-3 h-3 text-emerald-400" />
-                    ) : (
-                      <Copy className="w-3 h-3" />
-                    )}
-                  </button>
-                </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-mono text-[#EDEDEF] truncate max-w-[280px]">
+                  {event.eventId}
+                </span>
+                <button
+                  onClick={() => copyToClipboard(event.eventId, 'id')}
+                  className="text-[#62626B] hover:text-[#EDEDEF]"
+                  title="Copy Event ID"
+                >
+                  {copiedField === 'id' ? (
+                    <Check className="w-3 h-3 text-emerald-400" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <SeverityBadge severity={event.severityLabel} />
-              <button
-                onClick={onClose}
-                className="p-1 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              onClick={onClose}
+              className="p-1 text-[#9898A0] hover:text-[#EDEDEF] hover:bg-[#18181C] rounded-md transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Navigation Tabs */}
-          <div className="px-4 bg-[#090E1A] border-b border-[#1E293B]">
+          <div className="px-4 bg-[#0E0E11] border-b border-[#1C1C21]">
             <Tabs
               tabs={tabs}
               activeTab={activeTab}
@@ -98,60 +91,60 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
           </div>
 
           {/* Body Content */}
-          <div className="p-5 flex-1 overflow-y-auto space-y-4 font-mono text-xs">
+          <div className="p-4 sm:p-5 flex-1 overflow-y-auto space-y-4 text-xs">
             {activeTab === 'overview' && (
               <div className="space-y-4">
                 {/* Status bar */}
-                <div className="flex items-center justify-between p-3 bg-[#090E1A] border border-[#1E293B] rounded-lg">
-                  <span className="text-slate-400">Processing Status:</span>
+                <div className="flex items-center justify-between p-3 bg-[#18181C] border border-[#26262E] rounded-lg">
+                  <span className="text-[#9898A0]">Processing status</span>
                   <StatusBadge status={event.processingStatus} />
                 </div>
 
                 {/* Metadata Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1">
-                    <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                      Telemetry Provider
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1">
+                    <span className="text-[11px] text-[#62626B] block">Provider</span>
+                    <span className="text-[#EDEDEF] font-medium block">
+                      {event.provider === 'AWS_CLOUDTRAIL'
+                        ? 'AWS CloudTrail'
+                        : event.provider === 'CROWDSTRIKE_EDR'
+                          ? 'CrowdStrike'
+                          : 'Okta IAM'}
                     </span>
-                    <span className="text-amber-400 font-bold">{event.provider}</span>
                   </div>
 
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1">
-                    <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                      OCSF Class Name
-                    </span>
-                    <span className="text-purple-300 font-bold">{event.ocsfClassName}</span>
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1">
+                    <span className="text-[11px] text-[#62626B] block">OCSF class</span>
+                    <span className="text-[#EDEDEF] font-medium block">{event.ocsfClassName}</span>
                   </div>
 
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1">
-                    <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                      Tenant Identity
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1">
+                    <span className="text-[11px] text-[#62626B] block">Tenant</span>
+                    <span className="text-[#EDEDEF] font-mono text-[11px] block">
+                      {event.tenantId}
                     </span>
-                    <span className="text-slate-200 font-medium">{event.tenantId}</span>
                   </div>
 
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1">
-                    <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                      OCSF Class UID
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1">
+                    <span className="text-[11px] text-[#62626B] block">Class UID</span>
+                    <span className="text-[#EDEDEF] font-mono text-[11px] block">
+                      {event.ocsfClassUid}
                     </span>
-                    <span className="text-slate-200 font-medium">{event.ocsfClassUid}</span>
                   </div>
 
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1 sm:col-span-2">
-                    <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                      Timestamp (UTC ISO-8601)
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1 col-span-2">
+                    <span className="text-[11px] text-[#62626B] block">Timestamp (UTC)</span>
+                    <span className="text-[#EDEDEF] font-mono text-[11px] block">
+                      {event.timestampUtc}
                     </span>
-                    <span className="text-slate-200 font-medium">{event.timestampUtc}</span>
                   </div>
 
-                  <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg space-y-1 sm:col-span-2">
+                  <div className="bg-[#18181C] border border-[#26262E] p-3 rounded-lg space-y-1 col-span-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] text-slate-500 uppercase block font-semibold">
-                        Correlation ID
-                      </span>
+                      <span className="text-[11px] text-[#62626B] block">Correlation ID</span>
                       <button
                         onClick={() => copyToClipboard(event.correlationId, 'corr')}
-                        className="text-slate-400 hover:text-slate-200 text-[10px] flex items-center space-x-1"
+                        className="text-[#62626B] hover:text-[#EDEDEF] text-[11px] flex items-center space-x-1"
                       >
                         {copiedField === 'corr' ? (
                           <Check className="w-3 h-3 text-emerald-400" />
@@ -161,25 +154,23 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
                         <span>Copy</span>
                       </button>
                     </div>
-                    <span className="text-cyan-300 truncate block font-medium">
+                    <span className="text-[#EDEDEF] font-mono text-[11px] truncate block">
                       {event.correlationId}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#090E1A] border border-cyan-900/30 rounded-lg text-[11px] text-slate-400 leading-relaxed">
-                  <span className="text-cyan-400 font-semibold">Compliance Note: </span>
-                  Event is normalized to OCSF v1.1.0 schema with raw vendor evidence preserved in
-                  compliance with <code className="text-amber-300">SRS-FR-001</code> and{' '}
-                  <code className="text-amber-300">ADR-0003</code>.
+                <div className="p-3 bg-[#18181C] border border-[#26262E] rounded-lg text-xs text-[#9898A0] leading-relaxed">
+                  Normalized to OCSF v1.1.0 schema with raw evidence preserved in compliance with
+                  SRS-FR-001 and ADR-0003.
                 </div>
               </div>
             )}
 
             {activeTab === 'ocsf' && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Class UID: {event.ocsfClassUid} Schema Envelope</span>
+                <div className="flex items-center justify-between text-xs text-[#9898A0]">
+                  <span>Class UID {event.ocsfClassUid} envelope</span>
                   <Button
                     variant="ghost"
                     size="xs"
@@ -195,7 +186,7 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
                     {copiedField === 'ocsf' ? 'Copied' : 'Copy JSON'}
                   </Button>
                 </div>
-                <pre className="bg-[#090E1A] border border-[#1E293B] p-4 rounded-lg text-emerald-400 text-[11px] overflow-x-auto max-h-[500px] leading-relaxed">
+                <pre className="bg-[#0A0A0C] border border-[#222227] p-4 rounded-lg text-[#EDEDEF] font-mono text-[11px] overflow-x-auto max-h-[480px] leading-relaxed">
                   {ocsfFormatted}
                 </pre>
               </div>
@@ -203,8 +194,8 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
 
             {activeTab === 'raw' && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Original Vendor Ingress Record</span>
+                <div className="flex items-center justify-between text-xs text-[#9898A0]">
+                  <span>Original vendor ingress record</span>
                   <Button
                     variant="ghost"
                     size="xs"
@@ -217,10 +208,10 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
                     }
                     onClick={() => copyToClipboard(rawFormatted, 'raw')}
                   >
-                    {copiedField === 'raw' ? 'Copied' : 'Copy Payload'}
+                    {copiedField === 'raw' ? 'Copied' : 'Copy payload'}
                   </Button>
                 </div>
-                <pre className="bg-[#090E1A] border border-[#1E293B] p-4 rounded-lg text-slate-300 text-[11px] overflow-x-auto max-h-[500px] leading-relaxed">
+                <pre className="bg-[#0A0A0C] border border-[#222227] p-4 rounded-lg text-[#9898A0] font-mono text-[11px] overflow-x-auto max-h-[480px] leading-relaxed">
                   {rawFormatted}
                 </pre>
               </div>
@@ -228,9 +219,9 @@ export const EventDetailDrawer: React.FC<EventDetailDrawerProps> = ({ event, onC
           </div>
 
           {/* Footer */}
-          <div className="p-3 border-t border-[#1E293B] bg-[#090E1A] flex justify-end">
+          <div className="p-3.5 border-t border-[#1C1C21] bg-[#0E0E11] flex justify-end">
             <Button variant="secondary" size="xs" onClick={onClose}>
-              Close Inspector
+              Close
             </Button>
           </div>
         </div>

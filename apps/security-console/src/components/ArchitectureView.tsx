@@ -1,56 +1,52 @@
 import React from 'react';
-import { Network, Server, Layers, Cpu, ShieldCheck } from 'lucide-react';
+import { Server, Layers, Cpu, ShieldCheck } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 
 export const ArchitectureView: React.FC = () => {
   return (
-    <div className="space-y-5 font-mono text-xs">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center space-x-2 text-cyan-400">
-            <Network className="w-5 h-5" />
-            <CardTitle>SENTINELAI SPRINT 1 ARCHITECTURE SPECIFICATION</CardTitle>
-          </div>
-          <span className="text-[10px] bg-cyan-950 text-cyan-400 border border-cyan-800 px-2 py-0.5 rounded">
-            EPIC-1 Architecture
-          </span>
-        </CardHeader>
-        <CardContent>
-          <p className="text-slate-400 leading-relaxed">
-            Technical blueprint of the multi-cloud ingestion, partitioning, and OCSF v1.1.0
-            schematization substrate (Tasks T-1.1 through T-1.5).
-          </p>
-        </CardContent>
-      </Card>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="pb-1 border-b border-[#1C1C21]">
+        <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">
+          Architecture specification
+        </h1>
+        <p className="text-xs text-[#9898A0] mt-0.5">
+          Multi-cloud ingestion, partitioning, and OCSF v1.1.0 schematization substrate
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
         {/* Ingestion Collector */}
         <Card>
           <CardHeader>
-            <div className="flex items-center space-x-2 text-cyan-400 font-bold text-xs">
-              <Server className="w-4 h-4" />
-              <span>Ingestion Collector Microservice (T-1.3)</span>
+            <div className="flex items-center space-x-2">
+              <Server className="w-4 h-4 text-[#9898A0]" />
+              <CardTitle>Ingestion collector microservice</CardTitle>
             </div>
+            <span className="text-xs text-[#62626B]">Port 8080 / 50051</span>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-[#9898A0]">
               <li>
-                • Endpoint: <code className="text-cyan-300">POST /api/v1/ingest/raw</code>
+                • HTTP Endpoint:{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">
+                  POST /api/v1/ingest/raw
+                </code>
               </li>
               <li>
-                • gRPC Contract: <code className="text-purple-300">IngestionService</code>{' '}
+                • gRPC Contract:{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">IngestionService</code>{' '}
                 (ingestion.proto)
               </li>
+              <li>• Zero-Trust Tenant Validation (ADR-0006, ADR-0011)</li>
               <li>
-                • Zero-Trust Tenant Validation (<code className="text-amber-300">ADR-0006</code>,{' '}
-                <code className="text-amber-300">ADR-0011</code>)
+                • Fallback Ring Buffer:{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">StreamRingBuffer</code>{' '}
+                (SRS-FR-003)
               </li>
               <li>
-                • Fallback Ring Buffer: <code className="text-emerald-300">StreamRingBuffer</code> (
-                <code className="text-amber-300">SRS-FR-003</code>)
-              </li>
-              <li>
-                • Kafka Producer: Topic <code className="text-cyan-300">telemetry.raw.v1</code>
+                • Kafka Producer: Topic{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">telemetry.raw.v1</code>
               </li>
             </ul>
           </CardContent>
@@ -59,23 +55,27 @@ export const ArchitectureView: React.FC = () => {
         {/* OCSF Normalizer */}
         <Card>
           <CardHeader>
-            <div className="flex items-center space-x-2 text-purple-400 font-bold text-xs">
-              <Cpu className="w-4 h-4" />
-              <span>OCSF Normalizer Microservice (T-1.4)</span>
+            <div className="flex items-center space-x-2">
+              <Cpu className="w-4 h-4 text-[#9898A0]" />
+              <CardTitle>OCSF normalizer microservice</CardTitle>
             </div>
+            <span className="text-xs text-[#62626B]">Consumer group</span>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-[#9898A0]">
               <li>
                 • Consumer Group:{' '}
-                <code className="text-cyan-300">sentinelai-ocsf-normalizer-group</code>
+                <code className="text-[#EDEDEF] font-mono text-[11px]">
+                  sentinelai-ocsf-normalizer-group
+                </code>
               </li>
               <li>• Class 6001: AWS CloudTrail $\rightarrow$ Cloud Audit</li>
               <li>• Class 1007: CrowdStrike EDR $\rightarrow$ Process Activity</li>
               <li>• Class 3001: Okta IAM $\rightarrow$ Authentication</li>
               <li>• Identifiers: 128-bit RFC 4122 UUID v4 + UTC timestamp</li>
               <li>
-                • Kafka Producer: Topic <code className="text-emerald-300">telemetry.ocsf.v1</code>
+                • Kafka Producer: Topic{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">telemetry.ocsf.v1</code>
               </li>
             </ul>
           </CardContent>
@@ -84,20 +84,21 @@ export const ArchitectureView: React.FC = () => {
         {/* Kafka Topics */}
         <Card>
           <CardHeader>
-            <div className="flex items-center space-x-2 text-amber-400 font-bold text-xs">
-              <Layers className="w-4 h-4" />
-              <span>Kafka Event Bus Substrate (ADR-0004)</span>
+            <div className="flex items-center space-x-2">
+              <Layers className="w-4 h-4 text-[#9898A0]" />
+              <CardTitle>Kafka event bus substrate</CardTitle>
             </div>
+            <span className="text-xs text-[#62626B]">ADR-0004</span>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-[#9898A0]">
               <li>
-                • <code className="text-amber-300">telemetry.raw.v1</code>: Preserves raw evidence (
-                <code className="text-amber-300">SRS-FR-001</code>)
+                • <code className="text-[#EDEDEF] font-mono text-[11px]">telemetry.raw.v1</code>:
+                Preserves raw evidence (SRS-FR-001)
               </li>
               <li>
-                • <code className="text-emerald-300">telemetry.ocsf.v1</code>: Normalized OCSF v1.1
-                events
+                • <code className="text-[#EDEDEF] font-mono text-[11px]">telemetry.ocsf.v1</code>:
+                Normalized OCSF v1.1.0 events
               </li>
               <li>• High-Throughput Partitioning & Partition Key: Tenant ID</li>
             </ul>
@@ -107,18 +108,22 @@ export const ArchitectureView: React.FC = () => {
         {/* Observability */}
         <Card>
           <CardHeader>
-            <div className="flex items-center space-x-2 text-emerald-400 font-bold text-xs">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Observability & Metrics (ADR-0013)</span>
+            <div className="flex items-center space-x-2">
+              <ShieldCheck className="w-4 h-4 text-[#9898A0]" />
+              <CardTitle>Observability & telemetry</CardTitle>
             </div>
+            <span className="text-xs text-[#62626B]">ADR-0013</span>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-[#9898A0]">
               <li>
-                • Endpoint: <code className="text-cyan-300">GET /api/v1/ingest/metrics</code>
+                • Endpoint:{' '}
+                <code className="text-[#EDEDEF] font-mono text-[11px]">
+                  GET /api/v1/ingest/metrics
+                </code>
               </li>
-              <li>• Tracks received, accepted, rejected, normalized counters</li>
-              <li>• Tracks Kafka publish failures & ring buffer depth</li>
+              <li>• Tracks received, accepted, rejected, and normalized counters</li>
+              <li>• Tracks Kafka publish failures and ring buffer depth</li>
               <li>• OpenTelemetry Prometheus metrics exporter</li>
             </ul>
           </CardContent>

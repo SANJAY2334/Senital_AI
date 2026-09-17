@@ -1,40 +1,79 @@
-import { AlertCircle, AlertTriangle, Info, ShieldAlert } from 'lucide-react';
+import React from 'react';
 
 export type SeverityType = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'INFO';
 
 interface SeverityBadgeProps {
   severity: SeverityType | string;
   size?: 'sm' | 'md';
+  variant?: 'dot' | 'subtle';
 }
 
-export const SeverityBadge: React.FC<SeverityBadgeProps> = ({ severity, size = 'sm' }) => {
-  const sev = (severity || 'INFO').toUpperCase();
+const severityConfig: Record<
+  string,
+  { label: string; dot: string; text: string; bg: string; border: string }
+> = {
+  CRITICAL: {
+    label: 'Critical',
+    dot: 'bg-[#F43F5E]',
+    text: 'text-[#F43F5E]',
+    bg: 'bg-[#F43F5E]/10',
+    border: 'border-[#F43F5E]/20',
+  },
+  HIGH: {
+    label: 'High',
+    dot: 'bg-[#FB923C]',
+    text: 'text-[#FB923C]',
+    bg: 'bg-[#FB923C]/10',
+    border: 'border-[#FB923C]/20',
+  },
+  MEDIUM: {
+    label: 'Medium',
+    dot: 'bg-[#FBBF24]',
+    text: 'text-[#FBBF24]',
+    bg: 'bg-[#FBBF24]/10',
+    border: 'border-[#FBBF24]/20',
+  },
+  LOW: {
+    label: 'Low',
+    dot: 'bg-[#94A3B8]',
+    text: 'text-[#94A3B8]',
+    bg: 'bg-[#94A3B8]/10',
+    border: 'border-[#94A3B8]/20',
+  },
+  INFO: {
+    label: 'Info',
+    dot: 'bg-[#38BDF8]',
+    text: 'text-[#38BDF8]',
+    bg: 'bg-[#38BDF8]/10',
+    border: 'border-[#38BDF8]/20',
+  },
+};
 
-  let styles = 'bg-cyan-950/80 text-cyan-400 border-cyan-800';
-  let icon = <Info className="w-3 h-3 shrink-0" />;
+export const SeverityBadge: React.FC<SeverityBadgeProps> = ({
+  severity,
+  size = 'sm',
+  variant = 'subtle',
+}) => {
+  const key = (severity || 'INFO').toUpperCase();
+  const cfg = severityConfig[key] || severityConfig.INFO;
 
-  if (sev === 'CRITICAL') {
-    styles = 'bg-red-950/80 text-red-400 border-red-800';
-    icon = <AlertCircle className="w-3 h-3 shrink-0 text-red-400" />;
-  } else if (sev === 'HIGH') {
-    styles = 'bg-orange-950/80 text-orange-400 border-orange-800';
-    icon = <AlertTriangle className="w-3 h-3 shrink-0 text-orange-400" />;
-  } else if (sev === 'MEDIUM') {
-    styles = 'bg-amber-950/80 text-amber-400 border-amber-800';
-    icon = <ShieldAlert className="w-3 h-3 shrink-0 text-amber-400" />;
-  } else if (sev === 'LOW') {
-    styles = 'bg-blue-950/80 text-blue-400 border-blue-800';
-    icon = <Info className="w-3 h-3 shrink-0 text-blue-400" />;
+  const sizeCls = size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-xs px-2.5 py-1';
+
+  if (variant === 'dot') {
+    return (
+      <span className="inline-flex items-center space-x-1.5 text-xs text-neutral-300">
+        <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot} shrink-0`} />
+        <span>{cfg.label}</span>
+      </span>
+    );
   }
-
-  const sizeCls = size === 'sm' ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1';
 
   return (
     <span
-      className={`inline-flex items-center space-x-1.5 font-mono font-bold uppercase tracking-wider rounded border ${styles} ${sizeCls}`}
+      className={`inline-flex items-center space-x-1.5 font-medium rounded-md border ${cfg.bg} ${cfg.border} ${cfg.text} ${sizeCls}`}
     >
-      {icon}
-      <span>{sev}</span>
+      <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot} shrink-0`} />
+      <span>{cfg.label}</span>
     </span>
   );
 };
@@ -58,32 +97,78 @@ interface StatusBadgeProps {
   pulse?: boolean;
 }
 
+const statusConfig: Record<string, { label: string; dot: string; text: string; bg: string }> = {
+  ONLINE: {
+    label: 'Online',
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+  },
+  HEALTHY: {
+    label: 'Healthy',
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+  },
+  NORMALIZED: {
+    label: 'Normalized',
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+  },
+  RESOLVED: {
+    label: 'Resolved',
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+  },
+  ACCEPTED: {
+    label: 'Accepted',
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+  },
+  DEGRADED: {
+    label: 'Degraded',
+    dot: 'bg-amber-400',
+    text: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+  },
+  BUFFERED_BACKPRESSURE: {
+    label: 'Backpressure',
+    dot: 'bg-amber-400',
+    text: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+  },
+  TRIAGED: { label: 'Triaged', dot: 'bg-amber-400', text: 'text-amber-400', bg: 'bg-amber-500/10' },
+  NEW: { label: 'New', dot: 'bg-sky-400', text: 'text-sky-400', bg: 'bg-sky-500/10' },
+  INVESTIGATING: {
+    label: 'Investigating',
+    dot: 'bg-sky-400',
+    text: 'text-sky-400',
+    bg: 'bg-sky-500/10',
+  },
+  OUTAGE: { label: 'Outage', dot: 'bg-rose-500', text: 'text-rose-400', bg: 'bg-rose-500/10' },
+  REJECTED: { label: 'Rejected', dot: 'bg-rose-500', text: 'text-rose-400', bg: 'bg-rose-500/10' },
+};
+
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, pulse }) => {
-  const st = (status || 'UNKNOWN').toUpperCase();
-
-  let colorCls = 'bg-slate-800 text-slate-300 border-slate-700';
-  let dotCls = 'bg-slate-400';
-
-  if (st === 'ONLINE' || st === 'HEALTHY' || st === 'NORMALIZED' || st === 'RESOLVED') {
-    colorCls = 'bg-emerald-950/70 text-emerald-400 border-emerald-800/80';
-    dotCls = 'bg-emerald-400';
-  } else if (st === 'DEGRADED' || st === 'BUFFERED_BACKPRESSURE' || st === 'TRIAGED') {
-    colorCls = 'bg-amber-950/70 text-amber-400 border-amber-800/80';
-    dotCls = 'bg-amber-400';
-  } else if (st === 'OUTAGE' || st === 'REJECTED') {
-    colorCls = 'bg-red-950/70 text-red-400 border-red-800/80';
-    dotCls = 'bg-red-400';
-  } else if (st === 'NEW' || st === 'INVESTIGATING') {
-    colorCls = 'bg-cyan-950/70 text-cyan-400 border-cyan-800/80';
-    dotCls = 'bg-cyan-400';
-  }
+  const key = (status || 'UNKNOWN').toUpperCase();
+  const cfg = statusConfig[key] || {
+    label: key.toLowerCase().replace(/_/g, ' '),
+    dot: 'bg-neutral-500',
+    text: 'text-neutral-400',
+    bg: 'bg-neutral-500/10',
+  };
 
   return (
     <span
-      className={`inline-flex items-center space-x-1.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded border ${colorCls}`}
+      className={`inline-flex items-center space-x-1.5 text-xs font-normal px-2 py-0.5 rounded-md ${cfg.bg} ${cfg.text}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${dotCls} ${pulse ? 'animate-ping' : ''}`} />
-      <span>{st.replace(/_/g, ' ')}</span>
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${cfg.dot} shrink-0 ${pulse ? 'opacity-80' : ''}`}
+      />
+      <span>{cfg.label}</span>
     </span>
   );
 };

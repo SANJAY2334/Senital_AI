@@ -16,25 +16,25 @@ interface TabsProps {
 
 export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onChange, className = '' }) => {
   return (
-    <div className={`flex items-center space-x-1 border-b border-[#1E293B] ${className}`}>
+    <div className={`flex items-center space-x-1 border-b border-[#1E1E24] ${className}`}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         return (
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
-            className={`flex items-center space-x-2 px-3 py-2 text-xs font-mono font-medium border-b-2 transition-all ${
+            className={`flex items-center space-x-2 px-3 py-2 text-xs font-medium transition-all duration-150 relative -mb-px border-b-2 ${
               isActive
-                ? 'border-cyan-500 text-cyan-400 bg-cyan-950/20'
-                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/30'
+                ? 'border-[#EDEDEF] text-[#EDEDEF]'
+                : 'border-transparent text-[#9898A0] hover:text-[#EDEDEF]'
             }`}
           >
-            {tab.icon && <span className="w-3.5 h-3.5">{tab.icon}</span>}
+            {tab.icon && <span className="w-3.5 h-3.5 shrink-0 opacity-80">{tab.icon}</span>}
             <span>{tab.label}</span>
             {typeof tab.count === 'number' && (
               <span
-                className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isActive ? 'bg-cyan-900/60 text-cyan-300' : 'bg-slate-800 text-slate-400'
+                className={`text-[10px] px-1.5 py-0.2 rounded-full font-medium ${
+                  isActive ? 'bg-[#26262E] text-[#EDEDEF]' : 'bg-[#18181C] text-[#62626B]'
                 }`}
               >
                 {tab.count}

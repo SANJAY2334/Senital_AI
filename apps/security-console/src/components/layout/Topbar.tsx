@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Radio, AlertOctagon, SlidersHorizontal, User } from 'lucide-react';
+import { Shield, SlidersHorizontal, User } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { SearchInput } from '../ui/SearchInput';
 
@@ -19,69 +19,65 @@ export const Topbar: React.FC<TopbarProps> = ({
   onSearchChange,
 }) => {
   return (
-    <header className="h-14 bg-[#0D1424] border-b border-[#1E293B] px-4 flex items-center justify-between sticky top-0 z-30 shrink-0">
+    <header className="h-13 bg-[#0A0A0C] border-b border-[#1E1E24] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 shrink-0">
       {/* Brand & Environment Identity */}
       <div className="flex items-center space-x-3">
-        <div className="bg-cyan-500/10 p-1.5 rounded-lg border border-cyan-500/30 flex items-center justify-center">
-          <Shield className="w-5 h-5 text-cyan-400" />
+        <div className="flex items-center space-x-2.5">
+          <div className="w-7 h-7 rounded-md bg-[#18181C] border border-[#26262E] flex items-center justify-center text-[#EDEDEF]">
+            <Shield className="w-4 h-4" />
+          </div>
+          <div className="flex items-baseline space-x-2">
+            <span className="text-sm font-semibold tracking-tight text-[#EDEDEF]">SentinelAI</span>
+            <span className="text-[11px] font-normal text-[#62626B]">Console</span>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-sm font-bold tracking-wider text-slate-100 font-mono">
-            SENTINEL<span className="text-cyan-400">AI</span>
-          </span>
-          <span className="bg-slate-800 text-slate-300 border border-slate-700 text-[10px] px-1.5 py-0.5 rounded font-mono font-medium">
-            SOC CONSOLE
-          </span>
-          <span className="bg-amber-950/80 text-amber-400 border border-amber-800/80 text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold">
-            SIMULATED DEMO
-          </span>
-        </div>
+
+        <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-normal bg-[#18181C] text-[#9898A0] border border-[#26262E]">
+          Demo environment
+        </span>
       </div>
 
       {/* Center Search Input */}
-      <div className="hidden md:block w-80 max-w-sm">
+      <div className="hidden md:block w-72 lg:w-96">
         <SearchInput
           value={searchQuery}
           onChange={onSearchChange}
-          placeholder="Global search telemetry, hashes, tenants..."
+          placeholder="Search telemetry, events, alerts..."
           shortcutHint="⌘K"
         />
       </div>
 
-      {/* Right Controls & Telemetry Heartbeat */}
+      {/* Right Controls & Telemetry Status */}
       <div className="flex items-center space-x-3">
         {isOutageActive ? (
-          <div className="flex items-center space-x-1.5 bg-red-950/90 border border-red-800 text-red-400 px-2.5 py-1 rounded text-xs font-mono font-semibold animate-pulse">
-            <AlertOctagon className="w-3.5 h-3.5 text-red-400" />
-            <span className="hidden sm:inline">KAFKA OUTAGE ACTIVE</span>
+          <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs bg-rose-500/10 border border-rose-500/20 text-rose-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            <span className="font-medium">Broker outage active</span>
           </div>
         ) : (
-          <div className="flex items-center space-x-1.5 bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 px-2.5 py-1 rounded text-xs font-mono">
-            <Radio className="w-3 h-3 text-emerald-400 animate-pulse" />
-            <span className="font-semibold">{throughputEPS.toLocaleString()} EPS</span>
+          <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs text-[#9898A0]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="font-normal tabular-nums">{throughputEPS.toLocaleString()} EPS</span>
           </div>
         )}
 
         {/* Demo Controls Button */}
         <Button
-          variant="primary"
+          variant="secondary"
           size="xs"
-          icon={<SlidersHorizontal className="w-3.5 h-3.5" />}
+          icon={<SlidersHorizontal className="w-3.5 h-3.5 text-[#9898A0]" />}
           onClick={onOpenDemoControls}
         >
-          <span className="hidden sm:inline">Demo Controls</span>
+          <span className="hidden sm:inline">Simulation</span>
         </Button>
 
-        {/* User / Session Avatar */}
-        <div className="flex items-center space-x-2 pl-2 border-l border-[#1E293B] text-slate-400">
-          <div className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300">
-            <User className="w-4 h-4" />
+        {/* User Session Avatar */}
+        <div className="flex items-center space-x-2 pl-2 border-l border-[#1E1E24] text-[#9898A0]">
+          <div className="w-7 h-7 rounded-full bg-[#18181C] border border-[#26262E] flex items-center justify-center text-[#9898A0]">
+            <User className="w-3.5 h-3.5" />
           </div>
-          <div className="hidden lg:block text-left font-mono">
-            <div className="text-[11px] font-semibold text-slate-200 leading-tight">
-              SecOps Lead
-            </div>
-            <div className="text-[9px] text-slate-500 leading-tight">Tier-2 Analyst</div>
+          <div className="hidden lg:block text-left">
+            <div className="text-xs font-medium text-[#EDEDEF] leading-tight">SecOps Lead</div>
           </div>
         </div>
       </div>

@@ -24,56 +24,48 @@ interface NavItem {
   icon: React.ReactNode;
   badge?: string | number;
   badgeColor?: string;
-  isPlanned?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  activeTab,
-  setActiveTab,
-  alertCount = 0,
-  eventCount = 0,
-}) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, alertCount = 0 }) => {
   const operationsGroup: NavItem[] = [
     {
       id: 'overview',
-      label: 'Dashboard',
+      label: 'Overview',
       icon: <LayoutDashboard className="w-4 h-4" />,
     },
     {
       id: 'alerts',
-      label: 'Alerts Triage',
+      label: 'Alerts',
       icon: <ShieldAlert className="w-4 h-4" />,
       badge: alertCount > 0 ? alertCount : undefined,
-      badgeColor: 'bg-red-950 text-red-400 border-red-800',
+      badgeColor: 'bg-rose-500/10 text-rose-400 border border-rose-500/20',
     },
     {
       id: 'events',
-      label: 'Event Stream',
+      label: 'Events',
       icon: <ListFilter className="w-4 h-4" />,
-      badge: eventCount > 0 ? eventCount : undefined,
-      badgeColor: 'bg-slate-800 text-slate-300 border-slate-700',
     },
   ];
 
-  const infrastructureGroup: NavItem[] = [
-    {
-      id: 'telemetry',
-      label: 'Telemetry Stats',
-      icon: <Radio className="w-4 h-4" />,
-    },
+  const platformGroup: NavItem[] = [
     {
       id: 'pipeline',
-      label: 'Pipeline Flow',
+      label: 'Pipeline',
       icon: <Cpu className="w-4 h-4" />,
     },
     {
+      id: 'telemetry',
+      label: 'Telemetry',
+      icon: <Radio className="w-4 h-4" />,
+    },
+    {
       id: 'health',
-      label: 'System Health',
+      label: 'System health',
       icon: <Activity className="w-4 h-4" />,
     },
   ];
 
-  const engineeringGroup: NavItem[] = [
+  const referenceGroup: NavItem[] = [
     {
       id: 'architecture',
       label: 'Architecture',
@@ -81,39 +73,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       id: 'ai-planned',
-      label: 'AI Capabilities',
+      label: 'Roadmap',
       icon: <Sparkles className="w-4 h-4" />,
-      badge: 'Sprint 2+',
-      badgeColor: 'bg-indigo-950 text-indigo-400 border-indigo-800',
-      isPlanned: true,
     },
   ];
 
   const renderGroup = (title: string, items: NavItem[]) => (
-    <div className="space-y-1 mb-4">
-      <div className="px-3 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500 mb-1">
-        {title}
-      </div>
+    <div className="space-y-0.5 mb-5">
+      <div className="px-2.5 py-1 text-[11px] font-medium text-[#62626B]">{title}</div>
       {items.map((item) => {
         const isActive = activeTab === item.id;
         return (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-mono font-medium transition-all soc-focus-ring ${
+            className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs transition-all duration-150 ${
               isActive
-                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
-                : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 border border-transparent'
+                ? 'bg-[#18181C] text-[#EDEDEF] font-medium shadow-xs'
+                : 'text-[#9898A0] hover:bg-[#141418] hover:text-[#EDEDEF]'
             }`}
           >
             <div className="flex items-center space-x-2.5">
-              <span className={isActive ? 'text-cyan-400' : 'text-slate-400'}>{item.icon}</span>
+              <span className={isActive ? 'text-[#EDEDEF]' : 'text-[#62626B]'}>{item.icon}</span>
               <span>{item.label}</span>
             </div>
             {item.badge !== undefined && (
               <span
-                className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded border ${
-                  item.badgeColor || 'bg-slate-800 text-slate-400 border-slate-700'
+                className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
+                  item.badgeColor || 'bg-[#222227] text-[#9898A0]'
                 }`}
               >
                 {item.badge}
@@ -126,23 +113,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   );
 
   return (
-    <nav className="w-60 bg-[#0D1424] border-r border-[#1E293B] p-3 flex flex-col justify-between shrink-0 h-full select-none overflow-y-auto">
+    <nav className="w-56 bg-[#0A0A0C] border-r border-[#1E1E24] p-3 flex flex-col justify-between shrink-0 h-full select-none overflow-y-auto">
       <div>
         {renderGroup('Operations', operationsGroup)}
-        {renderGroup('Infrastructure', infrastructureGroup)}
-        {renderGroup('Engineering', engineeringGroup)}
+        {renderGroup('Platform', platformGroup)}
+        {renderGroup('Reference', referenceGroup)}
       </div>
 
       {/* Footer metadata */}
-      <div className="bg-[#090E1A] border border-[#1E293B] p-3 rounded-lg text-[11px] font-mono space-y-1.5 text-slate-400">
-        <div className="flex items-center justify-between">
-          <span>Sprint Milestone:</span>
-          <span className="text-cyan-400 font-bold">EPIC-1</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span>OCSF Schematizer:</span>
-          <span className="text-slate-200">v1.1.0</span>
-        </div>
+      <div className="pt-3 border-t border-[#1C1C21] px-2.5 text-[11px] text-[#62626B] flex items-center justify-between">
+        <span>SentinelAI v1.1</span>
+        <span>OCSF v1.1.0</span>
       </div>
     </nav>
   );

@@ -16,40 +16,39 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyle =
-    'inline-flex items-center justify-center font-mono font-medium rounded-lg transition-colors soc-focus-ring disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center font-medium rounded-md transition-all duration-150 soc-focus-ring disabled:opacity-40 disabled:cursor-not-allowed select-none';
 
   let variantStyle = '';
   switch (variant) {
     case 'primary':
-      variantStyle = 'bg-cyan-600 hover:bg-cyan-500 text-white border border-cyan-500/50 shadow-sm';
+      variantStyle = 'bg-[#EDEDEF] hover:bg-white text-[#0A0A0C] font-medium shadow-xs';
       break;
     case 'secondary':
       variantStyle =
-        'bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 border border-slate-700/70';
+        'bg-[#18181C] hover:bg-[#202026] text-[#EDEDEF] border border-[#26262E] hover:border-[#32323C] shadow-xs';
       break;
     case 'outline':
       variantStyle =
-        'bg-transparent hover:bg-slate-800/50 text-slate-300 border border-slate-700 hover:text-white';
+        'bg-transparent hover:bg-[#18181C] text-[#9898A0] hover:text-[#EDEDEF] border border-[#26262E]';
       break;
     case 'danger':
-      variantStyle = 'bg-red-950/80 hover:bg-red-900 text-red-300 border border-red-800/80';
+      variantStyle = 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/25';
       break;
     case 'ghost':
-      variantStyle =
-        'bg-transparent hover:bg-slate-800/60 text-slate-400 hover:text-slate-200 border border-transparent';
+      variantStyle = 'bg-transparent hover:bg-[#18181C] text-[#9898A0] hover:text-[#EDEDEF]';
       break;
   }
 
   let sizeStyle = '';
   switch (size) {
     case 'xs':
-      sizeStyle = 'text-[11px] px-2.5 py-1 space-x-1.5';
+      sizeStyle = 'text-xs px-2.5 py-1 space-x-1.5 h-7';
       break;
     case 'sm':
-      sizeStyle = 'text-xs px-3 py-1.5 space-x-2';
+      sizeStyle = 'text-xs px-3 py-1.5 space-x-1.5 h-8';
       break;
     case 'md':
-      sizeStyle = 'text-sm px-4 py-2 space-x-2.5';
+      sizeStyle = 'text-sm px-3.5 py-2 space-x-2 h-9';
       break;
   }
 

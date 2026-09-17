@@ -1,7 +1,6 @@
 import React from 'react';
 import { SystemHealthState } from '../../types/demo.types';
 import {
-  Activity,
   Server,
   Cpu,
   Layers,
@@ -10,7 +9,7 @@ import {
   RefreshCw,
   SlidersHorizontal,
 } from 'lucide-react';
-import { Card, CardHeader, CardTitle } from '../ui/Card';
+import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 
@@ -31,7 +30,7 @@ export const HealthView: React.FC<HealthViewProps> = ({
     {
       name: 'Ingestion Collector Microservice',
       serviceId: '@sentinelai/ingestion-collector',
-      protocol: 'HTTP REST / gRPC IngestionService',
+      protocol: 'REST / gRPC',
       port: '8080 / 50051',
       status: health.ingestionCollectorStatus,
       icon: Server,
@@ -40,8 +39,8 @@ export const HealthView: React.FC<HealthViewProps> = ({
     {
       name: 'OCSF Normalizer Microservice',
       serviceId: '@sentinelai/ocsf-normalizer',
-      protocol: 'Event Consumer & Schematizer',
-      port: 'Embedded / Kafka Consumer Group',
+      protocol: 'Consumer Group',
+      port: 'Embedded / Kafka',
       status: health.ocsfNormalizerStatus,
       icon: Cpu,
       details: 'OCSF v1.1.0 engine (Classes 1007, 3001, 6001)',
@@ -67,106 +66,100 @@ export const HealthView: React.FC<HealthViewProps> = ({
     {
       name: 'Stream Ring Buffer Backpressure',
       serviceId: 'StreamRingBuffer',
-      protocol: 'In-Memory Circular Buffer',
-      port: `Depth: ${health.ringBufferDepth} / 5,000`,
+      protocol: 'In-Memory Buffer',
+      port: `${health.ringBufferDepth} / 5,000 frames`,
       status: health.ringBufferState === 'BACKPRESSURE_ACTIVE' ? 'DEGRADED' : 'HEALTHY',
       icon: AlertOctagon,
-      details: 'SRS-FR-003 fault tolerance fallback during broker outages',
+      details: 'Fault tolerance circular fallback during broker outages (SRS-FR-003)',
     },
     {
       name: 'Security Operations Console UI',
       serviceId: '@sentinelai/security-console',
-      protocol: 'Vite / React 18 ESM',
+      protocol: 'React 18 / Vite ESM',
       port: '3000 (HTTP)',
       status: 'ONLINE',
-      icon: Activity,
-      details: 'Production-grade enterprise SOC command console',
+      icon: ShieldCheck,
+      details: 'Enterprise SOC operational interface',
     },
   ];
 
   return (
-    <div className="space-y-5">
-      {/* Header with quick status summary & actions */}
-      <Card>
-        <CardHeader className="flex-col sm:flex-row items-start sm:items-center gap-3">
-          <div className="flex items-center space-x-2.5">
-            <div className="p-1.5 rounded-lg bg-emerald-950/80 border border-emerald-800 text-emerald-400">
-              <Activity className="w-4 h-4" />
-            </div>
-            <div>
-              <CardTitle>System Health & Subsystem Telemetry</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Continuous heartbeat monitoring across all SentinelAI services
-              </span>
-            </div>
-          </div>
+    <div className="space-y-4 max-w-7xl mx-auto">
+      {/* Header with actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1 border-b border-[#1C1C21]">
+        <div>
+          <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">System health</h1>
+          <p className="text-xs text-[#9898A0] mt-0.5">
+            Continuous availability and heartbeat monitoring across SentinelAI services
+          </p>
+        </div>
 
-          <div className="flex items-center space-x-2">
-            {health.isOutageSimulated ? (
-              <Button
-                variant="primary"
-                size="xs"
-                className="bg-emerald-600 hover:bg-emerald-500 border-emerald-500 text-white"
-                icon={<RefreshCw className="w-3.5 h-3.5 animate-spin" />}
-                onClick={onRecover}
-              >
-                Recover Pipeline
-              </Button>
-            ) : (
-              <Button
-                variant="danger"
-                size="xs"
-                icon={<AlertOctagon className="w-3.5 h-3.5" />}
-                onClick={() => onToggleOutage(true)}
-              >
-                Simulate Kafka Outage
-              </Button>
-            )}
-
+        <div className="flex items-center space-x-2">
+          {health.isOutageSimulated ? (
             <Button
-              variant="outline"
+              variant="primary"
               size="xs"
-              icon={<SlidersHorizontal className="w-3.5 h-3.5" />}
-              onClick={onOpenDemoControls}
+              icon={<RefreshCw className="w-3.5 h-3.5 animate-spin text-[#0A0A0C]" />}
+              onClick={onRecover}
             >
-              Simulation Settings
+              Recover broker
             </Button>
-          </div>
-        </CardHeader>
-      </Card>
+          ) : (
+            <Button
+              variant="danger"
+              size="xs"
+              icon={<AlertOctagon className="w-3.5 h-3.5" />}
+              onClick={() => onToggleOutage(true)}
+            >
+              Simulate outage
+            </Button>
+          )}
+
+          <Button
+            variant="secondary"
+            size="xs"
+            icon={<SlidersHorizontal className="w-3.5 h-3.5 text-[#9898A0]" />}
+            onClick={onOpenDemoControls}
+          >
+            Simulation controls
+          </Button>
+        </div>
+      </div>
 
       {/* Subsystem Health Table */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs font-mono">
-            <thead className="bg-[#090E1A] text-slate-400 border-b border-[#1E293B]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#0E0E11] text-[#62626B] border-b border-[#1C1C21]">
               <tr>
-                <th className="p-3">Subsystem Name</th>
-                <th className="p-3">Package / Topic ID</th>
-                <th className="p-3">Protocol / Interface</th>
-                <th className="p-3">Port / Depth</th>
-                <th className="p-3">Operational Status</th>
-                <th className="p-3">Architecture Role</th>
+                <th className="px-4 py-2.5 font-medium">Subsystem</th>
+                <th className="px-4 py-2.5 font-medium">Package / topic</th>
+                <th className="px-4 py-2.5 font-medium">Interface</th>
+                <th className="px-4 py-2.5 font-medium">Port / buffer</th>
+                <th className="px-4 py-2.5 font-medium">Status</th>
+                <th className="px-4 py-2.5 font-medium">Role</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1E293B]/70">
+            <tbody className="divide-y divide-[#1C1C21]">
               {subsystems.map((sub, idx) => {
                 const Icon = sub.icon;
                 return (
-                  <tr key={idx} className="hover:bg-[#1B2640]/40 transition-colors">
-                    <td className="p-3 font-semibold text-slate-100">
+                  <tr key={idx} className="hover:bg-[#18181C] transition-colors">
+                    <td className="px-4 py-3 text-[#EDEDEF] font-medium">
                       <div className="flex items-center space-x-2">
-                        <Icon className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <Icon className="w-3.5 h-3.5 text-[#9898A0] shrink-0" />
                         <span>{sub.name}</span>
                       </div>
                     </td>
-                    <td className="p-3 text-cyan-300">{sub.serviceId}</td>
-                    <td className="p-3 text-slate-300">{sub.protocol}</td>
-                    <td className="p-3 text-slate-400">{sub.port}</td>
-                    <td className="p-3">
+                    <td className="px-4 py-3 text-[#9898A0] font-mono text-[11px]">
+                      {sub.serviceId}
+                    </td>
+                    <td className="px-4 py-3 text-[#9898A0]">{sub.protocol}</td>
+                    <td className="px-4 py-3 text-[#62626B] font-mono text-[11px]">{sub.port}</td>
+                    <td className="px-4 py-3">
                       <StatusBadge status={sub.status} pulse={sub.status === 'OUTAGE'} />
                     </td>
-                    <td className="p-3 text-slate-400 text-[11px]">{sub.details}</td>
+                    <td className="px-4 py-3 text-[#9898A0] text-xs">{sub.details}</td>
                   </tr>
                 );
               })}

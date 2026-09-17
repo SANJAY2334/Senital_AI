@@ -18,15 +18,25 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({
   timelineData,
 }) => {
   return (
-    <div className="space-y-5">
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-1 border-b border-[#1C1C21]">
+        <div>
+          <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">Telemetry</h1>
+          <p className="text-xs text-[#9898A0] mt-0.5">
+            Ingress metrics, schematization performance, and mapped classes
+          </p>
+        </div>
+      </div>
+
       {/* 1. Metric Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <KpiCard
-          label="Total Received"
+          label="Total received"
           value={metrics.eventsReceived.toLocaleString()}
           unit="frames"
           icon={<Layers className="w-4 h-4" />}
-          trendText="100% Ingress rate"
+          trendText="100% ingress rate"
           statusText="ONLINE"
         />
 
@@ -34,40 +44,40 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({
           label="Normalized to OCSF"
           value={metrics.eventsNormalized.toLocaleString()}
           unit="events"
-          icon={<ShieldCheck className="w-4 h-4 text-cyan-400" />}
-          trendText="v1.1.0 Schematized"
+          icon={<ShieldCheck className="w-4 h-4 text-emerald-400" />}
+          trendText="v1.1.0 schematized"
           statusText="NORMALIZED"
         />
 
         <KpiCard
-          label="Rejected / Error Frames"
+          label="Rejected frames"
           value={metrics.eventsRejected.toLocaleString()}
           unit="drops"
-          icon={<AlertOctagon className="w-4 h-4 text-red-400" />}
+          icon={<AlertOctagon className="w-4 h-4 text-[#62626B]" />}
           trendText="0.0% drop rate"
-          statusText="0 ERR"
+          statusText="HEALTHY"
         />
 
         <KpiCard
-          label="Throughput Capacity"
+          label="Throughput capacity"
           value={metrics.currentThroughputEPS.toLocaleString()}
           unit="EPS"
           icon={<Zap className="w-4 h-4 text-amber-400" />}
-          trendText="Target: > 50,000 EPS"
-          statusText="ACTIVE"
+          trendText="Target: 50K EPS"
+          statusText="ONLINE"
         />
       </div>
 
       {/* 2. Charts & Comparative Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Timeline Chart (7 cols) */}
         <Card className="lg:col-span-7">
           <CardHeader>
             <div>
-              <CardTitle>Ingestion & Schematization Throughput</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
+              <CardTitle>Ingestion & schematization timeline</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">
                 Stream volume timeline across 5-minute rolling windows
-              </span>
+              </p>
             </div>
           </CardHeader>
           <CardContent>
@@ -79,10 +89,10 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({
         <Card className="lg:col-span-5">
           <CardHeader>
             <div>
-              <CardTitle>Vendor Telemetry Distribution</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
+              <CardTitle>Vendor telemetry distribution</CardTitle>
+              <p className="text-xs text-[#9898A0] mt-0.5">
                 Relative volume by ingress cloud vendor
-              </span>
+              </p>
             </div>
           </CardHeader>
           <CardContent>
@@ -94,52 +104,55 @@ export const TelemetryView: React.FC<TelemetryViewProps> = ({
       {/* 3. OCSF Schema Classification Metadata */}
       <Card>
         <CardHeader>
-          <CardTitle>OCSF v1.1.0 Mapped Class Breakdown</CardTitle>
-          <span className="text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded">
-            Standard Mappers
-          </span>
+          <div>
+            <CardTitle>OCSF v1.1.0 mapped classes</CardTitle>
+            <p className="text-xs text-[#9898A0] mt-0.5">
+              Standard event class mappers and conversion rules
+            </p>
+          </div>
+          <span className="text-xs text-[#62626B]">3 registered mappers</span>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-            <div className="p-3.5 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-2">
-              <div className="flex items-center justify-between text-amber-400 font-bold">
-                <span>Class 6001: Cloud Audit</span>
-                <span>AWS CloudTrail</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-[#EDEDEF]">Class 6001: Cloud Audit</span>
+                <span className="text-xs text-[#FB923C]">AWS CloudTrail</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[#9898A0] leading-relaxed">
                 Normalizes AWS management event records (IAM policies, STS tokens, S3 bucket
                 modifications) into standardized cloud audit schema envelopes.
               </p>
-              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
-                Mapped Volume: {distribution.awsCount.toLocaleString()} events
+              <div className="text-[11px] text-[#62626B] pt-1">
+                Volume: {distribution.awsCount.toLocaleString()} events
               </div>
             </div>
 
-            <div className="p-3.5 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-2">
-              <div className="flex items-center justify-between text-red-400 font-bold">
-                <span>Class 1007: Process Activity</span>
-                <span>CrowdStrike EDR</span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-[#EDEDEF]">Class 1007: Process Activity</span>
+                <span className="text-xs text-[#F43F5E]">CrowdStrike EDR</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[#9898A0] leading-relaxed">
                 Normalizes endpoint process trees, parent-child process hashes, execution flags, and
                 privilege escalations from Falcon sensor feeds.
               </p>
-              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
-                Mapped Volume: {distribution.csCount.toLocaleString()} events
+              <div className="text-[11px] text-[#62626B] pt-1">
+                Volume: {distribution.csCount.toLocaleString()} events
               </div>
             </div>
 
-            <div className="p-3.5 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-2">
-              <div className="flex items-center justify-between text-cyan-400 font-bold">
-                <span>Class 3001: Authentication</span>
-                <span>Okta IAM</span>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-[#EDEDEF]">Class 3001: Authentication</span>
+                <span className="text-xs text-[#38BDF8]">Okta IAM</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[#9898A0] leading-relaxed">
                 Normalizes enterprise identity sign-in flows, MFA challenges, push tokens, and
                 session state transitions into unified authentication objects.
               </p>
-              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
-                Mapped Volume: {distribution.oktaCount.toLocaleString()} events
+              <div className="text-[11px] text-[#62626B] pt-1">
+                Volume: {distribution.oktaCount.toLocaleString()} events
               </div>
             </div>
           </div>

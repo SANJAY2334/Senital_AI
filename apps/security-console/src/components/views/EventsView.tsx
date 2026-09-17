@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UIProcessedEvent } from '../../types/demo.types';
-import { ListFilter, Filter, Eye, Copy, Check } from 'lucide-react';
-import { Card, CardHeader, CardTitle } from '../ui/Card';
+import { Copy, Check } from 'lucide-react';
+import { Card } from '../ui/Card';
 import { SeverityBadge, StatusBadge } from '../ui/Badge';
 import { SearchInput } from '../ui/SearchInput';
 import { EmptyState } from '../ui/EmptyState';
@@ -43,103 +43,102 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
   });
 
   return (
-    <div className="space-y-4">
-      {/* Search & Filtering Toolbar */}
-      <Card>
-        <CardHeader className="flex-col sm:flex-row items-start sm:items-center gap-3">
+    <div className="space-y-4 max-w-7xl mx-auto">
+      {/* Header & Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1 border-b border-[#1C1C21]">
+        <div>
           <div className="flex items-center space-x-2.5">
-            <div className="p-1.5 rounded-lg bg-cyan-950/80 border border-cyan-800 text-cyan-400">
-              <ListFilter className="w-4 h-4" />
-            </div>
-            <div>
-              <CardTitle>Normalized OCSF Telemetry Stream</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                {filteredEvents.length} events matching criteria ({events.length} stored)
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2 w-full sm:w-auto">
-            <SearchInput
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Search UUID, correlation ID, class..."
-              className="w-full sm:w-64"
-            />
-          </div>
-        </CardHeader>
-
-        {/* Filter Badges Bar */}
-        <div className="p-3 bg-[#090E1A] border-t border-[#1E293B] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-slate-500 mr-1 flex items-center space-x-1">
-              <Filter className="w-3.5 h-3.5" />
-              <span>Provider:</span>
+            <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">Events</h1>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-[#18181C] text-[#9898A0] border border-[#26262E] tabular-nums">
+              {filteredEvents.length}
             </span>
-            {['ALL', 'AWS_CLOUDTRAIL', 'CROWDSTRIKE_EDR', 'OKTA_IAM'].map((prov) => (
-              <button
-                key={prov}
-                onClick={() => setSelectedProvider(prov)}
-                className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
-                  selectedProvider === prov
-                    ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50'
-                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {prov === 'ALL'
-                  ? 'All'
-                  : prov === 'AWS_CLOUDTRAIL'
-                    ? 'AWS'
-                    : prov === 'CROWDSTRIKE_EDR'
-                      ? 'CrowdStrike'
-                      : 'Okta'}
-              </button>
-            ))}
-
-            <div className="h-4 w-px bg-slate-800 mx-2 hidden sm:block" />
-
-            <span className="text-slate-500 mr-1 hidden sm:inline">Severity:</span>
-            {['ALL', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].map((sev) => (
-              <button
-                key={sev}
-                onClick={() => setSelectedSeverity(sev)}
-                className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
-                  selectedSeverity === sev
-                    ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50'
-                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {sev}
-              </button>
-            ))}
           </div>
-
-          <div className="flex items-center space-x-2 text-slate-400 text-[11px]">
-            <span>Page Size:</span>
-            {[50, 100, 200].map((sz) => (
-              <button
-                key={sz}
-                onClick={() => setPageSize(sz)}
-                className={`px-2 py-0.5 rounded border text-[11px] ${
-                  pageSize === sz
-                    ? 'border-cyan-500 text-cyan-400 bg-cyan-950/30'
-                    : 'border-slate-800 text-slate-500 hover:text-slate-300'
-                }`}
-              >
-                {sz}
-              </button>
-            ))}
-          </div>
+          <p className="text-xs text-[#9898A0] mt-0.5">
+            Normalized OCSF v1.1.0 stream from cloud ingress
+          </p>
         </div>
-      </Card>
+
+        <div className="w-full sm:w-72">
+          <SearchInput
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search ID, tenant, class..."
+          />
+        </div>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[#62626B] mr-1">Provider:</span>
+          {[
+            { id: 'ALL', label: 'All' },
+            { id: 'AWS_CLOUDTRAIL', label: 'AWS' },
+            { id: 'CROWDSTRIKE_EDR', label: 'CrowdStrike' },
+            { id: 'OKTA_IAM', label: 'Okta' },
+          ].map((prov) => (
+            <button
+              key={prov.id}
+              onClick={() => setSelectedProvider(prov.id)}
+              className={`px-2.5 py-1 rounded-md text-xs font-normal transition-colors ${
+                selectedProvider === prov.id
+                  ? 'bg-[#222228] text-[#EDEDEF] border border-[#32323C]'
+                  : 'text-[#9898A0] hover:text-[#EDEDEF] hover:bg-[#18181C]'
+              }`}
+            >
+              {prov.label}
+            </button>
+          ))}
+
+          <div className="h-3.5 w-px bg-[#26262E] mx-1.5 hidden sm:block" />
+
+          <span className="text-[#62626B] mr-1 hidden sm:inline">Severity:</span>
+          {[
+            { id: 'ALL', label: 'All' },
+            { id: 'CRITICAL', label: 'Critical' },
+            { id: 'HIGH', label: 'High' },
+            { id: 'MEDIUM', label: 'Medium' },
+            { id: 'LOW', label: 'Low' },
+          ].map((sev) => (
+            <button
+              key={sev.id}
+              onClick={() => setSelectedSeverity(sev.id)}
+              className={`px-2.5 py-1 rounded-md text-xs font-normal transition-colors ${
+                selectedSeverity === sev.id
+                  ? 'bg-[#222228] text-[#EDEDEF] border border-[#32323C]'
+                  : 'text-[#9898A0] hover:text-[#EDEDEF] hover:bg-[#18181C]'
+              }`}
+            >
+              {sev.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center space-x-1.5 text-xs text-[#62626B]">
+          <span>Rows:</span>
+          {[50, 100, 200].map((sz) => (
+            <button
+              key={sz}
+              onClick={() => setPageSize(sz)}
+              className={`px-2 py-0.5 rounded text-xs ${
+                pageSize === sz
+                  ? 'bg-[#222228] text-[#EDEDEF] font-medium'
+                  : 'text-[#9898A0] hover:text-[#EDEDEF]'
+              }`}
+            >
+              {sz}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Events Table */}
       <Card>
         {filteredEvents.length === 0 ? (
           <EmptyState
-            title="No Events Found"
-            description="No telemetry events matched the current provider or severity criteria."
-            actionLabel="Reset Filters"
+            title="No events found"
+            description="No telemetry events matched the current provider or filter criteria."
+            actionLabel="Reset filters"
             onAction={() => {
               setSearchQuery('');
               setSelectedProvider('ALL');
@@ -148,34 +147,31 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs font-mono">
-              <thead className="bg-[#090E1A] text-slate-400 border-b border-[#1E293B]">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#0E0E11] text-[#62626B] border-b border-[#1C1C21]">
                 <tr>
-                  <th className="p-3">OCSF Event ID</th>
-                  <th className="p-3">Provider</th>
-                  <th className="p-3">Tenant ID</th>
-                  <th className="p-3">OCSF Class</th>
-                  <th className="p-3">Severity</th>
-                  <th className="p-3">Timestamp (UTC)</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3 text-right">Inspect</th>
+                  <th className="px-4 py-2.5 font-medium">Event ID</th>
+                  <th className="px-4 py-2.5 font-medium">Provider</th>
+                  <th className="px-4 py-2.5 font-medium">Tenant</th>
+                  <th className="px-4 py-2.5 font-medium">OCSF class</th>
+                  <th className="px-4 py-2.5 font-medium">Severity</th>
+                  <th className="px-4 py-2.5 font-medium">Timestamp</th>
+                  <th className="px-4 py-2.5 font-medium">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1E293B]/70">
+              <tbody className="divide-y divide-[#1C1C21]">
                 {filteredEvents.slice(0, pageSize).map((evt) => (
                   <tr
                     key={evt.eventId}
                     onClick={() => setSelectedEvent(evt)}
-                    className="hover:bg-[#1B2640]/40 cursor-pointer transition-colors"
+                    className="hover:bg-[#18181C] cursor-pointer transition-colors"
                   >
-                    <td className="p-3">
-                      <div className="flex items-center space-x-1.5 max-w-[170px]">
-                        <span className="text-cyan-400 font-semibold truncate block">
-                          {evt.eventId}
-                        </span>
+                    <td className="px-4 py-3 font-mono text-[11px]">
+                      <div className="flex items-center space-x-1.5 max-w-[170px] group">
+                        <span className="text-[#EDEDEF] truncate block">{evt.eventId}</span>
                         <button
                           onClick={(e) => copyId(evt.eventId, e)}
-                          className="text-slate-500 hover:text-slate-300 p-0.5 shrink-0"
+                          className="opacity-0 group-hover:opacity-100 text-[#62626B] hover:text-[#EDEDEF] p-0.5 shrink-0 transition-opacity"
                           title="Copy UUID"
                         >
                           {copiedId === evt.eventId ? (
@@ -186,32 +182,25 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                         </button>
                       </div>
                     </td>
-                    <td className="p-3">
-                      <span
-                        className={`px-1.5 py-0.5 rounded text-[10px] font-bold border ${
-                          evt.provider === 'AWS_CLOUDTRAIL'
-                            ? 'bg-amber-950 text-amber-400 border-amber-800'
-                            : evt.provider === 'CROWDSTRIKE_EDR'
-                              ? 'bg-red-950 text-red-400 border-red-800'
-                              : 'bg-cyan-950 text-cyan-400 border-cyan-800'
-                        }`}
-                      >
-                        {evt.provider.replace('_', ' ')}
-                      </span>
+                    <td className="px-4 py-3 text-[#9898A0]">
+                      {evt.provider === 'AWS_CLOUDTRAIL'
+                        ? 'AWS'
+                        : evt.provider === 'CROWDSTRIKE_EDR'
+                          ? 'CrowdStrike'
+                          : 'Okta'}
                     </td>
-                    <td className="p-3 text-slate-300">{evt.tenantId}</td>
-                    <td className="p-3 text-purple-300">{evt.ocsfClassName}</td>
-                    <td className="p-3">
+                    <td className="px-4 py-3 text-[#9898A0] font-mono text-[11px]">
+                      {evt.tenantId}
+                    </td>
+                    <td className="px-4 py-3 text-[#EDEDEF] font-medium">{evt.ocsfClassName}</td>
+                    <td className="px-4 py-3">
                       <SeverityBadge severity={evt.severityLabel} />
                     </td>
-                    <td className="p-3 text-slate-400">{evt.timestampUtc.substring(11, 19)} UTC</td>
-                    <td className="p-3">
-                      <StatusBadge status={evt.processingStatus} />
+                    <td className="px-4 py-3 text-[#62626B] font-mono text-[11px]">
+                      {evt.timestampUtc.substring(11, 19)} UTC
                     </td>
-                    <td className="p-3 text-right">
-                      <button className="text-slate-400 hover:text-cyan-400 p-1">
-                        <Eye className="w-3.5 h-3.5" />
-                      </button>
+                    <td className="px-4 py-3">
+                      <StatusBadge status={evt.processingStatus} />
                     </td>
                   </tr>
                 ))}

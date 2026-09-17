@@ -28,209 +28,207 @@ export const PipelineView: React.FC<PipelineViewProps> = ({
   const isOutage = health.isOutageSimulated;
 
   return (
-    <div className="space-y-5">
-      {/* 1. Header with Topology Overview & Action */}
-      <Card>
-        <CardHeader className="flex-col sm:flex-row items-start sm:items-center gap-3">
-          <div className="flex items-center space-x-2.5">
-            <div className="p-1.5 rounded-lg bg-purple-950/80 border border-purple-800 text-purple-400">
-              <Cpu className="w-4 h-4" />
-            </div>
-            <div>
-              <CardTitle>End-to-End Telemetry Pipeline Topology</CardTitle>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Multi-cloud streaming ingestion, partitioning, and OCSF normalization flow
-              </span>
-            </div>
-          </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Header with Topology Overview & Action */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1 border-b border-[#1C1C21]">
+        <div>
+          <h1 className="text-lg font-semibold text-[#EDEDEF] tracking-tight">Pipeline topology</h1>
+          <p className="text-xs text-[#9898A0] mt-0.5">
+            Streaming ingestion, ring-buffer backpressure, and OCSF normalization flow
+          </p>
+        </div>
 
-          <Button
-            variant="outline"
-            size="xs"
-            icon={<SlidersHorizontal className="w-3.5 h-3.5" />}
-            onClick={onOpenDemoControls}
-          >
-            Pipeline Failure Injection
-          </Button>
-        </CardHeader>
-      </Card>
+        <Button
+          variant="secondary"
+          size="xs"
+          icon={<SlidersHorizontal className="w-3.5 h-3.5 text-[#9898A0]" />}
+          onClick={onOpenDemoControls}
+        >
+          Failure injection
+        </Button>
+      </div>
 
-      {/* 2. Interactive Flow Pipeline Nodes */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 font-mono text-xs">
+      {/* Sequential Flow Pipeline Nodes */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
         {/* Node 1: Sources */}
-        <div className="bg-[#0D1424] border border-[#1E293B] p-4 rounded-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-500 uppercase font-bold">
-              1. Ingress Sources
-            </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="bg-[#121215] border border-[#222227] p-4 rounded-lg space-y-3 flex flex-col justify-between">
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#62626B] font-medium">1. Sources</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            </div>
+
+            <div className="font-medium text-[#EDEDEF] text-xs">Ingress feeds</div>
+
+            <div className="space-y-1.5 text-[11px]">
+              <div className="flex items-center space-x-1.5 text-[#9898A0]">
+                <Cloud className="w-3.5 h-3.5 text-[#FB923C]" />
+                <span>AWS CloudTrail</span>
+              </div>
+              <div className="flex items-center space-x-1.5 text-[#9898A0]">
+                <ShieldAlert className="w-3.5 h-3.5 text-[#F43F5E]" />
+                <span>CrowdStrike EDR</span>
+              </div>
+              <div className="flex items-center space-x-1.5 text-[#9898A0]">
+                <KeyRound className="w-3.5 h-3.5 text-[#38BDF8]" />
+                <span>Okta IAM</span>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-2 text-[11px]">
-            <div className="flex items-center space-x-1.5 text-amber-400">
-              <Cloud className="w-3.5 h-3.5" />
-              <span>AWS CloudTrail</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-red-400">
-              <ShieldAlert className="w-3.5 h-3.5" />
-              <span>CrowdStrike EDR</span>
-            </div>
-            <div className="flex items-center space-x-1.5 text-cyan-400">
-              <KeyRound className="w-3.5 h-3.5" />
-              <span>Okta IAM</span>
-            </div>
-          </div>
-
-          <div className="pt-2 border-t border-[#1E293B] text-[10px] text-slate-400">
-            Total: {metrics.eventsReceived.toLocaleString()} received
+          <div className="pt-2.5 border-t border-[#1C1C21] text-[11px] text-[#62626B]">
+            {metrics.eventsReceived.toLocaleString()} received
           </div>
         </div>
 
         {/* Node 2: Ingestion Collector */}
-        <div className="bg-[#0D1424] border border-cyan-900/50 p-4 rounded-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-cyan-500 uppercase font-bold">2. Collector</span>
-            <Server className="w-4 h-4 text-cyan-400" />
+        <div className="bg-[#121215] border border-[#222227] p-4 rounded-lg space-y-3 flex flex-col justify-between">
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#62626B] font-medium">2. Ingestion</span>
+              <Server className="w-3.5 h-3.5 text-[#9898A0]" />
+            </div>
+
+            <div>
+              <div className="text-[#EDEDEF] font-medium text-xs">Collector</div>
+              <div className="text-[11px] text-[#62626B]">REST / gRPC (Port 8080)</div>
+            </div>
+
+            <div className="space-y-1 text-[11px] text-[#9898A0]">
+              <div>Zero-trust HMAC</div>
+              <div className="text-emerald-400">
+                Status: {health.ingestionCollectorStatus.toLowerCase()}
+              </div>
+            </div>
           </div>
 
-          <div>
-            <div className="text-slate-100 font-bold text-xs">Ingestion Collector</div>
-            <div className="text-[10px] text-slate-400">Port 8080 REST / gRPC</div>
-          </div>
-
-          <div className="space-y-1 text-[11px] text-slate-300">
-            <div>Auth: Zero-Trust HMAC</div>
-            <div className="text-emerald-400">Status: {health.ingestionCollectorStatus}</div>
-          </div>
-
-          <div className="pt-2 border-t border-[#1E293B] text-[10px] text-slate-400">
-            Accepted: {metrics.eventsAccepted.toLocaleString()}
+          <div className="pt-2.5 border-t border-[#1C1C21] text-[11px] text-[#62626B]">
+            {metrics.eventsAccepted.toLocaleString()} accepted
           </div>
         </div>
 
         {/* Node 3: Kafka Raw Broker */}
         <div
-          className={`bg-[#0D1424] border ${
-            isOutage ? 'border-red-600 bg-red-950/20' : 'border-[#1E293B]'
-          } p-4 rounded-xl space-y-3`}
+          className={`bg-[#121215] border ${
+            isOutage ? 'border-rose-500/40 bg-rose-500/5' : 'border-[#222227]'
+          } p-4 rounded-lg space-y-3 flex flex-col justify-between`}
         >
-          <div className="flex items-center justify-between">
-            <span
-              className={`text-[10px] uppercase font-bold ${
-                isOutage ? 'text-red-400' : 'text-slate-500'
-              }`}
-            >
-              3. Kafka Raw Bus
-            </span>
-            <Layers className={`w-4 h-4 ${isOutage ? 'text-red-400' : 'text-amber-400'}`} />
-          </div>
-
-          <div>
-            <div className="text-slate-100 font-bold text-xs">telemetry.raw.v1</div>
-            <div className="text-[10px] text-slate-400">SRS-FR-001 Preserved</div>
-          </div>
-
-          <div className="space-y-1 text-[11px]">
-            <div className={isOutage ? 'text-red-400 font-bold' : 'text-emerald-400'}>
-              Broker: {health.kafkaRawTopicStatus}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span
+                className={`text-[11px] font-medium ${
+                  isOutage ? 'text-rose-400' : 'text-[#62626B]'
+                }`}
+              >
+                3. Raw bus
+              </span>
+              <Layers className={`w-3.5 h-3.5 ${isOutage ? 'text-rose-400' : 'text-[#9898A0]'}`} />
             </div>
-            {isOutage && (
-              <div className="text-amber-400 text-[10px] flex items-center space-x-1 font-bold">
-                <AlertTriangle className="w-3 h-3" />
-                <span>Buffer Depth: {health.ringBufferDepth}</span>
+
+            <div>
+              <div className="text-[#EDEDEF] font-medium text-xs">telemetry.raw.v1</div>
+              <div className="text-[11px] text-[#62626B]">Tenant key partition</div>
+            </div>
+
+            <div className="space-y-1 text-[11px]">
+              <div className={isOutage ? 'text-rose-400 font-medium' : 'text-emerald-400'}>
+                {isOutage ? 'Broker outage' : 'Healthy'}
               </div>
-            )}
+              {isOutage && (
+                <div className="text-amber-400 text-[11px] flex items-center space-x-1">
+                  <AlertTriangle className="w-3 h-3" />
+                  <span>Buffer: {health.ringBufferDepth} frames</span>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="pt-2 border-t border-[#1E293B] text-[10px] text-slate-400">
-            Partitions: Tenant Key
+          <div className="pt-2.5 border-t border-[#1C1C21] text-[11px] text-[#62626B]">
+            {isOutage ? 'Backpressure active' : 'Partitions synced'}
           </div>
         </div>
 
         {/* Node 4: OCSF Normalizer Engine */}
-        <div className="bg-[#0D1424] border border-purple-900/50 p-4 rounded-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-purple-400 uppercase font-bold">4. Schematizer</span>
-            <Cpu className="w-4 h-4 text-purple-400" />
-          </div>
+        <div className="bg-[#121215] border border-[#222227] p-4 rounded-lg space-y-3 flex flex-col justify-between">
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#62626B] font-medium">4. Normalizer</span>
+              <Cpu className="w-3.5 h-3.5 text-[#9898A0]" />
+            </div>
 
-          <div>
-            <div className="text-slate-100 font-bold text-xs">OCSF Normalizer</div>
-            <div className="text-[10px] text-slate-400">Class 1007 / 3001 / 6001</div>
-          </div>
+            <div>
+              <div className="text-[#EDEDEF] font-medium text-xs">OCSF engine</div>
+              <div className="text-[11px] text-[#62626B]">Classes 1007, 3001, 6001</div>
+            </div>
 
-          <div className="space-y-1 text-[11px] text-slate-300">
-            <div>UUID: RFC 4122 v4</div>
-            <div className="text-emerald-400 font-bold">
-              Rate: {metrics.currentThroughputEPS.toLocaleString()} EPS
+            <div className="space-y-1 text-[11px] text-[#9898A0]">
+              <div>RFC 4122 v4 UUID</div>
+              <div className="text-emerald-400 font-medium">
+                {metrics.currentThroughputEPS.toLocaleString()} EPS
+              </div>
             </div>
           </div>
 
-          <div className="pt-2 border-t border-[#1E293B] text-[10px] text-slate-400">
-            Normalized: {metrics.eventsNormalized.toLocaleString()}
+          <div className="pt-2.5 border-t border-[#1C1C21] text-[11px] text-[#62626B]">
+            {metrics.eventsNormalized.toLocaleString()} normalized
           </div>
         </div>
 
         {/* Node 5: Kafka OCSF Output */}
-        <div className="bg-[#0D1424] border border-emerald-900/50 p-4 rounded-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-emerald-400 uppercase font-bold">5. OCSF Bus</span>
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="bg-[#121215] border border-[#222227] p-4 rounded-lg space-y-3 flex flex-col justify-between">
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-[#62626B] font-medium">5. OCSF bus</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            </div>
+
+            <div>
+              <div className="text-[#EDEDEF] font-medium text-xs">telemetry.ocsf.v1</div>
+              <div className="text-[11px] text-[#62626B]">Standard v1.1.0</div>
+            </div>
+
+            <div className="space-y-1 text-[11px] text-[#9898A0]">
+              <div className="text-emerald-400">Egress active</div>
+              <div>SOC consumer group</div>
+            </div>
           </div>
 
-          <div>
-            <div className="text-slate-100 font-bold text-xs">telemetry.ocsf.v1</div>
-            <div className="text-[10px] text-slate-400">Unified Schema v1.1.0</div>
-          </div>
-
-          <div className="space-y-1 text-[11px] text-slate-300">
-            <div className="text-emerald-400">Egress: Healthy</div>
-            <div>Consumer: SOC Engine</div>
-          </div>
-
-          <div className="pt-2 border-t border-[#1E293B] text-[10px] text-slate-400">
+          <div className="pt-2.5 border-t border-[#1C1C21] text-[11px] text-[#62626B]">
             Latency: {metrics.pipelineLatencyMs} ms
           </div>
         </div>
       </div>
 
-      {/* 3. Pipeline Specifications Card */}
+      {/* 3. Architecture & Compliance Specifications */}
       <Card>
         <CardHeader>
-          <CardTitle>Architecture & Compliance Guarantees</CardTitle>
-          <span className="text-[10px] bg-cyan-950 text-cyan-400 border border-cyan-800 px-2 py-0.5 rounded font-mono">
-            ADR-0003 / ADR-0004 / SRS-FR-003
-          </span>
+          <CardTitle>Architecture & compliance guarantees</CardTitle>
+          <span className="text-xs text-[#62626B]">ADR-0003 · ADR-0004 · SRS-FR-003</span>
         </CardHeader>
-        <CardContent className="space-y-3 font-mono text-xs">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-3 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">
-                Raw Evidence Immutability (SRS-FR-001)
-              </span>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
-                Raw payloads are stored untouched within the Kafka raw topic and normalizer envelope
-                to satisfy forensic chain-of-custody compliance.
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
+            <div className="space-y-1.5">
+              <span className="text-[#EDEDEF] font-medium block">Raw evidence immutability</span>
+              <p className="text-[#9898A0] leading-relaxed">
+                Raw payloads are preserved untouched within the Kafka raw topic and normalizer
+                envelope to satisfy forensic chain-of-custody requirements (SRS-FR-001).
               </p>
             </div>
 
-            <div className="p-3 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">
-                Zero-Trust Multi-Tenancy (ADR-0006)
-              </span>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
+            <div className="space-y-1.5">
+              <span className="text-[#EDEDEF] font-medium block">Zero-trust multi-tenancy</span>
+              <p className="text-[#9898A0] leading-relaxed">
                 Every record is partitioned by tenant ID key; normalization rules execute in
-                isolated context preventing multi-tenant data leakage.
+                isolated contexts preventing cross-tenant data leakage (ADR-0006).
               </p>
             </div>
 
-            <div className="p-3 bg-[#090E1A] border border-[#1E293B] rounded-lg space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">
-                Backpressure Ring Buffer (SRS-FR-003)
-              </span>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
+            <div className="space-y-1.5">
+              <span className="text-[#EDEDEF] font-medium block">Backpressure ring buffer</span>
+              <p className="text-[#9898A0] leading-relaxed">
                 In the event of downstream Kafka broker latency or partition failure, an in-memory
-                circular buffer holds up to 5,000 raw frames before dropping oldest.
+                circular buffer holds up to 5,000 raw frames before dropping the oldest
+                (SRS-FR-003).
               </p>
             </div>
           </div>

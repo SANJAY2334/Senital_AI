@@ -1,5 +1,4 @@
 import React from 'react';
-import { AlertCircle, AlertTriangle, ShieldAlert, Info } from 'lucide-react';
 
 interface SeverityCounts {
   critical: number;
@@ -13,24 +12,24 @@ interface SeverityDonutChartProps {
   size?: number;
 }
 
-export const SeverityDonutChart: React.FC<SeverityDonutChartProps> = ({ counts, size = 150 }) => {
+export const SeverityDonutChart: React.FC<SeverityDonutChartProps> = ({ counts, size = 140 }) => {
   const total = counts.critical + counts.high + counts.medium + counts.low;
-  const radius = 55;
-  const strokeWidth = 14;
+  const radius = 54;
+  const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;
 
   // Calculate percentages and stroke-dash segments
   const segments = [
-    { label: 'CRITICAL', count: counts.critical, color: '#EF4444', icon: AlertCircle },
-    { label: 'HIGH', count: counts.high, color: '#F97316', icon: AlertTriangle },
-    { label: 'MEDIUM', count: counts.medium, color: '#F59E0B', icon: ShieldAlert },
-    { label: 'LOW', count: counts.low, color: '#3B82F6', icon: Info },
+    { label: 'Critical', count: counts.critical, color: '#F43F5E' },
+    { label: 'High', count: counts.high, color: '#FB923C' },
+    { label: 'Medium', count: counts.medium, color: '#FBBF24' },
+    { label: 'Low', count: counts.low, color: '#94A3B8' },
   ];
 
   let accumulatedPercent = 0;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-around gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-around gap-6">
       {/* SVG Donut */}
       <div className="relative shrink-0" style={{ width: size, height: size }}>
         <svg viewBox="0 0 140 140" className="w-full h-full -rotate-90 transform">
@@ -40,7 +39,7 @@ export const SeverityDonutChart: React.FC<SeverityDonutChartProps> = ({ counts, 
             cy="70"
             r={radius}
             fill="transparent"
-            stroke="#1E293B"
+            stroke="#1C1C22"
             strokeWidth={strokeWidth}
           />
 
@@ -71,27 +70,29 @@ export const SeverityDonutChart: React.FC<SeverityDonutChartProps> = ({ counts, 
 
         {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-xl font-bold font-mono text-slate-100">{total}</span>
-          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
-            Total
+          <span className="text-2xl font-semibold text-[#EDEDEF] tracking-tight tabular-nums">
+            {total}
           </span>
+          <span className="text-[11px] text-[#62626B] font-normal">Alerts</span>
         </div>
       </div>
 
       {/* Legend */}
-      <div className="space-y-2 text-xs font-mono w-full max-w-[200px]">
+      <div className="space-y-2 text-xs w-full max-w-[200px]">
         {segments.map((seg, i) => {
           const percent = total > 0 ? Math.round((seg.count / total) * 100) : 0;
-          const Icon = seg.icon;
           return (
             <div key={i} className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Icon className="w-3.5 h-3.5" style={{ color: seg.color }} />
-                <span className="text-slate-300 font-medium">{seg.label}</span>
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{ backgroundColor: seg.color }}
+                />
+                <span className="text-[#9898A0]">{seg.label}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-slate-100 font-semibold">{seg.count}</span>
-                <span className="text-[10px] text-slate-500">({percent}%)</span>
+              <div className="flex items-center space-x-1.5 tabular-nums">
+                <span className="text-[#EDEDEF] font-medium">{seg.count}</span>
+                <span className="text-[#62626B] text-[11px]">({percent}%)</span>
               </div>
             </div>
           );

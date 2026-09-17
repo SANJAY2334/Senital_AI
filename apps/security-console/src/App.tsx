@@ -77,7 +77,7 @@ export const App: React.FC = () => {
   ).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080C14] text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0C] text-[#EDEDEF] font-sans antialiased selection:bg-[#38BDF8]/20 selection:text-[#EDEDEF]">
       {/* 1. Global Topbar */}
       <Topbar
         isOutageActive={health.isOutageSimulated}
@@ -101,7 +101,7 @@ export const App: React.FC = () => {
           eventCount={events.length}
         />
 
-        <main className="flex-1 p-5 overflow-y-auto bg-[#080C14]">
+        <main className="flex-1 p-5 sm:p-6 lg:p-8 overflow-y-auto bg-[#0A0A0C]">
           {activeTab === 'overview' && (
             <DashboardView
               metrics={metrics}
