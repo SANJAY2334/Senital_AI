@@ -1,44 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   ViewTab,
   UIProcessedEvent,
   ExecutiveMetrics,
   ProviderDistribution,
   SystemHealthState,
+  SOCAlert,
+  AlertStatus,
+  TimelineDataPoint,
 } from './types/demo.types';
 import { globalDemoAdapter } from './adapters/demo-pipeline.adapter';
-import { Header } from './components/Header';
-import { Navigation } from './components/Navigation';
-import { ExecutiveMetricsComponent } from './components/ExecutiveMetrics';
-import { ProviderDistributionComponent } from './components/ProviderDistribution';
-import { PipelineVisualizer } from './components/PipelineVisualizer';
-import { LiveEventStream } from './components/LiveEventStream';
-import { SystemHealthComponent } from './components/SystemHealth';
-import { DemoControlPanel } from './components/DemoControlPanel';
+import { Topbar } from './components/layout/Topbar';
+import { Sidebar } from './components/layout/Sidebar';
+import { DashboardView } from './components/views/DashboardView';
+import { AlertsView } from './components/views/AlertsView';
+import { EventsView } from './components/views/EventsView';
+import { PipelineView } from './components/views/PipelineView';
+import { TelemetryView } from './components/views/TelemetryView';
+import { HealthView } from './components/views/HealthView';
 import { ArchitectureView } from './components/ArchitectureView';
 import { PlannedAiPanel } from './components/PlannedAiPanel';
+import { DemoControlsModal } from './components/modals/DemoControlsModal';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ViewTab>('overview');
   const [events, setEvents] = useState<UIProcessedEvent[]>([]);
+  const [alerts, setAlerts] = useState<SOCAlert[]>([]);
   const [metrics, setMetrics] = useState<ExecutiveMetrics>(globalDemoAdapter.getExecutiveMetrics());
   const [distribution, setDistribution] = useState<ProviderDistribution>(
     globalDemoAdapter.getProviderDistribution(),
   );
   const [health, setHealth] = useState<SystemHealthState>(globalDemoAdapter.getSystemHealth());
+  const [timelineData, setTimelineData] = useState<TimelineDataPoint[]>([]);
+  const [isDemoControlsOpen, setIsDemoControlsOpen] = useState(false);
+  const [globalSearch, setGlobalSearch] = useState('');
 
-  // Initial seed generation (50 events)
-  useEffect(() => {
-    globalDemoAdapter.generateAndProcessEvents(50);
-    refreshState();
-  }, []);
-
-  const refreshState = () => {
+  const refreshState = useCallback(() => {
     setEvents([...globalDemoAdapter.getEventsStore()]);
+    setAlerts([...globalDemoAdapter.getAlertsStore()]);
     setMetrics(globalDemoAdapter.getExecutiveMetrics());
     setDistribution(globalDemoAdapter.getProviderDistribution());
     setHealth(globalDemoAdapter.getSystemHealth());
-  };
+    setTimelineData([...globalDemoAdapter.getTimelineData()]);
+  }, []);
+
+  // Initial seed generation (50 events)
+  useEffect(() => {
+    if (globalDemoAdapter.getEventsStore().length === 0) {
+      globalDemoAdapter.generateAndProcessEvents(50);
+    }
+    refreshState();
+  }, [refreshState]);
 
   const handleGenerate = (count: number, tenant?: string, provider?: string) => {
     globalDemoAdapter.generateAndProcessEvents(count, tenant, provider);
@@ -55,73 +67,83 @@ export const App: React.FC = () => {
     refreshState();
   };
 
+  const handleUpdateAlertStatus = (alertId: string, status: AlertStatus) => {
+    globalDemoAdapter.updateAlertStatus(alertId, status);
+    refreshState();
+  };
+
+  const criticalAlertCount = alerts.filter(
+    (a) => a.severityLabel === 'CRITICAL' && a.status !== 'RESOLVED',
+  ).length;
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0F19] text-slate-100 font-sans">
-      <Header isOutageActive={health.isOutageSimulated} />
+    <div className="min-h-screen flex flex-col bg-[#080C14] text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-white">
+      {/* 1. Global Topbar */}
+      <Topbar
+        isOutageActive={health.isOutageSimulated}
+        throughputEPS={metrics.currentThroughputEPS}
+        onOpenDemoControls={() => setIsDemoControlsOpen(true)}
+        searchQuery={globalSearch}
+        onSearchChange={(q) => {
+          setGlobalSearch(q);
+          if (q && activeTab !== 'events' && activeTab !== 'alerts') {
+            setActiveTab('events');
+          }
+        }}
+      />
 
+      {/* 2. Main Shell: Sidebar + Workspace */}
       <div className="flex-1 flex overflow-hidden">
-        <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          alertCount={criticalAlertCount}
+          eventCount={events.length}
+        />
 
-        <main className="flex-1 p-6 overflow-y-auto space-y-6">
-          {/* Controls Bar always available at top of dashboard views */}
-          {activeTab !== 'architecture' && activeTab !== 'ai-planned' && (
-            <DemoControlPanel
-              onGenerate={handleGenerate}
-              onToggleOutage={handleToggleOutage}
-              onRecover={handleRecover}
-              isOutageActive={health.isOutageSimulated}
+        <main className="flex-1 p-5 overflow-y-auto bg-[#080C14]">
+          {activeTab === 'overview' && (
+            <DashboardView
+              metrics={metrics}
+              health={health}
+              alerts={alerts}
+              distribution={distribution}
+              timelineData={timelineData}
+              onNavigateToAlerts={() => setActiveTab('alerts')}
+              onNavigateToEvents={() => setActiveTab('events')}
+              onUpdateAlertStatus={handleUpdateAlertStatus}
             />
           )}
 
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <ExecutiveMetricsComponent metrics={metrics} />
-              <PipelineVisualizer
-                isOutageActive={health.isOutageSimulated}
-                ringBufferDepth={health.ringBufferDepth}
-              />
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                  <LiveEventStream events={events} />
-                </div>
-                <div className="space-y-6">
-                  <ProviderDistributionComponent distribution={distribution} />
-                  <SystemHealthComponent health={health} />
-                </div>
-              </div>
-            </div>
+          {activeTab === 'alerts' && (
+            <AlertsView alerts={alerts} onUpdateAlertStatus={handleUpdateAlertStatus} />
+          )}
+
+          {activeTab === 'events' && <EventsView events={events} />}
+
+          {activeTab === 'pipeline' && (
+            <PipelineView
+              health={health}
+              metrics={metrics}
+              onOpenDemoControls={() => setIsDemoControlsOpen(true)}
+            />
           )}
 
           {activeTab === 'telemetry' && (
-            <div className="space-y-6">
-              <ExecutiveMetricsComponent metrics={metrics} />
-              <ProviderDistributionComponent distribution={distribution} />
-              <LiveEventStream events={events} />
-            </div>
-          )}
-
-          {activeTab === 'pipeline' && (
-            <div className="space-y-6">
-              <PipelineVisualizer
-                isOutageActive={health.isOutageSimulated}
-                ringBufferDepth={health.ringBufferDepth}
-              />
-              <SystemHealthComponent health={health} />
-              <LiveEventStream events={events} />
-            </div>
-          )}
-
-          {activeTab === 'events' && (
-            <div className="space-y-6">
-              <LiveEventStream events={events} />
-            </div>
+            <TelemetryView
+              metrics={metrics}
+              distribution={distribution}
+              timelineData={timelineData}
+            />
           )}
 
           {activeTab === 'health' && (
-            <div className="space-y-6">
-              <SystemHealthComponent health={health} />
-              <ExecutiveMetricsComponent metrics={metrics} />
-            </div>
+            <HealthView
+              health={health}
+              onOpenDemoControls={() => setIsDemoControlsOpen(true)}
+              onRecover={handleRecover}
+              onToggleOutage={handleToggleOutage}
+            />
           )}
 
           {activeTab === 'architecture' && <ArchitectureView />}
@@ -129,6 +151,16 @@ export const App: React.FC = () => {
           {activeTab === 'ai-planned' && <PlannedAiPanel />}
         </main>
       </div>
+
+      {/* 3. Global Simulation / Demo Controls Dialog */}
+      <DemoControlsModal
+        isOpen={isDemoControlsOpen}
+        onClose={() => setIsDemoControlsOpen(false)}
+        onGenerate={handleGenerate}
+        onToggleOutage={handleToggleOutage}
+        onRecover={handleRecover}
+        isOutageActive={health.isOutageSimulated}
+      />
     </div>
   );
 };

@@ -1,7 +1,14 @@
 import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
 
 export type ViewTab =
-  'overview' | 'telemetry' | 'pipeline' | 'events' | 'health' | 'architecture' | 'ai-planned';
+  | 'overview'
+  | 'alerts'
+  | 'telemetry'
+  | 'pipeline'
+  | 'events'
+  | 'health'
+  | 'architecture'
+  | 'ai-planned';
 
 export interface UIProcessedEvent {
   eventId: string;
@@ -16,6 +23,38 @@ export interface UIProcessedEvent {
   rawPayload: string;
   ocsfNormalizedEvent: OCSFBaseEvent;
   processingStatus: 'ACCEPTED' | 'NORMALIZED' | 'BUFFERED_BACKPRESSURE' | 'REJECTED';
+}
+
+export type AlertStatus = 'NEW' | 'TRIAGED' | 'INVESTIGATING' | 'RESOLVED';
+
+export interface SOCAlert {
+  alertId: string;
+  title: string;
+  severityLabel: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  status: AlertStatus;
+  provider: 'AWS_CLOUDTRAIL' | 'CROWDSTRIKE_EDR' | 'OKTA_IAM';
+  tenantId: string;
+  detectedAt: string;
+  correlationId: string;
+  eventCount: number;
+  triggerEvent: UIProcessedEvent;
+  investigationSummary: string;
+  mitreAttack?: {
+    tactic: string;
+    technique: string;
+    techniqueId: string;
+  };
+  affectedEntity: {
+    type: 'HOST' | 'USER' | 'CLOUD_ACCOUNT' | 'SERVICE';
+    identifier: string;
+  };
+}
+
+export interface TimelineDataPoint {
+  timeLabel: string;
+  timestamp: number;
+  eventCount: number;
+  alertCount: number;
 }
 
 export interface ExecutiveMetrics {

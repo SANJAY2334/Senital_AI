@@ -12,6 +12,9 @@ import {
   ExecutiveMetrics,
   ProviderDistribution,
   SystemHealthState,
+  SOCAlert,
+  AlertStatus,
+  TimelineDataPoint,
 } from '../types/demo.types';
 
 export type TelemetryProvider = 'AWS_CLOUDTRAIL' | 'CROWDSTRIKE_EDR' | 'OKTA_IAM';
@@ -22,6 +25,7 @@ export class DemoPipelineAdapter {
   private normalizerMetrics: NormalizerMetricsCollector;
 
   private eventsStore: UIProcessedEvent[] = [];
+  private alertsStore: SOCAlert[] = [];
   private isOutageSimulated: boolean = false;
   private ringBufferStore: SyntheticRawTelemetryPackage[] = [];
   private maxRingBufferCapacity: number = 5000;
@@ -140,6 +144,76 @@ export class DemoPipelineAdapter {
 
         this.eventsStore.unshift(processedUIEvent);
         newEvents.push(processedUIEvent);
+
+        // Derive SOC Alerts for High/Critical correlated events
+        if (severityLabel === 'CRITICAL' || severityLabel === 'HIGH') {
+          let title = 'Potential Threat Activity Detected';
+          let tactic = 'Initial Access';
+          let technique = 'Valid Accounts';
+          let techniqueId = 'T1078';
+          let entityType: SOCAlert['affectedEntity']['type'] = 'HOST';
+          let entityId = 'srv-prod-01.internal';
+
+          if (rawPkg.provider === 'CROWDSTRIKE_EDR') {
+            title =
+              severityLabel === 'CRITICAL'
+                ? 'High-Risk Process Code Injection (EDR)'
+                : 'Suspicious Child Process Execution';
+            tactic = 'Execution';
+            technique = 'Command and Scripting Interpreter';
+            techniqueId = 'T1059';
+            entityType = 'HOST';
+            entityId = `endpoint-${processedUIEvent.tenantId.replace('tenant-', '')}-01.internal`;
+          } else if (rawPkg.provider === 'OKTA_IAM') {
+            title =
+              severityLabel === 'CRITICAL'
+                ? 'Credential Access / Anomaly Login Spike'
+                : 'Multiple Failed MFA Challenges';
+            tactic = 'Credential Access';
+            technique = 'Brute Force';
+            techniqueId = 'T1110';
+            entityType = 'USER';
+            entityId = `secops-lead@${processedUIEvent.tenantId.replace('tenant-', '')}.com`;
+          } else if (rawPkg.provider === 'AWS_CLOUDTRAIL') {
+            title =
+              severityLabel === 'CRITICAL'
+                ? 'Unauthorized Security Group Bypass / Root API'
+                : 'IAM Role Policy Modification';
+            tactic = 'Persistence';
+            technique = 'Account Manipulation';
+            techniqueId = 'T1098';
+            entityType = 'CLOUD_ACCOUNT';
+            entityId = `arn:aws:iam::${processedUIEvent.tenantId.replace('tenant-', '')}:root`;
+          }
+
+          const alert: SOCAlert = {
+            alertId: `ALT-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 8999 + 1000)}`,
+            title,
+            severityLabel,
+            status: 'NEW',
+            provider: rawPkg.provider as TelemetryProvider,
+            tenantId: processedUIEvent.tenantId,
+            detectedAt: processedUIEvent.timestampUtc,
+            correlationId: processedUIEvent.correlationId,
+            eventCount: Math.floor(Math.random() * 3) + 1,
+            triggerEvent: processedUIEvent,
+            investigationSummary: `Correlated telemetry signal from ${rawPkg.provider} indicates ${title.toLowerCase()} targeting ${entityId}. Telemetry normalized to OCSF Class ${ocsfClassName}.`,
+            mitreAttack: {
+              tactic,
+              technique,
+              techniqueId,
+            },
+            affectedEntity: {
+              type: entityType,
+              identifier: entityId,
+            },
+          };
+
+          this.alertsStore.unshift(alert);
+          if (this.alertsStore.length > 500) {
+            this.alertsStore = this.alertsStore.slice(0, 500);
+          }
+        }
       } catch (err) {
         this.totalRejected++;
       }
@@ -210,6 +284,46 @@ export class DemoPipelineAdapter {
     return this.eventsStore;
   }
 
+  public getAlertsStore(): SOCAlert[] {
+    return this.alertsStore;
+  }
+
+  public updateAlertStatus(alertId: string, status: AlertStatus): void {
+    const alert = this.alertsStore.find((a) => a.alertId === alertId);
+    if (alert) {
+      alert.status = status;
+    }
+  }
+
+  public getTimelineData(): TimelineDataPoint[] {
+    const now = Date.now();
+    const points: TimelineDataPoint[] = [];
+    const stepMs = 5 * 60 * 1000; // 5 minute intervals
+
+    const totalEvents = this.eventsStore.length;
+    const totalAlerts = this.alertsStore.length;
+
+    for (let i = 11; i >= 0; i--) {
+      const bucketTime = now - i * stepMs;
+      const date = new Date(bucketTime);
+      const timeLabel = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+      // Distribute event & alert volume across intervals
+      const weight = 0.5 + 0.5 * Math.sin((12 - i) * 0.8) + (i === 0 ? 0.3 : 0);
+      const eventSlice = Math.round((totalEvents / 12) * weight);
+      const alertSlice = Math.round((totalAlerts / 12) * weight);
+
+      points.push({
+        timeLabel,
+        timestamp: bucketTime,
+        eventCount: Math.max(eventSlice, 1),
+        alertCount: alertSlice,
+      });
+    }
+
+    return points;
+  }
+
   public getExecutiveMetrics(): ExecutiveMetrics {
     const avgLatency =
       this.totalReceived > 0
@@ -221,7 +335,7 @@ export class DemoPipelineAdapter {
       eventsNormalized: this.totalNormalized,
       eventsRejected: this.totalRejected,
       pipelineLatencyMs: avgLatency,
-      currentThroughputEPS: this.isOutageSimulated ? 0 : 14500,
+      currentThroughputEPS: this.isOutageSimulated ? 0 : 54300,
     };
   }
 

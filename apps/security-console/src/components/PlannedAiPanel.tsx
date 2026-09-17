@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, Network, BrainCircuit, ShieldAlert, FileCode2, Lock } from 'lucide-react';
+import { Card, CardHeader, CardTitle } from './ui/Card';
 
 export const PlannedAiPanel: React.FC = () => {
   const capabilities = [
@@ -36,41 +37,43 @@ export const PlannedAiPanel: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="bg-indigo-950/40 border border-indigo-800/80 p-5 rounded-xl flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <Sparkles className="w-6 h-6 text-indigo-400" />
-          <div>
-            <h2 className="text-base font-bold font-mono text-indigo-200">
-              FUTURE AI & ADVANCED ANALYTICS ROADMAP
-            </h2>
-            <p className="text-xs text-indigo-400 font-mono">
-              Visually Reserved Capabilities — Implementation Scheduled for Sprints 2–6
-            </p>
+    <div className="space-y-5 font-mono text-xs">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center space-x-2.5">
+            <div className="p-1.5 rounded-lg bg-indigo-950/80 border border-indigo-800 text-indigo-400">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div>
+              <CardTitle>AI & ADVANCED ANALYTICS ROADMAP</CardTitle>
+              <span className="text-[11px] text-slate-400 font-mono">
+                Architecturally defined future capabilities (Sprints 2 through 6)
+              </span>
+            </div>
           </div>
-        </div>
-        <span className="text-xs bg-indigo-900 text-indigo-300 border border-indigo-700 px-3 py-1 rounded font-mono font-bold">
-          PLANNED — SPRINT 2+
-        </span>
-      </div>
+          <span className="text-[10px] bg-indigo-950 text-indigo-300 border border-indigo-700 px-2 py-0.5 rounded font-bold">
+            PLANNED ROADMAP
+          </span>
+        </CardHeader>
+      </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-mono">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {capabilities.map((c, i) => (
           <div
             key={i}
-            className="bg-slate-900/60 border border-slate-800/80 p-5 rounded-xl space-y-3 opacity-75 hover:opacity-100 transition-opacity"
+            className="bg-[#0D1424] border border-[#1E293B] hover:border-slate-700 p-4 rounded-xl space-y-3 transition-colors"
           >
             <div className="flex items-center justify-between">
-              {c.icon}
-              <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded">
+              <div className="p-1.5 rounded-lg bg-[#090E1A] border border-[#1E293B]">{c.icon}</div>
+              <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">
                 {c.milestone}
               </span>
             </div>
-            <h3 className="text-sm font-bold text-slate-200">{c.title}</h3>
-            <p className="text-xs text-slate-400">{c.desc}</p>
-            <div className="pt-2 text-[10px] text-amber-500 font-semibold flex items-center space-x-1">
+            <h4 className="text-xs font-bold text-slate-200">{c.title}</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">{c.desc}</p>
+            <div className="pt-2 border-t border-[#1E293B] text-[10px] text-amber-400 font-semibold flex items-center justify-between">
               <span>Status:</span>
-              <span>Architecture Defined / Backend Reserved</span>
+              <span className="text-slate-400 font-normal">Backend Contract Reserved</span>
             </div>
           </div>
         ))}
