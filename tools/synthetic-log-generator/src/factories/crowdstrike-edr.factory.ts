@@ -1,4 +1,5 @@
 import { SeededRandom } from '../utils/seed-random.util';
+import { generateUUID } from '@sentinelai/utils';
 import { SyntheticRawTelemetryPackage } from './aws-cloudtrail.factory';
 
 export class CrowdStrikeEdrFactory {
@@ -9,7 +10,7 @@ export class CrowdStrikeEdrFactory {
   }
 
   public createEvent(tenantId: string = 'tenant-acme-corp'): SyntheticRawTelemetryPackage {
-    const eventId = crypto.randomUUID();
+    const eventId = generateUUID();
     const correlationId = `corr-cs-${this.prng.nextInt(100000, 999999)}`;
     const timestampUtc = new Date().toISOString();
 

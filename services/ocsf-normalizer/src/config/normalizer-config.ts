@@ -2,7 +2,9 @@ import { z } from 'zod';
 
 export const NormalizerConfigSchema = z.object({
   serviceName: z.string().default('ocsf-normalizer'),
-  env: z.enum(['local', 'development', 'testing', 'staging', 'production']).default('development'),
+  env: z
+    .enum(['local', 'development', 'testing', 'test', 'staging', 'production'])
+    .default('development'),
   kafkaBrokers: z.array(z.string()).default(['localhost:9092']),
   kafkaTopicRaw: z.string().default('telemetry.raw.v1'),
   kafkaTopicOcsf: z.string().default('telemetry.ocsf.v1'),

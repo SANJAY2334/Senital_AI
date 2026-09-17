@@ -1,0 +1,54 @@
+# SentinelAI Security Console Production Dockerfile (Multi-Stage Build)
+# Complies with ADR-0016 (Cloud-Agnostic Containers) and ADR-0011 (Zero-Trust Security)
+
+# Stage 1: Build & Prune Dependencies
+FROM node:20-alpine3.20 AS builder
+WORKDIR /app
+RUN npm install -g pnpm@8.15.4 turbo@1.12.4
+
+COPY package.json turbo.json pnpm-workspace.yaml* pnpm-lock.yaml* tsconfig.json* ./
+COPY apps/ ./apps/
+COPY services/ ./services/
+COPY packages/ ./packages/
+COPY contracts/ ./contracts/
+COPY ml/ ./ml/
+COPY tools/ ./tools/
+
+ARG APP_NAME=security-console
+RUN turbo prune @sentinelai/${APP_NAME} --docker
+
+# Stage 2: Install dependencies & compile production bundle
+FROM node:20-alpine3.20 AS installer
+WORKDIR /app
+RUN npm install -g pnpm@8.15.4 turbo@1.12.4
+
+ARG APP_NAME=security-console
+
+COPY --from=builder /app/pnpm-workspace.yaml* ./
+COPY --from=builder /app/tsconfig.json* ./
+COPY --from=builder /app/out/json/ ./
+COPY --from=builder /app/out/pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile
+
+COPY --from=builder /app/out/full/ ./
+RUN turbo run build --filter=@sentinelai/${APP_NAME}...
+
+# Stage 3: Minimal Production Runtime
+FROM node:20-alpine3.20 AS runner
+WORKDIR /app
+
+RUN apk upgrade --no-cache && \
+    npm install -g serve && \
+    addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 sentinelai
+
+ARG APP_NAME=security-console
+COPY --from=installer /app/apps/${APP_NAME}/dist ./dist
+
+USER sentinelai
+
+ENV NODE_ENV=production
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["serve", "-s", "dist", "-l", "3000"]

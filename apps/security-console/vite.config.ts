@@ -15,9 +15,13 @@ export default defineConfig({
         __dirname,
         '../../tools/synthetic-log-generator/src/index.ts',
       ),
+      '@sentinelai/ocsf-normalizer/browser': path.resolve(
+        __dirname,
+        '../../services/ocsf-normalizer/src/browser.ts',
+      ),
       '@sentinelai/ocsf-normalizer': path.resolve(
         __dirname,
-        '../../services/ocsf-normalizer/src/index.ts',
+        '../../services/ocsf-normalizer/src/browser.ts',
       ),
       '@sentinelai/ocsf-types': path.resolve(__dirname, '../../packages/ocsf-types/src/index.ts'),
       '@sentinelai/shared-types': path.resolve(

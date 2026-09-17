@@ -329,23 +329,25 @@ services:
       - PORT=8090
 
   # =========================================================================
-  # 3. FRONTEND APPLICATION (Analyst Workspace)
+  # 3. FRONTEND APPLICATION (Security Console)
+  # Note: apps/analyst-workspace is an architectural placeholder for Sprint 5.
+  # The operational UI application is apps/security-console.
   # =========================================================================
-  analyst-workspace:
+  security-console:
     build:
       context: .
-      dockerfile: deploy/docker/Dockerfile.app
+      dockerfile: deploy/docker/Dockerfile.console
       args:
-        APP_NAME: analyst-workspace
-    container_name: sentinelai-analyst-workspace
+        APP_NAME: security-console
+    container_name: sentinelai-security-console
     networks:
       - sentinelai-network
     ports:
       - '3000:3000'
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - PORT=3000
-      - NEXT_PUBLIC_API_GATEWAY_URL=http://localhost:8080
+      - VITE_API_GATEWAY_URL=http://localhost:8080
     depends_on:
       - ingestion-collector
       - copilot-service

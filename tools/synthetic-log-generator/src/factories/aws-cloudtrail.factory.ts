@@ -1,4 +1,5 @@
 import { SeededRandom } from '../utils/seed-random.util';
+import { generateUUID } from '@sentinelai/utils';
 
 export interface SyntheticRawTelemetryPackage {
   eventId: string; // 128-bit UUID (SRS-FR-005)
@@ -18,7 +19,7 @@ export class AwsCloudTrailFactory {
   }
 
   public createEvent(tenantId: string = 'tenant-acme-corp'): SyntheticRawTelemetryPackage {
-    const eventId = crypto.randomUUID();
+    const eventId = generateUUID();
     const correlationId = `corr-aws-${this.prng.nextInt(100000, 999999)}`;
     const timestampUtc = new Date().toISOString();
 

@@ -2,7 +2,9 @@ import { z } from 'zod';
 
 export const IngestionConfigSchema = z.object({
   serviceName: z.string().default('ingestion-collector'),
-  env: z.enum(['local', 'development', 'testing', 'staging', 'production']).default('development'),
+  env: z
+    .enum(['local', 'development', 'testing', 'test', 'staging', 'production'])
+    .default('development'),
   port: z.number().int().min(1024).max(65535).default(8080),
   grpcPort: z.number().int().min(1024).max(65535).default(50051),
   kafkaBrokers: z.array(z.string()).default(['localhost:9092']),

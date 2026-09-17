@@ -4,6 +4,17 @@
   "private": true,
   "description": "OCSF v1.1 Telemetry Schematization & Normalization Microservice for SentinelAI",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "default": "./dist/browser.js"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/index.ts",

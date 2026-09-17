@@ -2,7 +2,10 @@ import {
   SyntheticTelemetryGenerator,
   SyntheticRawTelemetryPackage,
 } from '@sentinelai/synthetic-log-generator';
-import { OCSFNormalizerEngine, NormalizerMetricsCollector } from '@sentinelai/ocsf-normalizer';
+import {
+  OCSFNormalizerEngine,
+  NormalizerMetricsCollector,
+} from '@sentinelai/ocsf-normalizer/browser';
 import { OCSFBaseEvent } from '@sentinelai/ocsf-types';
 import {
   UIProcessedEvent,
